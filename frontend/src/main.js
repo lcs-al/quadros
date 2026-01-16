@@ -8,41 +8,47 @@ import App from './App.vue'
 /* Font Awesome */
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { 
-  faBell, 
-  faCog, 
-  faChevronDown, 
-  faSun, 
-  faMoon, 
-  faSignOutAlt, 
-  faPlus, 
-  faTrashAlt, 
-  faTimes, 
+import {
+  faBell,
+  faCog,
+  faChevronDown,
+  faSun,
+  faMoon,
+  faSignOutAlt,
+  faPlus,
+  faTrashAlt,
+  faTimes,
   faColumns,
   faSpinner,
   faThLarge,
   faCheck,
   faClock,
-  faUserCircle
-} from '@fortawesome/free-solid-svg-icons'
+  faUserCircle,
+  faEnvelope,
+  faEye,
+  faEyeSlash,
+} from "@fortawesome/free-solid-svg-icons";
 
 library.add(
-  faBell, 
-  faCog, 
-  faChevronDown, 
-  faSun, 
-  faMoon, 
-  faSignOutAlt, 
-  faPlus, 
-  faTrashAlt, 
-  faTimes, 
+  faBell,
+  faCog,
+  faChevronDown,
+  faSun,
+  faMoon,
+  faSignOutAlt,
+  faPlus,
+  faTrashAlt,
+  faTimes,
   faColumns,
   faSpinner,
   faThLarge,
   faCheck,
   faClock,
-  faUserCircle
-)
+  faUserCircle,
+  faEnvelope,
+  faEye,
+  faEyeSlash
+);
 
 const app = createApp(App)
 

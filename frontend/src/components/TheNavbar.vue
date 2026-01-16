@@ -45,7 +45,7 @@
               <font-awesome-icon icon="cog" class="h-6 w-6" />
             </button>
             <Transition name="scale">
-              <div v-if="showSettings" class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-md shadow-lg py-1 z-50">
+              <div v-if="showSettings" class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md shadow-lg py-1 z-50">
                 <div class="px-4 py-2 border-b border-gray-100 dark:border-gray-600">
                   <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ $t('settings.title') }}</p>
                 </div>
@@ -127,8 +127,7 @@
                 <div class="py-1 border-t border-gray-100 dark:border-gray-700">
                   <button 
                     @click="handleLogout"
-                    role="button"
-                    class="w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+                    class="cursor-pointer w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
                   >
                     <font-awesome-icon icon="sign-out-alt" class="mr-2 h-4 w-4" />
                     {{ $t('navbar.logout') }}

@@ -31,9 +31,12 @@
         </h2>
       </div>
       <form class="mt-8 space-y-6" @submit.prevent="handleLogin">
-        <div class="rounded-md shadow-sm -space-y-px">
-          <div>
+        <div class="rounded-md shadow-sm space-y-4">
+          <div class="relative group">
             <label for="email-address" class="sr-only">{{ $t('auth.login.email_label') }}</label>
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 group-focus-within:text-indigo-500 transition-colors">
+              <font-awesome-icon icon="envelope" />
+            </div>
             <input
               v-model="email"
               id="email-address"
@@ -41,20 +44,29 @@
               type="email"
               autocomplete="email"
               required
-              class="w-full px-3 py-2 border-2 dark:border-gray-600 text-gray-900 dark:text-white dark:bg-gray-700 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm border-2 border-solid"
+              class="w-full pl-10 pr-3 py-2 border-2 dark:border-gray-600 text-gray-900 dark:text-white dark:bg-gray-700 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-solid transition-all"
               :placeholder="$t('auth.login.email_placeholder')"
             />
           </div>
-          <div>
+          <div class="relative group">
             <label for="password" class="sr-only">{{ $t('auth.login.password_label') }}</label>
+            <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
+              <button 
+                type="button"
+                @click="showPassword = !showPassword"
+                class="text-gray-400 hover:text-indigo-500 focus:outline-none cursor-pointer transition-colors p-1"
+              >
+                <font-awesome-icon :icon="showPassword ? 'eye-slash' : 'eye'" />
+              </button>
+            </div>
             <input
               v-model="password"
               id="password"
               name="password"
-              type="password"
+              :type="showPassword ? 'text' : 'password'"
               autocomplete="current-password"
               required
-              class="w-full px-3 py-2 border-2 dark:border-gray-600 text-gray-900 dark:text-white dark:bg-gray-700 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+              class="w-full pl-3 pr-10 py-2 border-2 dark:border-gray-600 text-gray-900 dark:text-white dark:bg-gray-700 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-solid transition-all"
               :placeholder="$t('auth.login.password_placeholder')"
             />
           </div>
@@ -63,7 +75,7 @@
         <div>
           <BaseButton
             type="submit"
-            class="w-full"
+            class="w-full cursor-pointer"
             :loading="loading"
           >
             {{ $t('auth.login.submit') }}
@@ -87,6 +99,7 @@ import BaseButton from '../components/common/BaseButton.vue';
 const { t } = useI18n();
 const email = ref('user@example.com');
 const password = ref('password');
+const showPassword = ref(false);
 const error = ref('');
 const loading = ref(false);
 const authStore = useAuthStore();
