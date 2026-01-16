@@ -2,7 +2,9 @@
   <div class="min-h-screen flex flex-col items-center justify-center">
     <div class="w-full max-w-md p-8 space-y-8 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
       <div class="flex flex-col items-center justify-center mb-4">
+        <span class="mb-2 text-2xl font-semibold text-gray-900 dark:text-white">
           {{ $t('navbar.brand') }}
+        </span>
 
         <div class="grid grid-cols-2 grid-rows-2 gap-0 rounded-2xl shadow-xl overflow-hidden">
           <div class="flex items-center justify-center w-16 h-16 bg-slate-600">

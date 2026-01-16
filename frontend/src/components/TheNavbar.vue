@@ -37,9 +37,11 @@
             <span class="absolute top-1.5 right-1.5 block h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-white dark:ring-gray-800"></span>
           </button>
 
-          <div class="relative" @mouseenter="showSettings = true" @mouseleave="showSettings = false">
+          <div class="relative" ref="settingsRef">
             <button 
+              @click="toggleSettings"
               class="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+              :class="{ 'bg-gray-100 dark:bg-gray-700 text-indigo-600 dark:text-indigo-400': showSettings }"
               :title="$t('settings.title')"
             >
               <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -53,21 +55,25 @@
                   <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ $t('settings.title') }}</p>
                 </div>
                 
-                <div class="px-4 py-2 flex items-center justify-between">
-                  <span class="text-sm text-gray-700 dark:text-gray-200">{{ $t('settings.language') }}</span>
-                  <button 
-                    @click="toggleLanguage"
-                    class="text-xs font-bold px-2 py-1 rounded bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 uppercase transform active:scale-95 transition-transform"
+                <div 
+                  @click.stop="toggleLanguage"
+                  class="px-4 py-2.5 flex items-center justify-between hover:bg-gray-100 dark:hover:bg-gray-600/50 cursor-pointer transition-all duration-200 group"
+                >
+                  <span class="text-sm text-gray-700 dark:text-gray-200 font-medium group-hover:text-indigo-600 dark:group-hover:text-indigo-400">{{ $t('settings.language') }}</span>
+                  <div 
+                    class="text-[10px] font-extrabold px-2 py-0.5 rounded bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 uppercase border border-indigo-200 dark:border-indigo-800"
                   >
                     {{ currentLocale }}
-                  </button>
+                  </div>
                 </div>
 
-                <div class="px-4 py-2 flex items-center justify-between">
-                  <span class="text-sm text-gray-700 dark:text-gray-200">{{ $t('settings.theme') }}</span>
-                  <button 
-                    @click="toggleTheme"
-                    class="p-1 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors transform active:scale-95"
+                <div 
+                  @click.stop="toggleTheme"
+                  class="px-4 py-2.5 flex items-center justify-between hover:bg-gray-100 dark:hover:bg-gray-600/50 cursor-pointer transition-all duration-200 group"
+                >
+                  <span class="text-sm text-gray-700 dark:text-gray-200 font-medium group-hover:text-indigo-600 dark:group-hover:text-indigo-400">{{ $t('settings.theme') }}</span>
+                  <div 
+                    class="p-1 text-gray-500 dark:text-gray-400 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors"
                   >
                     <svg v-if="isDark" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 9H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
@@ -75,15 +81,17 @@
                     <svg v-else class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 118.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                     </svg>
-                  </button>
+                  </div>
                 </div>
               </div>
             </Transition>
           </div>
 
-          <div class="relative" @mouseenter="showUserMenu = true" @mouseleave="showUserMenu = false">
+          <div class="relative" ref="userMenuRef">
             <button 
+              @click="toggleUserMenu"
               class="flex items-center space-x-2 p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none"
+              :class="{ 'bg-gray-100 dark:bg-gray-700': showUserMenu }"
             >
               <div class="h-8 w-8 rounded-full bg-indigo-500 flex items-center justify-center text-white font-bold border-2 border-white dark:border-gray-800 shadow-sm">
                 {{ userInitials }}
@@ -111,6 +119,7 @@
                   <router-link 
                     to="/" 
                     class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+                    @click="closeMenus"
                   >
                     {{ $t('navbar.boards') }}
                   </router-link>
@@ -120,6 +129,7 @@
                   <a 
                     href="#" 
                     class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+                    @click="closeMenus"
                   >
                     {{ $t('nav.profile') }}
                   </a>
@@ -128,6 +138,7 @@
                 <div class="py-1 border-t border-gray-100 dark:border-gray-700">
                   <button 
                     @click="handleLogout"
+                    role="button"
                     class="w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
                   >
                     {{ $t('navbar.logout') }}
@@ -143,7 +154,7 @@
 </template>
 
 <script setup>
-import { computed, ref, onMounted } from 'vue';
+import { computed, ref, onMounted, onUnmounted } from 'vue';
 import { useAuthStore } from '../stores/auth';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
@@ -154,6 +165,9 @@ const locale = useI18n().locale;
 
 const showSettings = ref(false);
 const showUserMenu = ref(false);
+
+const settingsRef = ref(null);
+const userMenuRef = ref(null);
 
 const isDark = ref(localStorage.getItem('theme') === 'dark');
 const currentLocale = computed(() => locale.value.split('_')[0].toUpperCase());
@@ -166,6 +180,30 @@ const userInitials = computed(() => {
   }
   return names[0][0].toUpperCase();
 });
+
+const toggleSettings = () => {
+  showSettings.value = !showSettings.value;
+  if (showSettings.value) showUserMenu.value = false;
+};
+
+const toggleUserMenu = () => {
+  showUserMenu.value = !showUserMenu.value;
+  if (showUserMenu.value) showSettings.value = false;
+};
+
+const closeMenus = () => {
+  showSettings.value = false;
+  showUserMenu.value = false;
+};
+
+const handleClickOutside = (event) => {
+  if (showSettings.value && settingsRef.value && !settingsRef.value.contains(event.target)) {
+    showSettings.value = false;
+  }
+  if (showUserMenu.value && userMenuRef.value && !userMenuRef.value.contains(event.target)) {
+    showUserMenu.value = false;
+  }
+};
 
 const toggleTheme = () => {
   isDark.value = !isDark.value;
@@ -198,5 +236,10 @@ onMounted(() => {
   if (savedLocale) {
     locale.value = savedLocale;
   }
+  window.addEventListener('click', handleClickOutside);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('click', handleClickOutside);
 });
 </script>
