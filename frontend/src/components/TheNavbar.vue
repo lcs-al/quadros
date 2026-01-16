@@ -100,7 +100,7 @@
                   <p class="text-sm dark:text-gray-200 font-bold truncate">{{ authStore.user?.name }}</p>
                   <p class="text-xs text-gray-500 dark:text-gray-400 truncate">{{ authStore.user?.email }}</p>
                   <p class="text-[10px] mt-1 inline-block px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 uppercase font-bold tracking-tight">
-                    {{ authStore.user?.role }}
+                    {{ $t('auth.roles.' + (authStore.user?.role || 'user')) }}
                   </p>
                 </div>
 

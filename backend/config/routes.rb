@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :cards, only: [:create, :update, :destroy] do
+  resources :cards, only: [:create, :show, :update, :destroy] do
     member do
       patch :move
     end

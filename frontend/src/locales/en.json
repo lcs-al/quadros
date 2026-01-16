@@ -1,4 +1,7 @@
 {
+  "app": {
+    "name": "Quadros"
+  },
   "auth": {
     "login": {
       "title": "Sign in to your account",
@@ -7,6 +10,10 @@
       "password_label": "Password",
       "password_placeholder": "Password",
       "submit": "Sign in"
+    },
+    "roles": {
+      "admin": "Administrator",
+      "user": "User"
     },
     "error": {
       "invalid_credentials": "Invalid email or password"
@@ -18,6 +25,7 @@
     "logout": "Logout"
   },
   "dashboard": {
+    "title": "Dashboard",
     "loading": "Loading...",
     "select_board": "Select a Board",
     "pick_board_msg": "Pick a board to start"
@@ -26,18 +34,28 @@
     "column": {
       "add": "+ Add Column",
       "prompt_title": "Enter column title:",
-      "delete_confirm": "Are you sure? This will delete all cards in this column."
-    },
-    "card": {
-      "add": "Add Card",
-      "prompt_title": "Enter card title:"
+      "delete_confirm_title": "Confirm Delete",
+      "delete_confirm_body": "Are you sure? This will delete all cards in this column."
     },
     "columns": "columns"
   },
-  "hello": {
-    "count_is": "count is",
-    "edit_msg": "Edit",
-    "test_hmr": "to test HMR"
+  "card": {
+    "add": "Add Card",
+    "title": "Card Title",
+    "description": "Description",
+    "description_placeholder": "Add a more detailed description...",
+    "metadata": {
+      "created_at": "Created at",
+      "creator": "Created by",
+      "assignee": "Assignee",
+      "unassigned": "Unassigned",
+      "unknown": "Unknown"
+    },
+    "comments": {
+      "title": "Comments",
+      "placeholder": "Write a comment...",
+      "post": "Comment"
+    }
   },
   "settings": {
     "title": "Settings",

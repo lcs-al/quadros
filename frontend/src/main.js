@@ -27,6 +27,8 @@ import {
   faEnvelope,
   faEye,
   faEyeSlash,
+  faComment,
+  faAlignLeft,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -47,7 +49,9 @@ library.add(
   faUserCircle,
   faEnvelope,
   faEye,
-  faEyeSlash
+  faEyeSlash,
+  faComment,
+  faAlignLeft
 );
 
 const app = createApp(App)

@@ -1,16 +1,27 @@
 class CardsController < ApplicationController
-  before_action :set_card, only: %i[update destroy move]
+  before_action :set_card, only: %i[show update destroy move]
 
   def create
     @column = Column.find(params[:column_id])
     @card = @column.cards.build(card_params)
-    @card.assignee = current_user if card_params[:assignee_id].blank? # Assign to self default or whatever logic
+    @card.creator = current_user
+    @card.assignee = current_user if card_params[:assignee_id].blank?
     
     if @card.save
       render json: @card, status: :created
     else
       render json: @card.errors, status: :unprocessable_entity
     end
+  end
+
+  def show
+    render json: @card, include: {
+      assignee: {},
+      creator: {},
+      comments: {
+        include: :user
+      }
+    }
   end
 
   def update

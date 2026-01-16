@@ -1,18 +1,19 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { useAuthStore } from '../stores/auth';
+import i18n from "../i18n";
 
 const routes = [
   {
     path: "/login",
     name: "Login",
     component: () => import("../views/LoginView.vue"),
-    meta: { guest: true, title: "Login" },
+    meta: { guest: true, title: "auth.login.title" },
   },
   {
     path: "/",
     name: "Dashboard",
     component: () => import("../views/DashboardView.vue"),
-    meta: { requiresAuth: true, title: "Dashboard" },
+    meta: { requiresAuth: true, title: "nav.dashboard" },
   },
 ];
 
@@ -24,19 +25,21 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const authStore = useAuthStore();
   if (to.meta.requiresAuth && !authStore.isAuthenticated) {
-    next('/login');
+    next("/login");
   } else if (to.meta.guest && authStore.isAuthenticated) {
-    next('/');
+    next("/");
   } else {
     next();
   }
 });
 
 router.afterEach((to) => {
-  const baseTitle = "Quadros";
-  const pageTitle = to.meta.title;
-  if (pageTitle) {
-    document.title = `${baseTitle} | ${pageTitle}`;
+  const { t } = i18n.global;
+  const baseTitle = t("app.name") || "Quadros";
+  const pageTitleKey = to.meta.title;
+
+  if (pageTitleKey) {
+    document.title = `${baseTitle} | ${t(pageTitleKey)}`;
   } else {
     document.title = baseTitle;
   }

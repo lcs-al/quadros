@@ -41,7 +41,7 @@
                       </div>
                     </div>
                     <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ board.title }}</h3>
-                    <p class="text-sm text-gray-500 mt-2">{{ board.columns?.length || 0 }} {{ $t('board.columns') || 'columns' }}</p>
+                    <p class="text-sm text-gray-500 mt-2">{{ board.columns?.length || 0 }} {{ $t('board.columns') }}</p>
                   </div>
                </div>
             </div>
@@ -59,7 +59,10 @@ import { ref, onMounted, watch } from 'vue';
 import { useAuthStore } from '../stores/auth';
 import { useRouter } from 'vue-router';
 import api from '../api';
+import { useI18n } from 'vue-i18n';
 import BoardDetail from '../components/BoardDetail.vue';
+
+const { t } = useI18n();
 
 const authStore = useAuthStore();
 const router = useRouter();
@@ -100,11 +103,11 @@ const selectBoard = async (boardId) => {
 }
 
 watch(currentBoard, (newBoard) => {
-  const baseTitle = 'Quadros';
+  const baseTitle = t('app.name') || 'Quadros';
   if (newBoard) {
     document.title = `${baseTitle} | ${newBoard.title}`;
   } else {
-    document.title = `${baseTitle} | Dashboard`;
+    document.title = `${baseTitle} | ${t('dashboard.title')}`;
   }
 }, { immediate: true });
 
