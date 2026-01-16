@@ -33,6 +33,7 @@ import {
   faCamera,
   faCheckCircle,
   faExclamationCircle,
+  faPencilAlt,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -60,6 +61,7 @@ library.add(
   faCamera,
   faCheckCircle,
   faExclamationCircle,
+  faPencilAlt,
 );
 
 const app = createApp(App)

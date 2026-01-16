@@ -17,10 +17,27 @@
                  <p class="text-gray-500">{{ $t('dashboard.pick_board_msg') }}</p>
                </div>
             </div>
-            <div v-else class="mb-6">
-               <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
-                 {{ currentBoard.title }}
-               </h1>
+            <div v-else class="mb-6 flex items-center">
+               <div v-if="!isEditingTitle" @click="startEditing" class="flex items-center space-x-3 cursor-pointer group">
+                  <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
+                    {{ currentBoard.title }}
+                  </h1>
+                  <font-awesome-icon 
+                    icon="pencil-alt" 
+                    class="text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity duration-200 h-4 w-4" 
+                  />
+               </div>
+               <div v-else class="w-full max-w-md">
+                  <input 
+                    ref="titleInput"
+                    v-model="editTitleValue"
+                    @blur="saveTitle"
+                    @keyup.enter="saveTitle"
+                    @keyup.esc="cancelEditing"
+                    type="text" 
+                    class="text-2xl font-bold bg-white dark:bg-gray-800 border-2 border-indigo-500 rounded-md px-2 py-1 focus:outline-none w-full text-gray-900 dark:text-white shadow-sm"
+                  />
+               </div>
             </div>
           </Transition>
 
@@ -53,7 +70,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted, watch, nextTick } from 'vue';
 import { useAuthStore } from '../stores/auth';
 import { useRouter } from 'vue-router';
 import api from '../api';
@@ -67,6 +84,48 @@ const router = useRouter();
 const boards = ref([]);
 const currentBoard = ref(null);
 const loading = ref(true);
+
+const isEditingTitle = ref(false);
+const editTitleValue = ref('');
+const titleInput = ref(null);
+
+const startEditing = () => {
+  if (currentBoard.value) {
+    editTitleValue.value = currentBoard.value.title;
+    isEditingTitle.value = true;
+    nextTick(() => {
+      titleInput.value?.focus();
+    });
+  }
+};
+
+const saveTitle = async () => {
+  if (!isEditingTitle.value) return;
+  const oldTitle = currentBoard.value.title;
+  const newTitle = editTitleValue.value.trim();
+
+  if (newTitle && newTitle !== oldTitle) {
+    try {
+      const response = await api.patch(`/boards/${currentBoard.value.id}`, {
+        board: { title: newTitle }
+      });
+      currentBoard.value.title = response.data.title;
+      // Also update the title in the boards list
+      const boardIndex = boards.value.findIndex(b => b.id === currentBoard.value.id);
+      if (boardIndex !== -1) {
+        boards.value[boardIndex].title = response.data.title;
+      }
+    } catch (error) {
+      console.error('Failed to update board title', error);
+      editTitleValue.value = oldTitle;
+    }
+  }
+  isEditingTitle.value = false;
+};
+
+const cancelEditing = () => {
+  isEditingTitle.value = false;
+};
 
 const logout = () => {
   authStore.logout();
