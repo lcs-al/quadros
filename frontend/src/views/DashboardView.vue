@@ -1,7 +1,6 @@
 <template>
   <div class="min-h-screen bg-transparent">
-    <!-- Content -->
-    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+    <div class="mx-auto py-6 sm:px-6 lg:px-8">
       <Transition name="fade" mode="out-in">
         <div v-if="loading && boards.length === 0" class="flex flex-col items-center justify-center mt-20 space-y-4">
           <font-awesome-icon icon="spinner" spin class="text-3xl text-indigo-600" />
@@ -45,7 +44,6 @@
                   </div>
                </div>
             </div>
-            <!-- Kanban Board Component -->
             <BoardDetail v-else-if="currentBoard" :board="currentBoard" @refresh="fetchBoardDetails" />
           </Transition>
         </div>

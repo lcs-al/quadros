@@ -147,7 +147,6 @@
       :isOpen="modalState.cardDetail.isOpen" 
       :title="modalState.cardDetail.data?.title || $t('card.title')" 
       @close="closeCardDetail"
-      class="max-w-2xl"
     >
       <div v-if="modalState.cardDetail.loading" class="flex justify-center py-12">
         <font-awesome-icon icon="spinner" spin class="text-3xl text-indigo-600" />

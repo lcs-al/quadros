@@ -9,7 +9,7 @@
         <Transition name="scale" appear>
           <div 
             v-if="isOpen"
-            class="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-md overflow-hidden"
+            class="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-4xl overflow-hidden"
           >
             <!-- Header -->
             <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center">
