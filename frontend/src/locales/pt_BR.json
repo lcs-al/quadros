@@ -81,6 +81,7 @@
     "cancel": "Cancelar",
     "confirm_delete": "Confirmar Exclusão",
     "delete": "Excluir",
-    "undo": "Desfazer"
+    "undo": "Desfazer",
+    "ctrl_enter_to_post": "Ctrl + Enter para postar"
   }
 }

@@ -151,145 +151,158 @@
       <div v-if="modalState.cardDetail.loading" class="flex justify-center py-12">
         <font-awesome-icon icon="spinner" spin class="text-3xl text-indigo-600" />
       </div>
-      <div v-else-if="modalState.cardDetail.data" class="space-y-6">
-        <!-- Title & Description Editing -->
-        <div class="space-y-4">
-          <div>
-            <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">
-              {{ $t('card.title') }}
-            </label>
-            <input 
-              v-model="modalState.cardDetail.editData.title"
-              type="text" 
-              @blur="submitEditCard"
-              class="w-full text-xl font-bold bg-transparent border-b-2 border-transparent hover:border-gray-200 dark:hover:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-400 focus:outline-none py-1 transition-all text-gray-900 dark:text-white"
-            />
+      <div v-else-if="modalState.cardDetail.data" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Main Column (Left) -->
+        <div class="lg:col-span-2 space-y-8">
+          <!-- Title & Description Editing -->
+          <div class="space-y-6">
+            <div>
+              <input 
+                v-model="modalState.cardDetail.editData.title"
+                type="text" 
+                @blur="submitEditCard"
+                class="w-full text-2xl font-bold bg-transparent border-b-2 border-transparent hover:border-gray-200 dark:hover:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-400 focus:outline-none py-1 transition-all text-gray-900 dark:text-white"
+                :placeholder="$t('card.title')"
+              />
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">
+                {{ $t('card.description') }}
+              </label>
+              <textarea 
+                v-model="modalState.cardDetail.editData.description"
+                rows="6"
+                @blur="submitEditCard"
+                class="w-full px-4 py-3 bg-gray-50/50 dark:bg-gray-700/30 border border-transparent rounded-xl focus:border-indigo-500 dark:focus:border-indigo-400 focus:bg-white dark:focus:bg-gray-700 focus:outline-none transition-all text-gray-700 dark:text-gray-200 resize-none text-sm leading-relaxed"
+                :placeholder="$t('card.description_placeholder')"
+              ></textarea>
+            </div>
           </div>
 
-          <div>
-            <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">
-              {{ $t('card.description') }}
-            </label>
-            <textarea 
-              v-model="modalState.cardDetail.editData.description"
-              rows="4"
-              @blur="submitEditCard"
-              class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-700/50 border border-transparent rounded-lg focus:border-indigo-500 dark:focus:border-indigo-400 focus:bg-white dark:focus:bg-gray-700 focus:outline-none transition-all text-gray-700 dark:text-gray-200"
-              :placeholder="$t('card.description_placeholder')"
-            ></textarea>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-2 gap-6 py-4 border-y border-gray-100 dark:border-gray-700">
-          <div class="space-y-3">
-             <div>
-                <span class="block text-xs font-bold text-gray-400 uppercase tracking-wider">{{ $t('card.metadata.creator') }}</span>
-                <span class="text-sm text-gray-700 dark:text-gray-300 flex items-center mt-1">
-                  <span class="h-6 w-6 rounded-full bg-slate-500 flex items-center justify-center text-[10px] mr-2 text-white">
-                    {{ modalState.cardDetail.data.creator?.name?.charAt(0) || '?' }}
-                  </span>
-                  {{ modalState.cardDetail.data.creator?.name || $t('card.metadata.unknown') }}
-                </span>
+          <!-- Comments Section -->
+          <div class="space-y-6 pt-6 border-t border-gray-100 dark:border-gray-700">
+             <h4 class="text-sm font-bold text-gray-900 dark:text-white flex items-center">
+               <font-awesome-icon icon="comment" class="mr-2 text-gray-400" />
+               {{ $t('card.comments.title') }}
+             </h4>
+             
+             <!-- Comment List -->
+             <div class="space-y-4 max-h-[400px] overflow-y-auto pr-2 scrollbar-thin">
+                <div v-for="comment in modalState.cardDetail.data.comments" :key="comment.id" class="flex space-x-3 group">
+                   <div class="flex-shrink-0">
+                      <div class="h-8 w-8 rounded-full bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-xs font-bold">
+                         {{ comment.user?.name?.charAt(0) || '?' }}
+                      </div>
+                   </div>
+                   <div class="flex-1">
+                      <div class="flex items-center space-x-2 mb-1">
+                         <span class="text-sm font-bold text-gray-900 dark:text-white">{{ comment.user?.name }}</span>
+                         <span class="text-[10px] text-gray-400 font-medium">{{ formatDate(comment.created_at) }}</span>
+                      </div>
+                      <p class="text-sm text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-800/50 p-3 rounded-lg border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition-colors">
+                        {{ comment.content }}
+                      </p>
+                   </div>
+                </div>
              </div>
-             <div>
-                <span class="block text-xs font-bold text-gray-400 uppercase tracking-wider">{{ $t('card.metadata.assignee') }}</span>
-                <div class="mt-1 relative">
-                  <select 
-                    :value="modalState.cardDetail.data.assignee?.id"
-                    @change="submitUpdateAssignee($event.target.value)"
-                    class="block w-full pl-8 pr-10 py-1 text-sm border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md dark:bg-gray-700 dark:text-gray-300 appearance-none transition-all hover:bg-gray-100 dark:hover:bg-gray-600"
-                    :disabled="modalState.cardDetail.loadingUsers"
-                  >
-                    <option :value="null">{{ $t('card.metadata.unassigned') }}</option>
-                    <option v-for="user in modalState.cardDetail.users" :key="user.id" :value="user.id">
-                      {{ user.name }}
-                    </option>
-                  </select>
-                  <div class="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none">
-                    <span v-if="modalState.cardDetail.data.assignee" class="h-5 w-5 rounded-full bg-indigo-500 flex items-center justify-center text-[8px] text-white">
-                      {{ modalState.cardDetail.data.assignee.name.charAt(0) }}
-                    </span>
-                    <font-awesome-icon v-else icon="user-circle" class="text-gray-400 h-4 w-4" />
-                  </div>
-                  <div v-if="modalState.cardDetail.loadingUsers" class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-                    <font-awesome-icon icon="spinner" spin class="text-indigo-500 text-xs" />
-                  </div>
+
+             <!-- Add Comment -->
+             <div class="flex space-x-3 mt-6">
+                <div class="flex-shrink-0">
+                   <div class="h-8 w-8 rounded-full bg-indigo-600 flex items-center justify-center text-xs font-bold text-white shadow-sm">
+                      {{ authStore.user?.name?.charAt(0) }}
+                   </div>
+                </div>
+                <div class="flex-1 space-y-3">
+                   <textarea 
+                     v-model="modalState.cardDetail.newComment"
+                     @keydown.enter.ctrl.prevent="submitAddComment"
+                     rows="3"
+                     class="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-xl dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-sm transition-shadow"
+                     :placeholder="$t('card.comments.placeholder')"
+                   ></textarea>
+                   <div class="flex justify-between items-center text-[10px] text-gray-400">
+                     <span>{{ $t('common.ctrl_enter_to_post') || 'Ctrl + Enter to post' }}</span>
+                     <BaseButton 
+                       size="sm" 
+                       :loading="modalState.cardDetail.commentLoading" 
+                       @click="submitAddComment"
+                       :disabled="!modalState.cardDetail.newComment.trim()"
+                       class="rounded-full px-6"
+                     >
+                       {{ $t('card.comments.post') }}
+                     </BaseButton>
+                   </div>
                 </div>
              </div>
           </div>
-          <div class="space-y-3">
-             <div>
-                <span class="block text-xs font-bold text-gray-400 uppercase tracking-wider">{{ $t('card.metadata.created_at') }}</span>
-                <span class="text-sm text-gray-600 dark:text-gray-400 block mt-1">
-                   {{ formatDate(modalState.cardDetail.data.created_at) }}
-                </span>
-             </div>
-             <div class="pt-2">
-                <BaseButton 
-                  variant="ghost" 
-                  size="sm" 
-                  class="text-red-500 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/20 w-full justify-start px-0"
-                  @click="confirmDeleteCard"
-                >
-                  <font-awesome-icon icon="trash-alt" class="mr-2" />
-                  {{ $t('card.delete') }}
-                </BaseButton>
-             </div>
-          </div>
         </div>
 
-        <!-- Comments Section -->
-        <div class="space-y-4">
-           <h4 class="text-sm font-bold text-gray-900 dark:text-white flex items-center">
-             <font-awesome-icon icon="comment" class="mr-2 text-gray-400" />
-             {{ $t('card.comments.title') }}
-           </h4>
-           
-           <!-- Comment List -->
-           <div class="space-y-4 max-h-60 overflow-y-auto pr-2 scrollbar-thin">
-              <div v-for="comment in modalState.cardDetail.data.comments" :key="comment.id" class="flex space-x-3">
-                 <div class="flex-shrink-0">
-                    <div class="h-8 w-8 rounded-full bg-gray-400 flex items-center justify-center text-xs text-white">
-                       {{ comment.user?.name?.charAt(0) || '?' }}
-                    </div>
-                 </div>
-                 <div class="bg-gray-50 dark:bg-gray-700/30 p-3 rounded-lg flex-1">
-                    <div class="flex justify-between items-center mb-1">
-                       <span class="text-xs font-bold text-gray-900 dark:text-white">{{ comment.user?.name }}</span>
-                       <span class="text-[10px] text-gray-500">{{ formatDate(comment.created_at) }}</span>
-                    </div>
-                    <p class="text-sm text-gray-700 dark:text-gray-300">{{ comment.content }}</p>
-                 </div>
-              </div>
-           </div>
+        <!-- Sidebar Column (Right) -->
+        <div class="space-y-6">
+          <div class="bg-gray-50/50 dark:bg-gray-800/30 rounded-2xl p-5 border border-gray-100 dark:border-gray-700 space-y-6">
+            <div>
+               <span class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">{{ $t('card.metadata.creator') }}</span>
+               <div class="flex items-center">
+                 <span class="h-6 w-6 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-[10px] font-bold mr-3 text-slate-600 dark:text-slate-300">
+                   {{ modalState.cardDetail.data.creator?.name?.charAt(0) || '?' }}
+                 </span>
+                 <span class="text-sm font-medium text-gray-700 dark:text-gray-200">
+                   {{ modalState.cardDetail.data.creator?.name || $t('card.metadata.unknown') }}
+                 </span>
+               </div>
+            </div>
 
-           <!-- Add Comment -->
-           <div class="flex space-x-3 mt-4">
-              <div class="flex-shrink-0">
-                 <div class="h-8 w-8 rounded-full bg-indigo-600 flex items-center justify-center text-xs text-white">
-                    {{ authStore.user?.name?.charAt(0) }}
+            <div>
+               <span class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">{{ $t('card.metadata.assignee') }}</span>
+               <div class="relative group">
+                 <select 
+                   :value="modalState.cardDetail.data.assignee?.id"
+                   @change="submitUpdateAssignee($event.target.value)"
+                   class="block w-full pl-9 pr-10 py-2 text-sm border-2 border-transparent focus:border-indigo-500 rounded-xl dark:bg-gray-700 dark:text-gray-200 appearance-none transition-all hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer font-medium"
+                   :disabled="modalState.cardDetail.loadingUsers"
+                 >
+                   <option :value="null">{{ $t('card.metadata.unassigned') }}</option>
+                   <option v-for="user in modalState.cardDetail.users" :key="user.id" :value="user.id">
+                     {{ user.name }}
+                   </option>
+                 </select>
+                 <div class="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none">
+                   <span v-if="modalState.cardDetail.data.assignee" class="h-5 w-5 rounded-full bg-indigo-500 flex items-center justify-center text-[8px] font-bold text-white shadow-sm">
+                     {{ modalState.cardDetail.data.assignee.name.charAt(0) }}
+                   </span>
+                   <font-awesome-icon v-else icon="user-circle" class="text-gray-400 h-4 w-4" />
                  </div>
-              </div>
-              <div class="flex-1 space-y-2">
-                 <textarea 
-                   v-model="modalState.cardDetail.newComment"
-                   @keydown.enter.prevent="submitAddComment"
-                   rows="2"
-                   class="w-full px-3 py-2 border border-gray-200 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white focus:ring-indigo-500 focus:border-indigo-500 text-sm"
-                   :placeholder="$t('card.comments.placeholder')"
-                 ></textarea>
-                 <div class="flex justify-end">
-                    <BaseButton 
-                      size="sm" 
-                      :loading="modalState.cardDetail.commentLoading" 
-                      @click="submitAddComment"
-                      :disabled="!modalState.cardDetail.newComment.trim()"
-                    >
-                      {{ $t('card.comments.post') }}
-                    </BaseButton>
+                 <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-gray-400 group-hover:text-indigo-500 transition-colors">
+                   <font-awesome-icon icon="chevron-down" class="text-[10px]" />
                  </div>
-              </div>
-           </div>
+                 <div v-if="modalState.cardDetail.loadingUsers" class="absolute inset-y-0 right-8 flex items-center pointer-events-none">
+                   <font-awesome-icon icon="spinner" spin class="text-indigo-500 text-xs" />
+                 </div>
+               </div>
+            </div>
+
+            <div>
+               <span class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">{{ $t('card.metadata.created_at') }}</span>
+               <span class="text-sm font-medium text-gray-600 dark:text-gray-400 flex items-center">
+                  <font-awesome-icon icon="clock" class="mr-2 text-xs" />
+                  {{ formatDate(modalState.cardDetail.data.created_at) }}
+               </span>
+            </div>
+          </div>
+
+          <div class="pt-2 px-1">
+             <BaseButton 
+               variant="ghost" 
+               size="sm" 
+               class="text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/10 w-full justify-start rounded-xl group transition-all"
+               @click="confirmDeleteCard"
+             >
+               <font-awesome-icon icon="trash-alt" class="mr-3 group-hover:scale-110 transition-transform" />
+               <span class="font-bold">{{ $t('card.delete') }}</span>
+             </BaseButton>
+          </div>
         </div>
       </div>
     </BaseModal>

@@ -81,6 +81,7 @@
     "cancel": "Cancel",
     "confirm_delete": "Confirm Delete",
     "delete": "Delete",
-    "undo": "Undo"
+    "undo": "Undo",
+    "ctrl_enter_to_post": "Ctrl + Enter to post"
   }
 }
