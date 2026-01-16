@@ -20,5 +20,9 @@ class User < ApplicationRecord
       nil
     end
   end
+
+  def as_json(options = {})
+    super(options.merge(methods: :avatar_url))
+  end
 end
 

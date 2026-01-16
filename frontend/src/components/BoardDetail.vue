@@ -16,11 +16,11 @@
               <h3 class="font-bold text-gray-700 dark:text-gray-200">{{ column.title }}</h3>
               <div class="flex space-x-1">
                  <!-- Add Card Button -->
-                  <button @click="openAddCardModal(column)" class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                  <button @click="openAddCardModal(column)" class="cursor-pointer text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
                      <font-awesome-icon icon="plus" class="h-4 w-4" />
                   </button>
                   <!-- Delete Column (Admin only or Creator) -->
-                   <button v-if="authStore.isAdmin" @click="deleteColumn(column.id)" class="text-red-500 hover:text-red-700">
+                   <button v-if="authStore.isAdmin" @click="deleteColumn(column.id)" class="cursor-pointer text-red-500 hover:text-red-700">
                       <font-awesome-icon icon="trash-alt" class="h-4 w-4" />
                    </button>
               </div>
@@ -45,9 +45,7 @@
                        <!-- Assignee Avatar -->
                         <div class="mt-2 flex items-center justify-between">
                            <div v-if="card.assignee" class="flex items-center">
-                              <span class="inline-flex items-center justify-center h-6 w-6 rounded-full bg-indigo-500" :title="card.assignee.name">
-                                <span class="text-xs font-medium leading-none text-white">{{ card.assignee.name.charAt(0) }}</span>
-                              </span>
+                              <UserAvatar :user="card.assignee" size="sm" />
                               <span class="text-[10px] text-gray-400 ml-2">{{ card.assignee.name }}</span>
                            </div>
                            <div class="flex items-center space-x-2 text-gray-400">
@@ -191,9 +189,7 @@
              <div class="space-y-4 max-h-[400px] overflow-y-auto pr-2 scrollbar-thin">
                 <div v-for="comment in modalState.cardDetail.data.comments" :key="comment.id" class="flex space-x-3 group">
                    <div class="flex-shrink-0">
-                      <div class="h-8 w-8 rounded-full bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-xs font-bold">
-                         {{ comment.user?.name?.charAt(0) || '?' }}
-                      </div>
+                      <UserAvatar :user="comment.user" size="md" />
                    </div>
                    <div class="flex-1">
                       <div class="flex items-center space-x-2 mb-1">
@@ -208,12 +204,10 @@
              </div>
 
              <!-- Add Comment -->
-             <div class="flex space-x-3 mt-6">
-                <div class="flex-shrink-0">
-                   <div class="h-8 w-8 rounded-full bg-indigo-600 flex items-center justify-center text-xs font-bold text-white shadow-sm">
-                      {{ authStore.user?.name?.charAt(0) }}
-                   </div>
-                </div>
+              <div class="flex space-x-3 mt-6">
+                 <div class="flex-shrink-0">
+                    <UserAvatar v-if="authStore.user" :user="authStore.user" size="md" />
+                 </div>
                 <div class="flex-1 space-y-3">
                    <textarea 
                      v-model="modalState.cardDetail.newComment"
@@ -245,9 +239,7 @@
             <div>
                <span class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">{{ $t('card.metadata.creator') }}</span>
                <div class="flex items-center">
-                 <span class="h-6 w-6 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-[10px] font-bold mr-3 text-slate-600 dark:text-slate-300">
-                   {{ modalState.cardDetail.data.creator?.name?.charAt(0) || '?' }}
-                 </span>
+                 <UserAvatar v-if="modalState.cardDetail.data.creator" :user="modalState.cardDetail.data.creator" size="sm" class="mr-3" />
                  <span class="text-sm font-medium text-gray-700 dark:text-gray-200">
                    {{ modalState.cardDetail.data.creator?.name || $t('card.metadata.unknown') }}
                  </span>
@@ -269,9 +261,7 @@
                    </option>
                  </select>
                  <div class="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none">
-                   <span v-if="modalState.cardDetail.data.assignee" class="h-5 w-5 rounded-full bg-indigo-500 flex items-center justify-center text-[8px] font-bold text-white shadow-sm">
-                     {{ modalState.cardDetail.data.assignee.name.charAt(0) }}
-                   </span>
+                   <UserAvatar v-if="modalState.cardDetail.data.assignee" :user="modalState.cardDetail.data.assignee" size="xs" />
                    <font-awesome-icon v-else icon="user-circle" class="text-gray-400 h-4 w-4" />
                  </div>
                  <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-gray-400 group-hover:text-indigo-500 transition-colors">
@@ -356,6 +346,7 @@ import { useUIStore } from '../stores/ui';
 import { useI18n } from 'vue-i18n';
 import BaseModal from './common/BaseModal.vue';
 import BaseButton from './common/BaseButton.vue';
+import UserAvatar from './common/UserAvatar.vue';
 
 const props = defineProps(['board']);
 const emit = defineEmits(['refresh']);

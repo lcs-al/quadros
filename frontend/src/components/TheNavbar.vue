@@ -84,10 +84,7 @@
               class="cursor-pointer flex items-center space-x-2 p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none"
               :class="{ 'bg-gray-100 dark:bg-gray-700': showUserMenu }"
             >
-              <div class="h-8 w-8 rounded-full bg-indigo-500 flex items-center justify-center text-white font-bold border-2 border-white dark:border-gray-800 shadow-sm overflow-hidden">
-                <img v-if="authStore.user?.avatar_url" :src="authStore.user?.avatar_url" class="h-full w-full object-cover" />
-                <span v-else>{{ userInitials }}</span>
-              </div>
+              <UserAvatar :user="authStore.user" size="md" />
               <font-awesome-icon 
                 icon="chevron-down"
                 class="h-3 w-3 text-gray-400 transition-transform duration-200" 
@@ -148,6 +145,7 @@ import { computed, ref, onMounted, onUnmounted } from 'vue';
 import { useAuthStore } from '../stores/auth';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
+import UserAvatar from './common/UserAvatar.vue';
 
 const authStore = useAuthStore();
 const router = useRouter();
