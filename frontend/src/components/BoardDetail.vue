@@ -193,12 +193,28 @@
              </div>
              <div>
                 <span class="block text-xs font-bold text-gray-400 uppercase tracking-wider">{{ $t('card.metadata.assignee') }}</span>
-                <span class="text-sm text-gray-700 dark:text-gray-300 flex items-center mt-1">
-                  <span class="h-6 w-6 rounded-full bg-indigo-500 flex items-center justify-center text-[10px] mr-2 text-white">
-                    {{ modalState.cardDetail.data.assignee?.name?.charAt(0) || '?' }}
-                  </span>
-                  {{ modalState.cardDetail.data.assignee?.name || $t('card.metadata.unassigned') }}
-                </span>
+                <div class="mt-1 relative">
+                  <select 
+                    :value="modalState.cardDetail.data.assignee?.id"
+                    @change="submitUpdateAssignee($event.target.value)"
+                    class="block w-full pl-8 pr-10 py-1 text-sm border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 rounded-md dark:bg-gray-700 dark:text-gray-300 appearance-none transition-all hover:bg-gray-100 dark:hover:bg-gray-600"
+                    :disabled="modalState.cardDetail.loadingUsers"
+                  >
+                    <option :value="null">{{ $t('card.metadata.unassigned') }}</option>
+                    <option v-for="user in modalState.cardDetail.users" :key="user.id" :value="user.id">
+                      {{ user.name }}
+                    </option>
+                  </select>
+                  <div class="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none">
+                    <span v-if="modalState.cardDetail.data.assignee" class="h-5 w-5 rounded-full bg-indigo-500 flex items-center justify-center text-[8px] text-white">
+                      {{ modalState.cardDetail.data.assignee.name.charAt(0) }}
+                    </span>
+                    <font-awesome-icon v-else icon="user-circle" class="text-gray-400 h-4 w-4" />
+                  </div>
+                  <div v-if="modalState.cardDetail.loadingUsers" class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                    <font-awesome-icon icon="spinner" spin class="text-indigo-500 text-xs" />
+                  </div>
+                </div>
              </div>
           </div>
           <div class="space-y-3">
@@ -346,7 +362,9 @@ const modalState = reactive({
       data: null, 
       editData: { title: '', description: '' },
       newComment: '',
-      commentLoading: false
+      commentLoading: false,
+      users: [],
+      loadingUsers: false
     },
     deleteCard: { isOpen: false, cardId: null, loading: false }
 });
@@ -457,9 +475,23 @@ const submitAddCard = async () => {
     }
 };
 
+const fetchUsers = async () => {
+    if (modalState.cardDetail.users.length > 0) return;
+    modalState.cardDetail.loadingUsers = true;
+    try {
+        const response = await api.get('/users');
+        modalState.cardDetail.users = response.data;
+    } catch (error) {
+        console.error("Fetch users failed", error);
+    } finally {
+        modalState.cardDetail.loadingUsers = false;
+    }
+};
+
 const openCardDetail = async (card) => {
     modalState.cardDetail.isOpen = true;
     modalState.cardDetail.loading = true;
+    fetchUsers();
     try {
         const response = await api.get(`/cards/${card.id}`);
         modalState.cardDetail.data = response.data;
@@ -470,6 +502,20 @@ const openCardDetail = async (card) => {
         modalState.cardDetail.isOpen = false;
     } finally {
         modalState.cardDetail.loading = false;
+    }
+};
+
+const submitUpdateAssignee = async (userId) => {
+    const { data } = modalState.cardDetail;
+    if (!data) return;
+    try {
+        const response = await api.patch(`/cards/${data.id}`, {
+            assignee_id: userId
+        });
+        modalState.cardDetail.data = { ...data, ...response.data };
+        emit('refresh');
+    } catch (error) {
+        console.error("Update assignee failed", error);
     }
 };
 

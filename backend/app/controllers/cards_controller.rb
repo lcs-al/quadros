@@ -26,7 +26,13 @@ class CardsController < ApplicationController
 
   def update
     if @card.update(card_params)
-      render json: @card
+      render json: @card, include: {
+        assignee: {},
+        creator: {},
+        comments: {
+          include: :user
+        }
+      }
     else
       render json: @card.errors, status: :unprocessable_entity
     end
