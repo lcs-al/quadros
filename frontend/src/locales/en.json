@@ -49,8 +49,14 @@
       "creator": "Created by",
       "assignee": "Assignee",
       "unassigned": "Unassigned",
-      "unknown": "Unknown"
+      "unknown": "Unknown",
+      "deleted_at": "Deleted at"
     },
+    "delete": "Delete Card",
+    "delete_confirm": "Are you sure you want to delete this card?",
+    "delete_success": "Card deleted!",
+    "restore": "Restore Card",
+    "restore_success": "Card restored successfully!",
     "comments": {
       "title": "Comments",
       "placeholder": "Write a comment...",
@@ -73,6 +79,8 @@
   "common": {
     "save": "Save",
     "cancel": "Cancel",
-    "confirm_delete": "Confirm Delete"
+    "confirm_delete": "Confirm Delete",
+    "delete": "Delete",
+    "undo": "Undo"
   }
 }

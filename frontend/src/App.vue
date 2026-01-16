@@ -4,6 +4,7 @@ import { useAuthStore } from './stores/auth';
 import { useUIStore } from './stores/ui';
 import TheNavbar from './components/TheNavbar.vue';
 import LoadingBar from './components/common/LoadingBar.vue';
+import NotificationToast from './components/common/NotificationToast.vue';
 
 const authStore = useAuthStore();
 const uiStore = useUIStore();
@@ -22,6 +23,7 @@ onMounted(() => {
 <template>
   <div class="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans transition-colors duration-200">
     <LoadingBar />
+    <NotificationToast />
     <TheNavbar v-if="authStore.isAuthenticated" />
     <main :class="{ 'pt-16': authStore.isAuthenticated }">
       <router-view />

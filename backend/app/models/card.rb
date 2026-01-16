@@ -7,5 +7,19 @@ class Card < ApplicationRecord
   validates :title, :creator, presence: true
   
   acts_as_list scope: :column
+
+  default_scope { where(deleted_at: nil) }
+  scope :active, -> { where(deleted_at: nil) }
+  scope :deleted, -> { unscope(where: :deleted_at).where.not(deleted_at: nil) }
+
+  def soft_delete
+    remove_from_list
+    update(deleted_at: Time.current)
+  end
+
+  def restore
+    update(deleted_at: nil)
+    add_to_list_bottom
+  end
 end
 

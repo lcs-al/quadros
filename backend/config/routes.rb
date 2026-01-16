@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   resources :cards, only: [:create, :show, :update, :destroy] do
     member do
       patch :move
+      post :restore
     end
     resources :comments, only: [:create, :update, :destroy]
   end

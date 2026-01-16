@@ -49,8 +49,14 @@
       "creator": "Criado por",
       "assignee": "Responsável",
       "unassigned": "Sem responsável",
-      "unknown": "Desconhecido"
+      "unknown": "Desconhecido",
+      "deleted_at": "Excluído em"
     },
+    "delete": "Excluir Cartão",
+    "delete_confirm": "Tem certeza que deseja excluir este cartão?",
+    "delete_success": "Cartão excluído!",
+    "restore": "Restaurar Cartão",
+    "restore_success": "Cartão restaurado com sucesso!",
     "comments": {
       "title": "Comentários",
       "placeholder": "Escreva um comentário...",
@@ -73,6 +79,8 @@
   "common": {
     "save": "Salvar",
     "cancel": "Cancelar",
-    "confirm_delete": "Confirmar Exclusão"
+    "confirm_delete": "Confirmar Exclusão",
+    "delete": "Excluir",
+    "undo": "Desfazer"
   }
 }

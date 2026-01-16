@@ -29,6 +29,7 @@ import {
   faEyeSlash,
   faComment,
   faAlignLeft,
+  faUndo,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -51,7 +52,8 @@ library.add(
   faEye,
   faEyeSlash,
   faComment,
-  faAlignLeft
+  faAlignLeft,
+  faUndo
 );
 
 const app = createApp(App)

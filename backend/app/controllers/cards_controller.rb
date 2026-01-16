@@ -33,7 +33,14 @@ class CardsController < ApplicationController
   end
 
   def destroy
-    @card.destroy
+    @card.soft_delete
+    head :no_content
+  end
+
+  def restore
+    @card = Card.unscoped.find(params[:id])
+    @card.restore
+    render json: @card
   end
 
   def move

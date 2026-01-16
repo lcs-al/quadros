@@ -208,6 +208,17 @@
                    {{ formatDate(modalState.cardDetail.data.created_at) }}
                 </span>
              </div>
+             <div class="pt-2">
+                <BaseButton 
+                  variant="ghost" 
+                  size="sm" 
+                  class="text-red-500 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/20 w-full justify-start px-0"
+                  @click="confirmDeleteCard"
+                >
+                  <font-awesome-icon icon="trash-alt" class="mr-2" />
+                  {{ $t('card.delete') }}
+                </BaseButton>
+             </div>
           </div>
         </div>
 
@@ -285,6 +296,25 @@
         </BaseButton>
       </div>
     </BaseModal>
+
+    <!-- Delete Card Confirm Modal -->
+    <BaseModal 
+      :isOpen="modalState.deleteCard.isOpen" 
+      :title="$t('common.confirm_delete')" 
+      @close="modalState.deleteCard.isOpen = false"
+    >
+      <p class="text-gray-600 dark:text-gray-400 mb-6">
+        {{ $t('card.delete_confirm') }}
+      </p>
+      <div class="flex justify-end space-x-3">
+        <BaseButton variant="secondary" @click="modalState.deleteCard.isOpen = false">
+          {{ $t('common.cancel') }}
+        </BaseButton>
+        <BaseButton variant="danger" :loading="modalState.deleteCard.loading" @click="submitDeleteCard">
+          {{ $t('common.delete') }}
+        </BaseButton>
+      </div>
+    </BaseModal>
   </div>
 </template>
 
@@ -317,7 +347,8 @@ const modalState = reactive({
       editData: { title: '', description: '' },
       newComment: '',
       commentLoading: false
-    }
+    },
+    deleteCard: { isOpen: false, cardId: null, loading: false }
 });
 
 watchEffect(() => {
@@ -484,6 +515,49 @@ const submitAddComment = async () => {
         console.error("Add comment failed", error);
     } finally {
         modalState.cardDetail.commentLoading = false;
+    }
+};
+
+const confirmDeleteCard = () => {
+    modalState.deleteCard.cardId = modalState.cardDetail.data.id;
+    modalState.deleteCard.isOpen = true;
+};
+
+const submitDeleteCard = async () => {
+    const cardId = modalState.deleteCard.cardId;
+    modalState.deleteCard.loading = true;
+    try {
+        await api.delete(`/cards/${cardId}`);
+        modalState.deleteCard.isOpen = false;
+        closeCardDetail();
+        emit('refresh');
+        
+        // Add undo notification
+        uiStore.addNotification({
+            type: 'info',
+            message: t('card.delete_success') || 'Card deleted',
+            action: {
+                label: t('common.undo'),
+                callback: () => submitRestoreCard(cardId)
+            }
+        });
+    } catch (error) {
+        console.error("Delete card failed", error);
+    } finally {
+        modalState.deleteCard.loading = false;
+    }
+};
+
+const submitRestoreCard = async (cardId) => {
+    try {
+        await api.post(`/cards/${cardId}/restore`);
+        emit('refresh');
+        uiStore.addNotification({
+            type: 'success',
+            message: t('card.restore_success')
+        });
+    } catch (error) {
+        console.error("Restore card failed", error);
     }
 };
 
