@@ -97,7 +97,7 @@ import { useI18n } from 'vue-i18n';
 import BaseButton from '../components/common/BaseButton.vue';
 
 const { t } = useI18n();
-const email = ref('user@example.com');
+const email = ref('admin@example.com');
 const password = ref('password');
 const showPassword = ref(false);
 const error = ref('');
