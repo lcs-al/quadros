@@ -29,8 +29,10 @@
       "delete_confirm": "Are you sure? This will delete all cards in this column."
     },
     "card": {
+      "add": "Add Card",
       "prompt_title": "Enter card title:"
-    }
+    },
+    "columns": "columns"
   },
   "hello": {
     "count_is": "count is",
@@ -49,5 +51,10 @@
     "profile": "Profile",
     "go_to_board": "Go to Board",
     "dashboard": "Dashboard"
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm_delete": "Confirm Delete"
   }
 }

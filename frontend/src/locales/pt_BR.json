@@ -29,8 +29,10 @@
       "delete_confirm": "Tem certeza? Isso excluirá todos os cartões desta coluna."
     },
     "card": {
+      "add": "Adicionar Cartão",
       "prompt_title": "Digite o título do cartão:"
-    }
+    },
+    "columns": "colunas"
   },
   "hello": {
     "count_is": "contagem é",
@@ -49,5 +51,10 @@
     "profile": "Perfil",
     "go_to_board": "Ir para o Quadro",
     "dashboard": "Painel"
+  },
+  "common": {
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "confirm_delete": "Confirmar Exclusão"
   }
 }

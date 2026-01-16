@@ -1,8 +1,7 @@
 <template>
   <nav class="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 h-16 transition-colors duration-200">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
+    <div class="lg:px-8 h-full">
       <div class="flex justify-between items-center h-full">
-        <!-- Left side: Logo and Navigation -->
         <div class="flex items-center space-x-8">
           <router-link to="/" class="flex items-center space-x-2">
             <div class="grid grid-cols-2 gap-0.5 w-6 h-6 rounded overflow-hidden">
@@ -11,7 +10,7 @@
               <div class="bg-orange-500"></div>
               <div class="bg-purple-600"></div>
             </div>
-            <span class="font-bold text-xl text-indigo-600 dark:text-indigo-400">Quadros</span>
+            <span class="font-bold text-xl text-indigo-600 dark:text-indigo-400">{{ $t('navbar.brand') }}</span>
           </router-link>
           
           <div class="hidden md:flex items-center space-x-4">
@@ -25,9 +24,7 @@
           </div>
         </div>
 
-        <!-- Right side: Notifications, Settings, User Profile -->
         <div class="flex items-center space-x-4">
-          <!-- Notifications -->
           <button 
             type="button"
             class="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 relative transition-colors"
@@ -40,7 +37,6 @@
             <span class="absolute top-1.5 right-1.5 block h-2.5 w-2.5 rounded-full bg-red-500 ring-2 ring-white dark:ring-gray-800"></span>
           </button>
 
-          <!-- Settings Dropdown (Language/Theme) -->
           <div class="relative" @mouseenter="showSettings = true" @mouseleave="showSettings = false">
             <button 
               class="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
@@ -57,7 +53,6 @@
                   <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ $t('settings.title') }}</p>
                 </div>
                 
-                <!-- Language Toggle -->
                 <div class="px-4 py-2 flex items-center justify-between">
                   <span class="text-sm text-gray-700 dark:text-gray-200">{{ $t('settings.language') }}</span>
                   <button 
@@ -68,7 +63,6 @@
                   </button>
                 </div>
 
-                <!-- Theme Toggle -->
                 <div class="px-4 py-2 flex items-center justify-between">
                   <span class="text-sm text-gray-700 dark:text-gray-200">{{ $t('settings.theme') }}</span>
                   <button 
@@ -87,7 +81,6 @@
             </Transition>
           </div>
 
-          <!-- User Profile Dropdown -->
           <div class="relative" @mouseenter="showUserMenu = true" @mouseleave="showUserMenu = false">
             <button 
               class="flex items-center space-x-2 p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none"
@@ -114,7 +107,6 @@
                   </p>
                 </div>
 
-                <!-- Navigation section in dropdown -->
                 <div class="py-1 md:hidden">
                   <router-link 
                     to="/" 
@@ -124,7 +116,6 @@
                   </router-link>
                 </div>
 
-                <!-- Extra navigation if needed -->
                 <div class="py-1 border-t border-gray-100 dark:border-gray-700">
                   <a 
                     href="#" 
