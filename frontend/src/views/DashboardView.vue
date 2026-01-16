@@ -4,7 +4,7 @@
     <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
       <Transition name="fade" mode="out-in">
         <div v-if="loading && boards.length === 0" class="flex flex-col items-center justify-center mt-20 space-y-4">
-          <span class="loader-spinner !w-10 !h-10 text-indigo-600"></span>
+          <font-awesome-icon icon="spinner" spin class="text-3xl text-indigo-600" />
           <p class="text-gray-500 animate-pulse-subtle">{{ $t('dashboard.loading') }}</p>
         </div>
         <div v-else>
@@ -37,9 +37,7 @@
                   >
                     <div class="flex items-center justify-between mb-4">
                       <div class="p-3 bg-indigo-50 dark:bg-indigo-900/30 rounded-lg group-hover:bg-indigo-600 transition-colors">
-                        <svg class="h-6 w-6 text-indigo-600 dark:text-indigo-400 group-hover:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7" />
-                        </svg>
+                        <font-awesome-icon icon="columns" class="h-6 w-6 text-indigo-600 dark:text-indigo-400 group-hover:text-white" />
                       </div>
                     </div>
                     <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ board.title }}</h3>

@@ -9,7 +9,7 @@
     @click="$emit('click', $event)"
   >
     <div v-if="loading" class="mr-2">
-      <span class="loader-spinner !w-4 !h-4"></span>
+      <font-awesome-icon icon="spinner" spin />
     </div>
     <slot></slot>
   </button>

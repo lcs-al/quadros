@@ -8,32 +8,19 @@
 
         <div class="grid grid-cols-2 grid-rows-2 gap-0 rounded-2xl shadow-xl overflow-hidden">
           <div class="flex items-center justify-center w-16 h-16 bg-slate-600">
-            <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
-              <rect x="3" y="3" width="7" height="7" />
-              <rect x="14" y="3" width="7" height="7" />
-              <rect x="3" y="14" width="7" height="7" />
-              <rect x="14" y="14" width="7" height="7" />
-            </svg>
+            <font-awesome-icon icon="th-large" class="w-10 h-10 text-white" />
           </div>
 
           <div class="flex items-center justify-center w-16 h-16 bg-green-500">
-            <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
+            <font-awesome-icon icon="check" class="w-10 h-10 text-white" />
           </div>
 
           <div class="flex items-center justify-center w-16 h-16 bg-orange-500">
-            <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-              <circle cx="12" cy="12" r="9" />
-              <path stroke-linecap="round" d="M12 7v6l4 2" />
-            </svg>
+            <font-awesome-icon icon="clock" class="w-10 h-10 text-white" />
           </div>
 
           <div class="flex items-center justify-center w-16 h-16 bg-purple-600">
-            <svg class="w-12 h-12 text-white" fill="currentColor" viewBox="0 0 24 24">
-              <circle cx="12" cy="8" r="4" />
-              <path d="M4 20c0-4 4-6 8-6s8 2 8 6" />
-            </svg>
+            <font-awesome-icon icon="user-circle" class="w-10 h-10 text-white" />
           </div>
         </div>
       </div>
