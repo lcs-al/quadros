@@ -47,7 +47,7 @@
               <input 
                 v-model="form.name"
                 type="text" 
-                class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:text-white sm:text-sm"
+                class="w-full pl-3 pr-3 py-2 border-2 dark:border-gray-600 text-gray-900 dark:text-white dark:bg-gray-700 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-solid transition-all"
                 required
               />
             </div>
@@ -57,7 +57,7 @@
                 :value="authStore.user?.email"
                 disabled
                 type="email" 
-                class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 text-gray-500 dark:text-gray-400 cursor-not-allowed sm:text-sm"
+                class="w-full pl-3 pr-3 py-2 border-2 dark:border-gray-600 text-gray-900 dark:text-white dark:bg-gray-700 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-solid transition-all"
               />
             </div>
 
@@ -70,7 +70,7 @@
               <input 
                 v-model="form.password"
                 type="password" 
-                class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:text-white sm:text-sm"
+                class="w-full pl-3 pr-3 py-2 border-2 dark:border-gray-600 text-gray-900 dark:text-white dark:bg-gray-700 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-solid transition-all"
                 autocomplete="new-password"
               />
             </div>
@@ -79,7 +79,7 @@
               <input 
                 v-model="form.password_confirmation"
                 type="password" 
-                class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 dark:text-white sm:text-sm"
+                class="w-full pl-3 pr-3 py-2 border-2 dark:border-gray-600 text-gray-900 dark:text-white dark:bg-gray-700 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-solid transition-all"
                 autocomplete="new-password"
               />
             </div>
