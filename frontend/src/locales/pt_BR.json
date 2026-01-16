@@ -1,0 +1,53 @@
+{
+  "auth": {
+    "login": {
+      "title": "Entre na sua conta",
+      "email_label": "Endereço de e-mail",
+      "email_placeholder": "Endereço de e-mail",
+      "password_label": "Senha",
+      "password_placeholder": "Senha",
+      "submit": "Entrar"
+    },
+    "error": {
+      "invalid_credentials": "E-mail ou senha inválidos"
+    }
+  },
+  "navbar": {
+    "brand": "Quadros",
+    "boards": "Quadros",
+    "logout": "Sair"
+  },
+  "dashboard": {
+    "loading": "Carregando...",
+    "select_board": "Selecione um Quadro",
+    "pick_board_msg": "Escolha um quadro para começar"
+  },
+  "board": {
+    "column": {
+      "add": "+ Adicionar Coluna",
+      "prompt_title": "Digite o título da coluna:",
+      "delete_confirm": "Tem certeza? Isso excluirá todos os cartões desta coluna."
+    },
+    "card": {
+      "prompt_title": "Digite o título do cartão:"
+    }
+  },
+  "hello": {
+    "count_is": "contagem é",
+    "edit_msg": "Edite",
+    "test_hmr": "para testar HMR"
+  },
+  "settings": {
+    "title": "Configurações",
+    "language": "Idioma",
+    "theme": "Tema",
+    "light": "Claro",
+    "dark": "Escuro"
+  },
+  "nav": {
+    "notifications": "Notificações",
+    "profile": "Perfil",
+    "go_to_board": "Ir para o Quadro",
+    "dashboard": "Painel"
+  }
+}

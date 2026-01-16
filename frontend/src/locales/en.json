@@ -1,0 +1,53 @@
+{
+  "auth": {
+    "login": {
+      "title": "Sign in to your account",
+      "email_label": "Email address",
+      "email_placeholder": "Email address",
+      "password_label": "Password",
+      "password_placeholder": "Password",
+      "submit": "Sign in"
+    },
+    "error": {
+      "invalid_credentials": "Invalid email or password"
+    }
+  },
+  "navbar": {
+    "brand": "Quadros",
+    "boards": "Boards",
+    "logout": "Logout"
+  },
+  "dashboard": {
+    "loading": "Loading...",
+    "select_board": "Select a Board",
+    "pick_board_msg": "Pick a board to start"
+  },
+  "board": {
+    "column": {
+      "add": "+ Add Column",
+      "prompt_title": "Enter column title:",
+      "delete_confirm": "Are you sure? This will delete all cards in this column."
+    },
+    "card": {
+      "prompt_title": "Enter card title:"
+    }
+  },
+  "hello": {
+    "count_is": "count is",
+    "edit_msg": "Edit",
+    "test_hmr": "to test HMR"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "theme": "Theme",
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "nav": {
+    "notifications": "Notifications",
+    "profile": "Profile",
+    "go_to_board": "Go to Board",
+    "dashboard": "Dashboard"
+  }
+}
