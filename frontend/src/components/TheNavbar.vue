@@ -41,7 +41,7 @@
           </button>
 
           <!-- Settings Dropdown (Language/Theme) -->
-          <div class="relative group">
+          <div class="relative" @mouseenter="showSettings = true" @mouseleave="showSettings = false">
             <button 
               class="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
               :title="$t('settings.title')"
@@ -51,91 +51,99 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
             </button>
-            <div class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-md shadow-lg py-1 opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-200 z-50">
-              <div class="px-4 py-2 border-b border-gray-100 dark:border-gray-600">
-                <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ $t('settings.title') }}</p>
-              </div>
-              
-              <!-- Language Toggle -->
-              <div class="px-4 py-2 flex items-center justify-between">
-                <span class="text-sm text-gray-700 dark:text-gray-200">{{ $t('settings.language') }}</span>
-                <button 
-                  @click="toggleLanguage"
-                  class="text-xs font-bold px-2 py-1 rounded bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 uppercase"
-                >
-                  {{ currentLocale }}
-                </button>
-              </div>
+            <Transition name="scale">
+              <div v-if="showSettings" class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-md shadow-lg py-1 z-50">
+                <div class="px-4 py-2 border-b border-gray-100 dark:border-gray-600">
+                  <p class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ $t('settings.title') }}</p>
+                </div>
+                
+                <!-- Language Toggle -->
+                <div class="px-4 py-2 flex items-center justify-between">
+                  <span class="text-sm text-gray-700 dark:text-gray-200">{{ $t('settings.language') }}</span>
+                  <button 
+                    @click="toggleLanguage"
+                    class="text-xs font-bold px-2 py-1 rounded bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 uppercase transform active:scale-95 transition-transform"
+                  >
+                    {{ currentLocale }}
+                  </button>
+                </div>
 
-              <!-- Theme Toggle -->
-              <div class="px-4 py-2 flex items-center justify-between">
-                <span class="text-sm text-gray-700 dark:text-gray-200">{{ $t('settings.theme') }}</span>
-                <button 
-                  @click="toggleTheme"
-                  class="p-1 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
-                >
-                  <svg v-if="isDark" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 9H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                  </svg>
-                  <svg v-else class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 118.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                  </svg>
-                </button>
+                <!-- Theme Toggle -->
+                <div class="px-4 py-2 flex items-center justify-between">
+                  <span class="text-sm text-gray-700 dark:text-gray-200">{{ $t('settings.theme') }}</span>
+                  <button 
+                    @click="toggleTheme"
+                    class="p-1 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors transform active:scale-95"
+                  >
+                    <svg v-if="isDark" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 9H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                    <svg v-else class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 118.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+                  </button>
+                </div>
               </div>
-            </div>
+            </Transition>
           </div>
 
           <!-- User Profile Dropdown -->
-          <div class="relative group">
+          <div class="relative" @mouseenter="showUserMenu = true" @mouseleave="showUserMenu = false">
             <button 
               class="flex items-center space-x-2 p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none"
             >
               <div class="h-8 w-8 rounded-full bg-indigo-500 flex items-center justify-center text-white font-bold border-2 border-white dark:border-gray-800 shadow-sm">
                 {{ userInitials }}
               </div>
-              <svg class="h-4 w-4 text-gray-500 group-hover:text-gray-700 dark:text-gray-400 dark:group-hover:text-gray-200 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg 
+                class="h-4 w-4 text-gray-500 transition-transform duration-200" 
+                :class="{ 'rotate-180': showUserMenu }"
+                fill="none" viewBox="0 0 24 24" stroke="currentColor"
+              >
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
               </svg>
             </button>
             
-            <div class="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md shadow-lg py-1 opacity-0 group-hover:opacity-100 invisible group-hover:visible transition-all duration-200 z-50">
-              <div class="px-4 py-3 border-b border-gray-100 dark:border-gray-700">
-                <p class="text-sm dark:text-gray-200 font-bold truncate">{{ authStore.user?.name }}</p>
-                <p class="text-xs text-gray-500 dark:text-gray-400 truncate">{{ authStore.user?.email }}</p>
-                <p class="text-[10px] mt-1 inline-block px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 uppercase font-bold tracking-tight">
-                  {{ authStore.user?.role }}
-                </p>
-              </div>
+            <Transition name="scale">
+              <div v-if="showUserMenu" class="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md shadow-lg py-1 z-50">
+                <div class="px-4 py-3 border-b border-gray-100 dark:border-gray-700">
+                  <p class="text-sm dark:text-gray-200 font-bold truncate">{{ authStore.user?.name }}</p>
+                  <p class="text-xs text-gray-500 dark:text-gray-400 truncate">{{ authStore.user?.email }}</p>
+                  <p class="text-[10px] mt-1 inline-block px-1.5 py-0.5 rounded bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 uppercase font-bold tracking-tight">
+                    {{ authStore.user?.role }}
+                  </p>
+                </div>
 
-              <!-- Navigation section in dropdown -->
-              <div class="py-1 md:hidden">
-                <router-link 
-                  to="/" 
-                  class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
-                >
-                  {{ $t('navbar.boards') }}
-                </router-link>
-              </div>
+                <!-- Navigation section in dropdown -->
+                <div class="py-1 md:hidden">
+                  <router-link 
+                    to="/" 
+                    class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+                  >
+                    {{ $t('navbar.boards') }}
+                  </router-link>
+                </div>
 
-              <!-- Extra navigation if needed -->
-              <div class="py-1 border-t border-gray-100 dark:border-gray-700">
-                <a 
-                  href="#" 
-                  class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
-                >
-                  {{ $t('nav.profile') }}
-                </a>
-              </div>
+                <!-- Extra navigation if needed -->
+                <div class="py-1 border-t border-gray-100 dark:border-gray-700">
+                  <a 
+                    href="#" 
+                    class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+                  >
+                    {{ $t('nav.profile') }}
+                  </a>
+                </div>
 
-              <div class="py-1 border-t border-gray-100 dark:border-gray-700">
-                <button 
-                  @click="handleLogout"
-                  class="w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
-                >
-                  {{ $t('navbar.logout') }}
-                </button>
+                <div class="py-1 border-t border-gray-100 dark:border-gray-700">
+                  <button 
+                    @click="handleLogout"
+                    class="w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+                  >
+                    {{ $t('navbar.logout') }}
+                  </button>
+                </div>
               </div>
-            </div>
+            </Transition>
           </div>
         </div>
       </div>
@@ -151,7 +159,10 @@ import { useI18n } from 'vue-i18n';
 
 const authStore = useAuthStore();
 const router = useRouter();
-const { locale } = useI18n();
+const locale = useI18n().locale;
+
+const showSettings = ref(false);
+const showUserMenu = ref(false);
 
 const isDark = ref(localStorage.getItem('theme') === 'dark');
 const currentLocale = computed(() => locale.value.split('_')[0].toUpperCase());

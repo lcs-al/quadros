@@ -74,12 +74,13 @@
         </div>
 
         <div>
-          <button
+          <BaseButton
             type="submit"
-            class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            class="w-full"
+            :loading="loading"
           >
             {{ $t('auth.login.submit') }}
-          </button>
+          </BaseButton>
         </div>
       </form>
       <div v-if="error" class="text-red-500 text-sm text-center">
@@ -94,20 +95,25 @@ import { ref } from 'vue';
 import { useAuthStore } from '../stores/auth';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
+import BaseButton from '../components/common/BaseButton.vue';
 
 const { t } = useI18n();
-const email = ref('');
-const password = ref('');
+const email = ref('user@example.com');
+const password = ref('password');
 const error = ref('');
+const loading = ref(false);
 const authStore = useAuthStore();
 const router = useRouter();
 
 const handleLogin = async () => {
+  error.value = '';
+  loading.value = true;
   const success = await authStore.login(email.value, password.value);
   if (success) {
     router.push('/');
   } else {
     error.value = t('auth.error.invalid_credentials');
   }
+  loading.value = false;
 };
 </script>

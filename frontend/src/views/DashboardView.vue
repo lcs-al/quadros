@@ -2,30 +2,56 @@
   <div class="min-h-screen bg-transparent">
     <!-- Content -->
     <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-      <div v-if="loading" class="text-center text-gray-500 mt-10">
-        {{ $t('dashboard.loading') }}
-      </div>
-      <div v-else>
-        <!-- Board Selection (Simple Dropdown or List for now) -->
-        <div class="mb-6 flex justify-between items-center">
-           <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
-             {{ currentBoard ? currentBoard.title : $t('dashboard.select_board') }}
-           </h1>
-           <div v-if="!currentBoard && boards.length > 0">
-              <span class="text-gray-500">{{ $t('dashboard.pick_board_msg') }}</span>
-              <div class="mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                 <div v-for="board in boards" :key="board.id" @click="selectBoard(board.id)" class="bg-white dark:bg-gray-800 overflow-hidden shadow rounded-lg cursor-pointer hover:shadow-md transition">
-                    <div class="px-4 py-5 sm:p-6">
-                      <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-white">{{ board.title }}</h3>
-                    </div>
-                 </div>
-              </div>
-           </div>
+      <Transition name="fade" mode="out-in">
+        <div v-if="loading && boards.length === 0" class="flex flex-col items-center justify-center mt-20 space-y-4">
+          <span class="loader-spinner !w-10 !h-10 text-indigo-600"></span>
+          <p class="text-gray-500 animate-pulse-subtle">{{ $t('dashboard.loading') }}</p>
         </div>
+        <div v-else>
+          <!-- Board Selection -->
+          <Transition name="slide-up" appear>
+            <div class="mb-8 flex justify-between items-center" v-if="!currentBoard">
+               <div>
+                 <h1 class="text-3xl font-extrabold text-gray-900 dark:text-white mb-2">
+                   {{ $t('dashboard.select_board') }}
+                 </h1>
+                 <p class="text-gray-500">{{ $t('dashboard.pick_board_msg') }}</p>
+               </div>
+            </div>
+            <div v-else class="mb-6">
+               <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
+                 {{ currentBoard.title }}
+               </h1>
+            </div>
+          </Transition>
 
-        <!-- Kanban Board Component -->
-        <BoardDetail v-if="currentBoard" :board="currentBoard" @refresh="fetchBoardDetails" />
-      </div>
+          <Transition name="fade" mode="out-in">
+            <div v-if="!currentBoard && boards.length > 0">
+               <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                  <div 
+                    v-for="(board, index) in boards" 
+                    :key="board.id" 
+                    @click="selectBoard(board.id)" 
+                    class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 cursor-pointer hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group"
+                    :style="{ transitionDelay: `${index * 50}ms` }"
+                  >
+                    <div class="flex items-center justify-between mb-4">
+                      <div class="p-3 bg-indigo-50 dark:bg-indigo-900/30 rounded-lg group-hover:bg-indigo-600 transition-colors">
+                        <svg class="h-6 w-6 text-indigo-600 dark:text-indigo-400 group-hover:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7" />
+                        </svg>
+                      </div>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ board.title }}</h3>
+                    <p class="text-sm text-gray-500 mt-2">{{ board.columns?.length || 0 }} {{ $t('board.columns') || 'columns' }}</p>
+                  </div>
+               </div>
+            </div>
+            <!-- Kanban Board Component -->
+            <BoardDetail v-else-if="currentBoard" :board="currentBoard" @refresh="fetchBoardDetails" />
+          </Transition>
+        </div>
+      </Transition>
     </div>
   </div>
 </template>
