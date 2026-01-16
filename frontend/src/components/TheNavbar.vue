@@ -27,7 +27,7 @@
         <div class="flex items-center space-x-4">
           <button 
             type="button"
-            class="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 relative transition-colors"
+            class="cursor-pointer p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 relative transition-colors"
             :title="$t('nav.notifications')"
           >
             <span class="sr-only">{{ $t('nav.notifications') }}</span>
@@ -38,7 +38,7 @@
           <div class="relative" ref="settingsRef">
             <button 
               @click="toggleSettings"
-              class="p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+              class="cursor-pointer p-2 rounded-full text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
               :class="{ 'bg-gray-100 dark:bg-gray-700 text-indigo-600 dark:text-indigo-400': showSettings }"
               :title="$t('settings.title')"
             >
@@ -81,7 +81,7 @@
           <div class="relative" ref="userMenuRef">
             <button 
               @click="toggleUserMenu"
-              class="flex items-center space-x-2 p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none"
+              class="cursor-pointer flex items-center space-x-2 p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none"
               :class="{ 'bg-gray-100 dark:bg-gray-700': showUserMenu }"
             >
               <div class="h-8 w-8 rounded-full bg-indigo-500 flex items-center justify-center text-white font-bold border-2 border-white dark:border-gray-800 shadow-sm">
