@@ -55,7 +55,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { useAuthStore } from '../stores/auth';
 import { useRouter } from 'vue-router';
 import api from '../api';
@@ -98,6 +98,15 @@ const selectBoard = async (boardId) => {
      loading.value = false;
   }
 }
+
+watch(currentBoard, (newBoard) => {
+  const baseTitle = 'Quadros';
+  if (newBoard) {
+    document.title = `${baseTitle} | ${newBoard.title}`;
+  } else {
+    document.title = `${baseTitle} | Dashboard`;
+  }
+}, { immediate: true });
 
 const fetchBoardDetails = async () => {
    if (currentBoard.value) {

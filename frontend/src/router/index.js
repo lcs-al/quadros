@@ -3,16 +3,16 @@ import { useAuthStore } from '../stores/auth';
 
 const routes = [
   {
-    path: '/login',
-    name: 'Login',
-    component: () => import('../views/LoginView.vue'),
-    meta: { guest: true },
+    path: "/login",
+    name: "Login",
+    component: () => import("../views/LoginView.vue"),
+    meta: { guest: true, title: "Login" },
   },
   {
-    path: '/',
-    name: 'Dashboard',
-    component: () => import('../views/DashboardView.vue'),
-    meta: { requiresAuth: true },
+    path: "/",
+    name: "Dashboard",
+    component: () => import("../views/DashboardView.vue"),
+    meta: { requiresAuth: true, title: "Dashboard" },
   },
 ];
 
@@ -29,6 +29,16 @@ router.beforeEach((to, from, next) => {
     next('/');
   } else {
     next();
+  }
+});
+
+router.afterEach((to) => {
+  const baseTitle = "Quadros";
+  const pageTitle = to.meta.title;
+  if (pageTitle) {
+    document.title = `${baseTitle} | ${pageTitle}`;
+  } else {
+    document.title = baseTitle;
   }
 });
 
