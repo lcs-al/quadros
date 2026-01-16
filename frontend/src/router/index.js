@@ -15,6 +15,12 @@ const routes = [
     component: () => import("../views/DashboardView.vue"),
     meta: { requiresAuth: true, title: "nav.dashboard" },
   },
+  {
+    path: "/profile",
+    name: "Profile",
+    component: () => import("../views/ProfileView.vue"),
+    meta: { requiresAuth: true, title: "nav.profile" },
+  },
 ];
 
 const router = createRouter({

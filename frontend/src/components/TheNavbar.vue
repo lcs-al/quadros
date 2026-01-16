@@ -84,8 +84,9 @@
               class="cursor-pointer flex items-center space-x-2 p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors focus:outline-none"
               :class="{ 'bg-gray-100 dark:bg-gray-700': showUserMenu }"
             >
-              <div class="h-8 w-8 rounded-full bg-indigo-500 flex items-center justify-center text-white font-bold border-2 border-white dark:border-gray-800 shadow-sm">
-                {{ userInitials }}
+              <div class="h-8 w-8 rounded-full bg-indigo-500 flex items-center justify-center text-white font-bold border-2 border-white dark:border-gray-800 shadow-sm overflow-hidden">
+                <img v-if="authStore.user?.avatar_url" :src="authStore.user?.avatar_url" class="h-full w-full object-cover" />
+                <span v-else>{{ userInitials }}</span>
               </div>
               <font-awesome-icon 
                 icon="chevron-down"
@@ -115,13 +116,13 @@
                 </div>
 
                 <div class="py-1 border-t border-gray-100 dark:border-gray-700">
-                  <a 
-                    href="#" 
+                  <router-link 
+                    to="/profile" 
                     class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
                     @click="closeMenus"
                   >
                     {{ $t('nav.profile') }}
-                  </a>
+                  </router-link>
                 </div>
 
                 <div class="py-1 border-t border-gray-100 dark:border-gray-700">

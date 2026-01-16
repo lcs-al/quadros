@@ -30,6 +30,9 @@ import {
   faComment,
   faAlignLeft,
   faUndo,
+  faCamera,
+  faCheckCircle,
+  faExclamationCircle,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -53,7 +56,10 @@ library.add(
   faEyeSlash,
   faComment,
   faAlignLeft,
-  faUndo
+  faUndo,
+  faCamera,
+  faCheckCircle,
+  faExclamationCircle,
 );
 
 const app = createApp(App)

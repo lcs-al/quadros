@@ -83,5 +83,27 @@
     "delete": "Excluir",
     "undo": "Desfazer",
     "ctrl_enter_to_post": "Ctrl + Enter para postar"
+  },
+  "profile": {
+    "title": "Perfil do Usuário",
+    "personal_info": "Informações Pessoais",
+    "security": "Segurança",
+    "avatar": {
+      "title": "Foto de Perfil",
+      "change": "Alterar Foto",
+      "upload": "Fazer Upload",
+      "preview": "Prévia",
+      "error": "Erro ao fazer upload da imagem"
+    },
+    "fields": {
+      "name": "Nome",
+      "email": "E-mail",
+      "password": "Nova Senha",
+      "password_confirmation": "Confirmar Nova Senha"
+    },
+    "success": "Perfil atualizado com sucesso!",
+    "errors": {
+      "update_failed": "Falha ao atualizar perfil"
+    }
   }
 }

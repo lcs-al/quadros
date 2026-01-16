@@ -18,7 +18,12 @@ Rails.application.routes.draw do
     resources :comments, only: [:create, :update, :destroy]
   end
 
-  resources :users, only: [:index]
+  resources :users, only: [:index] do
+    collection do
+      get :me
+      patch :update_profile
+    end
+  end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

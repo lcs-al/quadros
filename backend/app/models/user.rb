@@ -1,5 +1,8 @@
 class User < ApplicationRecord
+  include Rails.application.routes.url_helpers
+  
   has_secure_password
+  has_one_attached :avatar
 
   enum role: { user: 0, admin: 1 }
 
@@ -9,5 +12,13 @@ class User < ApplicationRecord
 
   validates :email, presence: true, uniqueness: true
   validates :name, presence: true
+
+  def avatar_url
+    if avatar.attached?
+      url_for(avatar)
+    else
+      nil
+    end
+  end
 end
 

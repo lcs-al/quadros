@@ -83,5 +83,27 @@
     "delete": "Delete",
     "undo": "Undo",
     "ctrl_enter_to_post": "Ctrl + Enter to post"
+  },
+  "profile": {
+    "title": "User Profile",
+    "personal_info": "Personal Information",
+    "security": "Security",
+    "avatar": {
+      "title": "Profile Photo",
+      "change": "Change Photo",
+      "upload": "Upload",
+      "preview": "Preview",
+      "error": "Error uploading image"
+    },
+    "fields": {
+      "name": "Name",
+      "email": "Email",
+      "password": "New Password",
+      "password_confirmation": "Confirm New Password"
+    },
+    "success": "Profile updated successfully!",
+    "errors": {
+      "update_failed": "Failed to update profile"
+    }
   }
 }
