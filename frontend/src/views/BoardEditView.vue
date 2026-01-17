@@ -135,11 +135,9 @@ const fetchBoardDetails = async () => {
   try {
     const response = await api.get(`/boards/${route.params.id}`);
     board.value = response.data;
-    console.log({board: board.value})
     boardStore.addToRecent(board.value);
   } catch (error) {
     console.error('Failed to fetch board details', error);
-    // If board not found, redirect to boards list
     router.push({ name: 'BoardsList' });
   } finally {
     loading.value = false;
