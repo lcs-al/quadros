@@ -1,5 +1,7 @@
 <script setup>
 
+import { useBoardStore } from '../../stores/boards';
+
 const props = defineProps({
   isExpanded: {
     type: Boolean,
@@ -8,16 +10,11 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['toggle']);
+const boardStore = useBoardStore();
 
 const toggleSidebar = () => {
   emit('toggle');
 };
-
-const recentBoards = [
-  { id: 1, name: 'Marketing Campaign', color: 'bg-blue-500' },
-  { id: 2, name: 'Product Launch', color: 'bg-purple-500' },
-  { id: 3, name: 'Q1 Goals', color: 'bg-green-500' },
-];
 </script>
 
 <template>
@@ -61,7 +58,7 @@ const recentBoards = [
         
         <div class="space-y-1">
           <router-link
-            v-for="board in recentBoards"
+            v-for="board in boardStore.recentBoards"
             :key="board.id"
             :to="`/boards/${board.id}`"
             class="flex items-center gap-3 px-3 py-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"

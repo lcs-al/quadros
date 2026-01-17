@@ -108,6 +108,7 @@
 import { ref, onMounted, watch, nextTick } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useAuthStore } from '../stores/auth';
+import { useBoardStore } from '../stores/boards';
 import { useI18n } from "vue-i18n";
 import api from '../api';
 import BoardDetail from '../components/BoardDetail.vue';
@@ -120,6 +121,7 @@ const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
 const authStore = useAuthStore();
+const boardStore = useBoardStore();
 
 const board = ref(null);
 const loading = ref(true);
@@ -133,6 +135,8 @@ const fetchBoardDetails = async () => {
   try {
     const response = await api.get(`/boards/${route.params.id}`);
     board.value = response.data;
+    console.log({board: board.value})
+    boardStore.addToRecent(board.value);
   } catch (error) {
     console.error('Failed to fetch board details', error);
     // If board not found, redirect to boards list

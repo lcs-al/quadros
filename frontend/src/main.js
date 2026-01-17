@@ -41,6 +41,7 @@ import {
   faUser,
   faUsers,
   faBars,
+  faBookmark,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -76,6 +77,7 @@ library.add(
   faUser,
   faUsers,
   faBars,
+  faBookmark,
 );
 
 const app = createApp(App)
