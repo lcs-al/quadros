@@ -1,0 +1,139 @@
+<script setup>
+import { onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import Navbar from '../components/common/Navbar.vue';
+
+const router = useRouter(); 
+
+// Interactive elements for the hero section
+const scrollToFeatures = () => {
+  const element = document.getElementById('section-1');
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth' });
+  }
+};
+</script>
+
+<template>
+  <div class="font-sans antialiased text-gray-900 bg-white dark:bg-gray-900 dark:text-gray-100 overflow-x-hidden">
+    <!-- Navbar -->
+    <Navbar />
+
+    <!-- Sections Container -->
+    <div class="snap-y snap-mandatory h-screen overflow-y-scroll scroll-smooth">
+      
+      <!-- HERO SECTION -->
+      <section class="snap-start h-screen flex flex-col items-center justify-center px-6 relative overflow-hidden">
+        <!-- Background Elements -->
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-purple-200/50 dark:bg-purple-900/20 rounded-full blur-[100px] -z-10 animate-pulse"></div>
+        <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-200/50 dark:bg-blue-900/20 rounded-full blur-[100px] -z-10 animate-pulse" style="animation-delay: 1s"></div>
+
+        <div class="max-w-4xl text-center z-10 space-y-8">
+          <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight leading-tight">
+            Liberte sua mente.<br />
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
+              Foque no que importa.
+            </span>
+          </h1>
+          <p class="text-xl md:text-2xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed">
+            Uma plataforma intuitiva baseada no método GTD para organizar suas ideias, projetos e tarefas em um fluxo de trabalho natural.
+          </p>
+          <div class="flex items-center justify-center gap-4 pt-4">
+            <button @click="scrollToFeatures" class="px-8 py-4 rounded-full bg-indigo-600 text-white font-bold text-lg hover:bg-indigo-700 transition-all shadow-xl hover:shadow-indigo-500/30">
+              Conheça o Método
+            </button>
+            <router-link to="/login" class="px-8 py-4 rounded-full bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-white font-bold text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all">
+              Começar Agora
+            </router-link>
+          </div>
+        </div>
+
+        <div class="absolute bottom-10 animate-bounce cursor-pointer" @click="scrollToFeatures">
+          <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+        </div>
+      </section>
+
+      <!-- SECTION 1: CAPTURE (Text Left, Image Right) -->
+      <section id="section-1" class="snap-start h-screen flex items-center justify-center p-6 md:p-12 md:px-24 bg-gray-50 dark:bg-gray-800/50">
+        <div class="grid md:grid-cols-2 gap-12 items-center max-w-7xl mx-auto w-full">
+          <div class="space-y-6">
+            <div class="inline-block px-4 py-1 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-bold text-sm uppercase tracking-wide">
+              Passo 1: Capturar
+            </div>
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white leading-tight">
+              Tire tudo da <br /> sua cabeça.
+            </h2>
+            <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 leading-relaxed">
+              O primeiro passo para a tranquilidade é capturar tudo o que chama sua atenção. Tarefas, ideias, lembretes – coloque tudo na sua Caixa de Entrada e esvazie sua mente para criar.
+            </p>
+          </div>
+          <div class="relative h-[400px] md:h-[600px] w-full rounded-2xl overflow-hidden shadow-2xl group">
+             <!-- Placeholder or Generated Image -->
+             <div class="absolute inset-0 bg-gradient-to-br from-blue-500 to-cyan-500 opacity-20 group-hover:opacity-10 transition-opacity"></div>
+             <!-- Since I have the generated image path, I would usually copy it to assets and reference it.
+                  For now I will use a placeholder DIV with styling, or if I had successfully copied the file I would use it.
+                  I'll use a nice CSS composition for now that looks like the description. -->
+             <div class="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+                 <span class="text-gray-400 font-medium">[Imagem Ilustrativa: Captura]</span>
+             </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 2: ORGANIZE (Image Left, Text Right) -->
+      <section class="snap-start h-screen flex items-center justify-center p-6 md:p-12 md:px-24 bg-white dark:bg-gray-900">
+        <div class="grid md:grid-cols-2 gap-12 items-center max-w-7xl mx-auto w-full">
+           <div class="order-2 md:order-1 relative h-[400px] md:h-[600px] w-full rounded-2xl overflow-hidden shadow-2xl group">
+             <div class="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 opacity-20 group-hover:opacity-10 transition-opacity"></div>
+             <div class="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+                 <span class="text-gray-400 font-medium">[Imagem Ilustrativa: Organização]</span>
+             </div>
+          </div>
+          <div class="order-1 md:order-2 space-y-6">
+            <div class="inline-block px-4 py-1 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-bold text-sm uppercase tracking-wide">
+              Passo 2: Organizar
+            </div>
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white leading-tight">
+              Cada coisa em <br /> seu lugar.
+            </h2>
+            <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 leading-relaxed">
+              Defina o significado de cada item. É acionável? É uma referência? É lixo? Organize em listas claras como Próximas Ações, Projetos ou Aguardando, e nunca mais perca o controle.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 3: ENGAGE (Text Left, Image Right) -->
+      <section class="snap-start h-screen flex items-center justify-center p-6 md:p-12 md:px-24 bg-gray-50 dark:bg-gray-800/50">
+        <div class="grid md:grid-cols-2 gap-12 items-center max-w-7xl mx-auto w-full">
+          <div class="space-y-6">
+             <div class="inline-block px-4 py-1 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 font-bold text-sm uppercase tracking-wide">
+              Passo 3: Engajar
+            </div>
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white leading-tight">
+              Execute com <br /> confiança.
+            </h2>
+            <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 leading-relaxed">
+              Com seu sistema confiável e organizado, você pode escolher a tarefa certa para o momento certo, considerando seu contexto, tempo e energia disponível.
+            </p>
+          </div>
+          <div class="relative h-[400px] md:h-[600px] w-full rounded-2xl overflow-hidden shadow-2xl group">
+             <div class="absolute inset-0 bg-gradient-to-br from-green-500 to-emerald-500 opacity-20 group-hover:opacity-10 transition-opacity"></div>
+             <div class="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
+                 <span class="text-gray-400 font-medium">[Imagem Ilustrativa: Execução]</span>
+             </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</template>
+
+<style scoped>
+/* Custom scrollbar for webkit */
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
+</style>

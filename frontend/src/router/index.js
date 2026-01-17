@@ -12,7 +12,9 @@ const routes = [
   },
   {
     path: "/",
-    redirect: "/boards",
+    name: "Landing",
+    component: () => import("../views/LandingPage.vue"),
+    meta: { guest: true, title: "app.home" },
   },
   {
     path: '/register',
@@ -49,8 +51,10 @@ router.beforeEach((to, from, next) => {
   const authStore = useAuthStore();
   if (to.meta.requiresAuth && !authStore.isAuthenticated) {
     next("/login");
-  } else if (to.meta.guest && authStore.isAuthenticated) {
-    next("/");
+  } else if (to.path === "/" && authStore.isAuthenticated) {
+    next("/boards");
+  } else if (to.meta.guest && authStore.isAuthenticated && to.path !== "/") {
+    next("/boards");
   } else {
     next();
   }

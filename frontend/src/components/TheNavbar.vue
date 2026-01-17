@@ -10,18 +10,8 @@
               <div class="bg-orange-500"></div>
               <div class="bg-purple-600"></div>
             </div>
-            <span class="font-bold text-xl text-indigo-600 dark:text-indigo-400">{{ $t('navbar.brand') }}</span>
+            <span class="text-xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-400">{{ $t('navbar.brand') }}</span>
           </router-link>
-          
-          <div class="hidden md:flex items-center space-x-4">
-            <router-link 
-              to="/boards" 
-              class="text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 font-medium px-3 py-2 rounded-md transition-colors"
-              :class="{ 'text-indigo-600 dark:text-indigo-400': $route.name === 'BoardsList' || $route.name === 'BoardEdit' }"
-            >
-              {{ $t('navbar.boards') }}
-            </router-link>
-          </div>
         </div>
 
         <div class="flex items-center space-x-4">
