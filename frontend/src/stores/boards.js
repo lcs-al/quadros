@@ -18,7 +18,7 @@ export const useBoardStore = defineStore('boards', () => {
   const addToRecent = (board) => {
     const existingIndex = recentBoards.value.findIndex(b => b.id === board.id);
     if (existingIndex !== -1) {
-      recentBoards.value.splice(existingIndex, 1);
+        recentBoards.value.splice(existingIndex, 1);
     }
 
     recentBoards.value.unshift({
