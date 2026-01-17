@@ -43,6 +43,10 @@ import {
   faBars,
   faBookmark,
 } from "@fortawesome/free-solid-svg-icons";
+import {
+	faGithub,
+	faLinkedin
+} from "@fortawesome/free-brands-svg-icons";
 
 library.add(
   faBell,
@@ -78,6 +82,8 @@ library.add(
   faUsers,
   faBars,
   faBookmark,
+	faGithub,
+	faLinkedin
 );
 
 const app = createApp(App)

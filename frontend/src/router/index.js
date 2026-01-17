@@ -23,6 +23,18 @@ const routes = [
     meta: { guest: true, title: 'auth.register.title' }
   },
   {
+		path: '/privacy',
+		name: 'PrivacyPolicy',
+		component: () => import('../views/PrivacyPolicyView.vue'),
+		meta: { title: 'Política de Privacidade' }
+	},
+	{
+		path: '/terms',
+		name: 'TermsOfUse',
+		component: () => import('../views/TermsOfUseView.vue'),
+		meta: { title: 'Termos de Uso' }
+	},
+	{
     path: "/boards",
     name: "BoardsList",
     component: () => import("../views/BoardsListView.vue"),

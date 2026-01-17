@@ -88,23 +88,51 @@ const scrollToFeatures = () => {
         </div>
       </section>
 
-      <section class="snap-start h-screen flex items-center justify-center p-6 md:p-12 md:px-24 bg-gray-50 dark:bg-gray-800/50">
-        <div class="grid md:grid-cols-2 gap-12 items-center max-w-7xl mx-auto w-full">
-          <div class="space-y-6">
-             <div class="inline-block px-4 py-1 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 font-bold text-sm uppercase tracking-wide">
-              Passo 3: Engajar
+      <section class="snap-start h-screen flex flex-col justify-between p-6 md:p-12 md:px-24 bg-gray-50 dark:bg-gray-800/50">
+        <div class="flex-grow flex items-center w-full">
+          <div class="grid md:grid-cols-2 gap-12 items-center max-w-7xl mx-auto w-full">
+            <div class="space-y-6">
+               <div class="inline-block px-4 py-1 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 font-bold text-sm uppercase tracking-wide">
+                Passo 3: Engajar
+              </div>
+              <h2 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white leading-tight">
+                Execute com <br /> confiança.
+              </h2>
+              <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 leading-relaxed">
+                Com seu sistema confiável e organizado, você pode escolher a tarefa certa para o momento certo, considerando seu contexto, tempo e energia disponível.
+              </p>
             </div>
-            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white leading-tight">
-              Execute com <br /> confiança.
-            </h2>
-            <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 leading-relaxed">
-              Com seu sistema confiável e organizado, você pode escolher a tarefa certa para o momento certo, considerando seu contexto, tempo e energia disponível.
-            </p>
-          </div>
-          <div class="relative h-[400px] md:h-[600px] w-full rounded-2xl overflow-hidden shadow-2xl group">
-             <img :src="_imports_2" alt="Engajar" class="w-full h-full object-cover">
+            <div class="relative h-[400px] md:h-[600px] w-full rounded-2xl overflow-hidden shadow-2xl group">
+               <img :src="_imports_2" alt="Engajar" class="w-full h-full object-cover">
+            </div>
           </div>
         </div>
+
+        <footer class="w-full py-4 border-t border-gray-200 dark:border-gray-700/50 mt-8">
+          <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="text-sm text-gray-500 dark:text-gray-400">
+              Copyright © 2026 lcs-al
+            </div>
+
+						<div class="flex items-center gap-6 text-sm font-medium">
+               <router-link to="/terms" class="text-gray-500 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400 transition-colors">
+                Termos de Uso
+              </router-link>
+              <router-link to="/privacy" class="text-gray-500 hover:text-indigo-600 dark:text-gray-400 dark:hover:text-indigo-400 transition-colors">
+                Política de Privacidade
+              </router-link>
+            </div>
+            
+            <div class="flex items-center gap-6">
+              <a href="https://github.com/lcs-al" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors" title="GitHub">
+                <font-awesome-icon :icon="['fab', 'github']" class="text-xl" />
+              </a>
+              <a href="https://www.linkedin.com/in/lcs-al/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors" title="LinkedIn">
+                <font-awesome-icon :icon="['fab', 'linkedin']" class="text-xl" />
+              </a>
+            </div>
+          </div>
+        </footer>
       </section>
 
     </div>
