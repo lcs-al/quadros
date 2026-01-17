@@ -4,11 +4,6 @@
     <div class="flex-grow flex items-center justify-center pt-16">
       <div class="w-full max-w-md p-8 space-y-8 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
         <div class="flex flex-col items-center justify-center mb-4">
-          <!-- Brand removed from here as it is in the Navbar, or kept for context? 
-               User asked for Navbar in Login Page. 
-               The existing code has "navbar.brand" label. I will keep the decorative grid logo but maybe remove the text brand if it duplicates.
-               Let's keep the grid logo as it is a nice visual. 
-          -->
           <div class="grid grid-cols-2 grid-rows-2 gap-0 rounded-2xl shadow-xl overflow-hidden mb-4">
             <div class="flex items-center justify-center w-16 h-16 bg-slate-600">
               <font-awesome-icon icon="th-large" class="w-10 h-10 text-white" />
@@ -34,7 +29,6 @@
           </h2>
         </div>
         <form class="mt-8 space-y-6" @submit.prevent="handleLogin">
-          <!-- Form fields unchanged -->
           <div class="rounded-md shadow-sm space-y-4">
             <div class="relative group">
               <label for="email-address" class="sr-only">{{ $t('auth.login.email_label') }}</label>

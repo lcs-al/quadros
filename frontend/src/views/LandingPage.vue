@@ -5,7 +5,6 @@ import Navbar from '../components/common/Navbar.vue';
 
 const router = useRouter(); 
 
-// Interactive elements for the hero section
 const scrollToFeatures = () => {
   const element = document.getElementById('section-1');
   if (element) {
@@ -16,15 +15,11 @@ const scrollToFeatures = () => {
 
 <template>
   <div class="font-sans antialiased text-gray-900 bg-white dark:bg-gray-900 dark:text-gray-100 overflow-x-hidden">
-    <!-- Navbar -->
     <Navbar />
 
-    <!-- Sections Container -->
     <div class="snap-y snap-mandatory h-screen overflow-y-scroll scroll-smooth">
       
-      <!-- HERO SECTION -->
       <section class="snap-start h-screen flex flex-col items-center justify-center px-6 relative overflow-hidden">
-        <!-- Background Elements -->
         <div class="absolute top-0 left-1/4 w-96 h-96 bg-purple-200/50 dark:bg-purple-900/20 rounded-full blur-[100px] -z-10 animate-pulse"></div>
         <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-200/50 dark:bg-blue-900/20 rounded-full blur-[100px] -z-10 animate-pulse" style="animation-delay: 1s"></div>
 
@@ -53,7 +48,6 @@ const scrollToFeatures = () => {
         </div>
       </section>
 
-      <!-- SECTION 1: CAPTURE (Text Left, Image Right) -->
       <section id="section-1" class="snap-start h-screen flex items-center justify-center p-6 md:p-12 md:px-24 bg-gray-50 dark:bg-gray-800/50">
         <div class="grid md:grid-cols-2 gap-12 items-center max-w-7xl mx-auto w-full">
           <div class="space-y-6">
@@ -68,11 +62,7 @@ const scrollToFeatures = () => {
             </p>
           </div>
           <div class="relative h-[400px] md:h-[600px] w-full rounded-2xl overflow-hidden shadow-2xl group">
-             <!-- Placeholder or Generated Image -->
              <div class="absolute inset-0 bg-gradient-to-br from-blue-500 to-cyan-500 opacity-20 group-hover:opacity-10 transition-opacity"></div>
-             <!-- Since I have the generated image path, I would usually copy it to assets and reference it.
-                  For now I will use a placeholder DIV with styling, or if I had successfully copied the file I would use it.
-                  I'll use a nice CSS composition for now that looks like the description. -->
              <div class="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
                  <span class="text-gray-400 font-medium">[Imagem Ilustrativa: Captura]</span>
              </div>
@@ -80,7 +70,6 @@ const scrollToFeatures = () => {
         </div>
       </section>
 
-      <!-- SECTION 2: ORGANIZE (Image Left, Text Right) -->
       <section class="snap-start h-screen flex items-center justify-center p-6 md:p-12 md:px-24 bg-white dark:bg-gray-900">
         <div class="grid md:grid-cols-2 gap-12 items-center max-w-7xl mx-auto w-full">
            <div class="order-2 md:order-1 relative h-[400px] md:h-[600px] w-full rounded-2xl overflow-hidden shadow-2xl group">
@@ -103,7 +92,6 @@ const scrollToFeatures = () => {
         </div>
       </section>
 
-      <!-- SECTION 3: ENGAGE (Text Left, Image Right) -->
       <section class="snap-start h-screen flex items-center justify-center p-6 md:p-12 md:px-24 bg-gray-50 dark:bg-gray-800/50">
         <div class="grid md:grid-cols-2 gap-12 items-center max-w-7xl mx-auto w-full">
           <div class="space-y-6">
@@ -131,7 +119,6 @@ const scrollToFeatures = () => {
 </template>
 
 <style scoped>
-/* Custom scrollbar for webkit */
 ::-webkit-scrollbar {
   width: 0px;
   background: transparent;
