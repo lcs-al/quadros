@@ -55,11 +55,10 @@
                   class="px-4 py-2.5 flex items-center justify-between hover:bg-gray-100 dark:hover:bg-gray-600/50 cursor-pointer transition-all duration-200 group"
                 >
                   <span class="text-sm text-gray-700 dark:text-gray-200 font-medium group-hover:text-indigo-600 dark:group-hover:text-indigo-400">{{ $t('settings.language') }}</span>
-                  <div 
-                    class="text-[10px] font-extrabold px-2 py-0.5 rounded bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 uppercase border border-indigo-200 dark:border-indigo-800"
-                  >
-                    {{ currentLocale }}
-                  </div>
+                  <FlagIcon 
+                    :country="locale === 'pt_BR' ? 'BR' : 'US'" 
+                    :title="locale === 'pt_BR' ? 'Português' : 'English'"
+                  />
                 </div>
 
                 <div 
@@ -146,6 +145,7 @@ import { useAuthStore } from '../stores/auth';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import UserAvatar from './common/UserAvatar.vue';
+import FlagIcon from './common/FlagIcon.vue';
 
 const authStore = useAuthStore();
 const router = useRouter();
