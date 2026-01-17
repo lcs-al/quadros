@@ -1,7 +1,9 @@
 <script setup>
-import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import Navbar from '../components/common/Navbar.vue';
+import _imports_0 from '../assets/landing/capturar.png'
+import _imports_1 from '../assets/landing/organizar.png'
+import _imports_2 from '../assets/landing/engajar.png'
 
 const router = useRouter(); 
 
@@ -62,21 +64,15 @@ const scrollToFeatures = () => {
             </p>
           </div>
           <div class="relative h-[400px] md:h-[600px] w-full rounded-2xl overflow-hidden shadow-2xl group">
-             <div class="absolute inset-0 bg-gradient-to-br from-blue-500 to-cyan-500 opacity-20 group-hover:opacity-10 transition-opacity"></div>
-             <div class="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-                 <span class="text-gray-400 font-medium">[Imagem Ilustrativa: Captura]</span>
-             </div>
+             <img :src="_imports_0" alt="" class="w-full h-full object-cover">
           </div>
         </div>
       </section>
 
       <section class="snap-start h-screen flex items-center justify-center p-6 md:p-12 md:px-24 bg-white dark:bg-gray-900">
         <div class="grid md:grid-cols-2 gap-12 items-center max-w-7xl mx-auto w-full">
-           <div class="order-2 md:order-1 relative h-[400px] md:h-[600px] w-full rounded-2xl overflow-hidden shadow-2xl group">
-             <div class="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 opacity-20 group-hover:opacity-10 transition-opacity"></div>
-             <div class="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-                 <span class="text-gray-400 font-medium">[Imagem Ilustrativa: Organização]</span>
-             </div>
+          <div class="relative h-[400px] md:h-[600px] w-full rounded-2xl overflow-hidden shadow-2xl group">
+             <img :src="_imports_1" alt="Organizar" class="w-full h-full object-cover">
           </div>
           <div class="order-1 md:order-2 space-y-6">
             <div class="inline-block px-4 py-1 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 font-bold text-sm uppercase tracking-wide">
@@ -106,10 +102,7 @@ const scrollToFeatures = () => {
             </p>
           </div>
           <div class="relative h-[400px] md:h-[600px] w-full rounded-2xl overflow-hidden shadow-2xl group">
-             <div class="absolute inset-0 bg-gradient-to-br from-green-500 to-emerald-500 opacity-20 group-hover:opacity-10 transition-opacity"></div>
-             <div class="w-full h-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-                 <span class="text-gray-400 font-medium">[Imagem Ilustrativa: Execução]</span>
-             </div>
+             <img :src="_imports_2" alt="Engajar" class="w-full h-full object-cover">
           </div>
         </div>
       </section>
