@@ -50,6 +50,12 @@ Rails.application.configure do
   # Raise an error on page load if there are pending migrations.
   config.active_record.migration_error = :page_load
 
+  config.logger = ActiveSupport::Logger.new(STDOUT)
+    .tap  { |logger| logger.formatter = ::Logger::Formatter.new }
+    .then { |logger| ActiveSupport::TaggedLogging.new(logger) }
+
+  config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "debug")
+
   # Highlight code that triggered database queries in logs.
   config.active_record.verbose_query_logs = true
 
