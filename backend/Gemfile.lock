@@ -148,7 +148,7 @@ GEM
     nokogiri (1.15.7)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
-    pg (1.4.6)
+    pg (1.4.5)
     pp (0.6.3)
       prettyprint
     prettyprint (0.2.0)
@@ -235,7 +235,7 @@ DEPENDENCIES
   dotenv-rails
   faker
   jwt
-  pg (~> 1.4.6)
+  pg (~> 1.4.5)
   puma (>= 5.0)
   pundit
   rack-cors
