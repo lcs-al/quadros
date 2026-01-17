@@ -7,7 +7,6 @@
           <p class="text-gray-500 animate-pulse-subtle">{{ $t('dashboard.loading') }}</p>
         </div>
         <div v-else>
-          <!-- Board Selection Header -->
           <Transition name="slide-up" appear>
             <div class="mb-8 flex justify-between items-center">
                <div>
@@ -16,7 +15,6 @@
                  </h1>
                  <p class="text-gray-500">{{ $t('dashboard.pick_board_msg') }}</p>
                </div>
-               <!-- Create Board Button (Admin Only) -->
                <BaseButton 
                  v-if="authStore.isAdmin"
                  @click="openCreateBoardModal"
@@ -28,7 +26,6 @@
             </div>
           </Transition>
 
-          <!-- Boards Grid -->
           <Transition name="fade" mode="out-in">
             <div v-if="boards.length > 0">
                <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -38,7 +35,6 @@
                     class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 cursor-pointer hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group relative"
                     :style="{ transitionDelay: `${index * 50}ms` }"
                   >
-                    <!-- Delete Button (Owner Only) -->
                     <button
                       v-if="board.created_by?.id === authStore.user?.id"
                       @click.stop="confirmDeleteBoard(board.id)"
@@ -54,7 +50,6 @@
                           <font-awesome-icon icon="columns" class="h-6 w-6 text-indigo-600 dark:text-indigo-400 group-hover:text-white" />
                         </div>
                         
-                        <!-- Access Badge -->
                         <div class="flex flex-col items-end">
                           <span 
                             v-if="board.created_by?.id === authStore.user?.id"
@@ -74,7 +69,6 @@
                       <div class="flex items-center justify-between mt-2">
                         <p class="text-sm text-gray-500">{{ board.columns?.length || 0 }} {{ $t('board.columns') }}</p>
                         
-                        <!-- Owner Avatar -->
                         <div v-if="board.created_by && board.created_by.id !== authStore.user?.id" class="flex items-center space-x-2">
                            <UserAvatar :user="board.created_by" size="xs" />
                            <span class="text-[10px] text-gray-400 font-medium">{{ board.created_by.name }}</span>
@@ -89,7 +83,6 @@
       </Transition>
     </div>
 
-    <!-- Create Board Modal -->
     <BaseModal
       :isOpen="modalState.createBoard.isOpen"
       :title="$t('board.create_new')"
@@ -122,7 +115,6 @@
       </form>
     </BaseModal>
 
-    <!-- Delete Board Confirmation Modal -->
     <BaseModal
       :isOpen="modalState.deleteBoard.isOpen"
       :title="$t('board.delete_confirm_title')"
@@ -169,7 +161,6 @@ const router = useRouter();
 const boards = ref([]);
 const loading = ref(true);
 
-// Modal States
 const modalState = reactive({
   createBoard: { isOpen: false, title: '', loading: false },
   deleteBoard: { isOpen: false, boardId: null, loading: false }
