@@ -82,12 +82,11 @@
               name="name"
               type="text"
               required
-              class="w-full pl-3 pr-3 py-2 border-2 text-gray-900 dark:text-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-solid transition-all shadow-sm"
+              class="w-full pl-10 pr-3 py-2 border-2 text-gray-900 dark:text-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border-solid transition-all shadow-sm"
               :placeholder="$t('auth.register.name_placeholder')"
             />
           </div>
 
-          <!-- Email -->
           <div class="relative group">
             <label for="email-address" class="sr-only">{{ $t('auth.login.email_label') }}</label>
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400 group-focus-within:text-indigo-500 transition-colors">
@@ -141,13 +140,35 @@
               :placeholder="$t('auth.register.password_confirmation_placeholder')"
             />
           </div>
+
+          <!-- Terms of Use Checkbox -->
+          <div class="flex items-start">
+            <div class="flex items-center h-5">
+              <input
+                id="terms"
+                name="terms"
+                type="checkbox"
+                v-model="form.termsAccepted"
+                required
+                class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded cursor-pointer"
+              />
+            </div>
+            <div class="ml-3 text-sm">
+              <label for="terms" class="font-medium text-gray-700 dark:text-gray-300 cursor-pointer">
+                Eu li e aceito os 
+                <router-link to="/terms" class="text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 underline" target="_blank">
+                  Termos de Uso
+                </router-link>
+              </label>
+            </div>
+          </div>
         </div>
 
         <div>
           <button
             type="submit"
-            :disabled="isLoading"
-            class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 transition-colors shadow-sm"
+            :disabled="isLoading || !form.termsAccepted"
+            class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm"
           >
             <span class="absolute left-0 inset-y-0 flex items-center pl-3">
               <font-awesome-icon v-if="!isLoading" icon="user-plus" class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" />
@@ -182,7 +203,8 @@ const form = reactive({
   email: '',
   password: '',
   password_confirmation: '',
-  avatar: null
+  avatar: null,
+  termsAccepted: false
 });
 
 const showPassword = ref(false);

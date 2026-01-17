@@ -84,6 +84,12 @@
                {{ $t('auth.register.title') }}
             </router-link>
           </div>
+          <div class="text-xs text-center text-gray-500 dark:text-gray-400 mt-4">
+             protected by
+             <router-link to="/terms" class="underline hover:text-gray-900 dark:hover:text-gray-200">Terms of Use</router-link>
+             &
+             <router-link to="/privacy" class="underline hover:text-gray-900 dark:hover:text-gray-200">Privacy Policy</router-link>
+          </div>
         </form>
         <div v-if="error" class="text-red-500 text-sm text-center">
           {{ error }}
