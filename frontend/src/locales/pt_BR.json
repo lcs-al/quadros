@@ -31,6 +31,14 @@
     "pick_board_msg": "Escolha um quadro para começar"
   },
   "board": {
+    "create": "Criar Quadro",
+    "create_new": "Criar Novo Quadro",
+    "title_prompt": "Digite o título do quadro:",
+    "delete": "Excluir Quadro",
+    "delete_confirm_title": "Excluir Quadro?",
+    "delete_confirm_body": "Tem certeza que deseja excluir este quadro? Todas as colunas e cartões serão removidos permanentemente.",
+    "back_to_boards": "Voltar aos Quadros",
+    "delete_success": "Quadro excluído com sucesso!",
     "column": {
       "add": "+ Adicionar Coluna",
       "prompt_title": "Digite o título da coluna:",

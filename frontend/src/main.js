@@ -34,6 +34,7 @@ import {
   faCheckCircle,
   faExclamationCircle,
   faPencilAlt,
+  faArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -62,6 +63,7 @@ library.add(
   faCheckCircle,
   faExclamationCircle,
   faPencilAlt,
+  faArrowLeft,
 );
 
 const app = createApp(App)
