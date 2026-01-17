@@ -11,6 +11,17 @@
       "password_placeholder": "Senha",
       "submit": "Entrar"
     },
+    "register": {
+      "title": "Crie sua conta",
+      "subtitle": "Junte-se a nós e comece a gerenciar seus projetos",
+      "name_label": "Nome Completo",
+      "name_placeholder": "Nome Completo",
+      "password_confirmation_label": "Confirmar Senha",
+      "password_confirmation_placeholder": "Confirmar Senha",
+      "submit": "Criar Conta",
+      "login_link": "Já tem uma conta? Entrar",
+      "password_mismatch": "As senhas não conferem"
+    },
     "roles": {
       "admin": "Administrador",
       "user": "Usuário"
@@ -82,6 +93,11 @@
       "unknown": "Desconhecido",
       "deleted_at": "Excluído em"
     },
+    "types": {
+      "story": "História",
+      "task": "Tarefa",
+      "bug": "Bug"
+    },
     "delete": "Excluir Cartão",
     "delete_confirm": "Tem certeza que deseja excluir este cartão?",
     "delete_success": "Cartão excluído!",
@@ -107,6 +123,7 @@
     "dashboard": "Painel"
   },
   "common": {
+    "optional": "opcional",
     "save": "Salvar",
     "cancel": "Cancelar",
     "confirm_delete": "Confirmar Exclusão",

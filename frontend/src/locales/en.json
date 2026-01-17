@@ -11,6 +11,17 @@
       "password_placeholder": "Password",
       "submit": "Sign in"
     },
+    "register": {
+      "title": "Create your account",
+      "subtitle": "Join us and start managing your projects",
+      "name_label": "Full Name",
+      "name_placeholder": "Full Name",
+      "password_confirmation_label": "Confirm Password",
+      "password_confirmation_placeholder": "Confirm Password",
+      "submit": "Create Account",
+      "login_link": "Already have an account? Sign in",
+      "password_mismatch": "Passwords do not match"
+    },
     "roles": {
       "admin": "Administrator",
       "user": "User"
@@ -82,6 +93,11 @@
       "unknown": "Unknown",
       "deleted_at": "Deleted at"
     },
+    "types": {
+      "story": "Story",
+      "task": "Task",
+      "bug": "Bug"
+    },
     "delete": "Delete Card",
     "delete_confirm": "Are you sure you want to delete this card?",
     "delete_success": "Card deleted!",
@@ -107,6 +123,7 @@
     "dashboard": "Dashboard"
   },
   "common": {
+    "optional": "optional",
     "save": "Save",
     "cancel": "Cancel",
     "confirm_delete": "Confirm Delete",

@@ -26,21 +26,24 @@ export const useAuthStore = defineStore("auth", {
         return false;
       }
     },
-    async signup(name, email, password) {
+    async signup(payload) {
       try {
-        const response = await api.post("/auth/signup", {
-          name,
-          email,
-          password,
-        });
+        const isFormData = payload instanceof FormData;
+        const headers = isFormData ? { "Content-Type": "multipart/form-data" } : {};
+
+        const response = await api.post("/auth/signup", payload, { headers });
+
         this.token = response.data.token;
         this.user = response.data.user;
         localStorage.setItem("token", this.token);
         localStorage.setItem("user", JSON.stringify(this.user));
-        return true;
+        return { success: true };
       } catch (error) {
         console.error("Signup failed", error);
-        return false;
+        return {
+          success: false,
+          errors: error.response?.data?.errors || ["An error occurred"]
+        };
       }
     },
     async updateProfile(formData) {

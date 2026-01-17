@@ -81,6 +81,11 @@
             {{ $t('auth.login.submit') }}
           </BaseButton>
         </div>
+        <div class="text-sm text-center">
+          <router-link to="/register" class="font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300">
+             {{ $t('auth.register.title') }}
+          </router-link>
+        </div>
       </form>
       <div v-if="error" class="text-red-500 text-sm text-center">
         {{ error }}

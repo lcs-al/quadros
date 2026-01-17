@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { useAuthStore } from '../stores/auth';
 import i18n from "../i18n";
+import RegisterView from '../views/RegisterView.vue';
 
 const routes = [
   {
@@ -12,6 +13,12 @@ const routes = [
   {
     path: "/",
     redirect: "/boards",
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: RegisterView,
+    meta: { guest: true, title: 'auth.register.title' }
   },
   {
     path: "/boards",
