@@ -13,7 +13,14 @@ default: &default
 
 development:
   <<: *default
-  database: storage/development.sqlite3
+  url: <%= ENV['DATABASE_URL'] %>
+  database: <%= ENV.fetch("DATABASE_NAME", "storage/development.sqlite3") %>
+  # Note: The 'sqlite3' adapter ignores username, password, host, port if provided via keys, 
+  # but they are kept here for consistency or if switching adapters via ENV.
+  username: <%= ENV["DATABASE_USERNAME"] %>
+  password: <%= ENV["DATABASE_PASSWORD"] %>
+  host: <%= ENV["DATABASE_HOST"] %>
+  port: <%= ENV["DATABASE_PORT"] %>
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".

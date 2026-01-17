@@ -12,6 +12,7 @@ backend/vendor/bundle
 backend/.bundle
 backend/db/*.sqlite3
 backend/db/*.sqlite3-journal
+backend/.env
 
 # Frontend (Node/Vue)
 frontend/node_modules/
@@ -21,6 +22,7 @@ frontend/npm-debug.log*
 frontend/yarn-debug.log*
 frontend/yarn-error.log*
 frontend/pnpm-debug.log*
+frontend/.env
 frontend/.env.local
 frontend/.env.*.local
 frontend/.env.development.local
