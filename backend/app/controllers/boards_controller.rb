@@ -11,7 +11,11 @@ class BoardsController < ApplicationController
       columns: {
         include: {
           cards: {
-            include: :assignee
+            include: {
+              assignee: { 
+                methods: [:avatar_url]
+              }
+            }
           }
         }
       }

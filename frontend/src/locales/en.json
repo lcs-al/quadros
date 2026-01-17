@@ -93,7 +93,9 @@
       "change": "Change Photo",
       "upload": "Upload",
       "preview": "Preview",
-      "error": "Error uploading image"
+      "error": "Error uploading image",
+      "file_format_hint": "JPG, PNG or GIF. Max 2MB.",
+      "size_error": "Image size too large (max 2MB)"
     },
     "fields": {
       "name": "Name",

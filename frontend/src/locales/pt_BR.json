@@ -93,7 +93,9 @@
       "change": "Alterar Foto",
       "upload": "Fazer Upload",
       "preview": "Prévia",
-      "error": "Erro ao fazer upload da imagem"
+      "error": "Erro ao fazer upload da imagem",
+      "file_format_hint": "JPG, PNG ou GIF. Máx 2MB.",
+      "size_error": "Imagem muito grande (máx 2MB)"
     },
     "fields": {
       "name": "Nome",

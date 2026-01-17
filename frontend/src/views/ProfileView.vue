@@ -33,7 +33,7 @@
               >
                 {{ $t('profile.avatar.change') }}
               </button>
-              <p class="text-xs text-gray-500 dark:text-gray-400">JPG, PNG or GIF. Max 2MB.</p>
+              <p class="text-xs text-gray-500 dark:text-gray-400">{{ $t('profile.avatar.file_format_hint') }}</p>
             </div>
           </div>
         </section>
@@ -128,8 +128,10 @@
 <script setup>
 import { ref, computed, reactive, onMounted } from 'vue';
 import { useAuthStore } from '../stores/auth';
+import { useI18n } from 'vue-i18n';
 
 const authStore = useAuthStore();
+const { t } = useI18n();
 
 const form = reactive({
   name: authStore.user?.name || '',
@@ -167,7 +169,7 @@ const handleFileChange = (event) => {
   const file = event.target.files[0];
   if (file) {
     if (file.size > 2 * 1024 * 1024) {
-      showFeedback('error', 'Image size too large (max 2MB)');
+      showFeedback('error', t('profile.avatar.size_error'));
       return;
     }
     form.avatar = file;
@@ -205,13 +207,13 @@ const handleUpdateProfile = async () => {
   const result = await authStore.updateProfile(formData);
 
   if (result.success) {
-    showFeedback('success', 'Profile updated successfully!');
+    showFeedback('success', t('profile.success'));
     form.password = '';
     form.password_confirmation = '';
     form.avatar = null;
     previewUrl.value = null;
   } else {
-    showFeedback('error', 'Update failed', result.errors);
+    showFeedback('error', t('profile.errors.update_failed'), result.errors);
   }
   isLoading.value = false;
 };
