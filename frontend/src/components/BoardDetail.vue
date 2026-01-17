@@ -56,13 +56,19 @@
               <template #item="{ element: card }">
                 <div
                   @click="openCardDetail(card)"
-                  class="bg-white dark:bg-gray-600 p-3 rounded shadow cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-500 text-left border-l-4 border-indigo-400 group"
+                  class="bg-white dark:bg-gray-600 p-3 rounded shadow cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-500 text-left border-l-4 group transition-all"
+                  :class="getCardBorderColor(card.card_type)"
                 >
-                  <div
-                    class="font-medium text-gray-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors"
-                  >
+                    <div class="flex items-center mb-1">
+                      <font-awesome-icon 
+                        :icon="getCardIcon(card.card_type)" 
+                        class="text-xs mr-2 opacity-70"
+                        :class="getCardIconColor(card.card_type)"
+                      />
+                      <span class="text-xs uppercase font-bold tracking-wider opacity-60" :class="getCardIconColor(card.card_type)">{{ $t(`card.types.${card.card_type || 'task'}`) }}</span>
+                    </div>
                     {{ card.title }}
-                  </div>
+                  
                   <div
                     class="text-sm text-gray-500 dark:text-gray-300 mt-1 line-clamp-2"
                     v-if="card.description"
@@ -161,6 +167,26 @@
             autofocus
           />
         </div>
+        
+        <!-- Card Type Selection -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ $t("card.type") }}</label>
+          <div class="flex space-x-4">
+            <label class="flex items-center space-x-2 cursor-pointer">
+              <input type="radio" v-model="modalState.addCard.card_type" value="story" class="text-green-500 focus:ring-green-500" />
+              <span class="text-sm text-gray-700 dark:text-gray-300"><font-awesome-icon icon="bookmark" class="text-green-500 mr-1" /> {{ $t('card.types.story') }}</span>
+            </label>
+            <label class="flex items-center space-x-2 cursor-pointer">
+              <input type="radio" v-model="modalState.addCard.card_type" value="task" class="text-blue-500 focus:ring-blue-500" />
+              <span class="text-sm text-gray-700 dark:text-gray-300"><font-awesome-icon icon="check-square" class="text-blue-500 mr-1" /> {{ $t('card.types.task') }}</span>
+            </label>
+            <label class="flex items-center space-x-2 cursor-pointer">
+              <input type="radio" v-model="modalState.addCard.card_type" value="bug" class="text-red-500 focus:ring-red-500" />
+              <span class="text-sm text-gray-700 dark:text-gray-300"><font-awesome-icon icon="bug" class="text-red-500 mr-1" /> {{ $t('card.types.bug') }}</span>
+            </label>
+          </div>
+        </div>
+
         <div>
           <label
             class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
@@ -208,10 +234,34 @@
         v-else-if="modalState.cardDetail.data"
         class="grid grid-cols-1 lg:grid-cols-3 gap-8"
       >
-        <!-- Main Column (Left) -->
+          <!-- Main Column (Left) -->
         <div class="lg:col-span-2 space-y-8">
-          <!-- Title & Description Editing -->
+          <!-- Title & Description & Type Editing -->
           <div class="space-y-6">
+            <!-- Type Selector in Edit Mode -->
+             <div class="flex items-center space-x-4" v-if="canEdit">
+                <select 
+                  v-model="modalState.cardDetail.editData.card_type" 
+                  @change="submitEditCard"
+                  class="text-xs font-bold uppercase tracking-wider border-none bg-transparent focus:ring-0 cursor-pointer pl-0"
+                  :class="getCardIconColor(modalState.cardDetail.editData.card_type)"
+                >
+                  <option value="story">{{ $t('card.types.story') }}</option>
+                  <option value="task">{{ $t('card.types.task') }}</option>
+                  <option value="bug">{{ $t('card.types.bug') }}</option>
+                </select>
+             </div>
+             <div v-else class="flex items-center space-x-2">
+                <font-awesome-icon 
+                  :icon="getCardIcon(modalState.cardDetail.data.card_type)" 
+                  class="text-sm"
+                  :class="getCardIconColor(modalState.cardDetail.data.card_type)"
+                />
+                <span class="text-xs font-bold uppercase tracking-wider" :class="getCardIconColor(modalState.cardDetail.data.card_type)">
+                  {{ $t(`card.types.${modalState.cardDetail.data.card_type || 'task'}`) }}
+                </span>
+             </div>
+
             <div>
               <input
                 v-model="modalState.cardDetail.editData.title"
@@ -526,6 +576,7 @@ const modalState = reactive({
     isOpen: false,
     title: "",
     description: "",
+    card_type: "task",
     columnId: null,
     loading: false,
   },
@@ -534,7 +585,7 @@ const modalState = reactive({
     isOpen: false,
     loading: false,
     data: null,
-    editData: { title: "", description: "" },
+    editData: { title: "", description: "", card_type: "task" },
     newComment: "",
     commentLoading: false,
     users: [],
@@ -629,6 +680,7 @@ const openAddCardModal = (column) => {
   modalState.addCard.columnId = column.id;
   modalState.addCard.title = "";
   modalState.addCard.description = "";
+  modalState.addCard.card_type = "task";
   modalState.addCard.isOpen = true;
 };
 
@@ -639,6 +691,7 @@ const submitAddCard = async () => {
     await api.post(`/cards`, {
       title: modalState.addCard.title,
       description: modalState.addCard.description,
+      card_type: modalState.addCard.card_type,
       column_id: modalState.addCard.columnId,
       assignee_id: authStore.user.id,
     });
@@ -672,8 +725,8 @@ const openCardDetail = async (card) => {
     const response = await api.get(`/cards/${card.id}`);
     modalState.cardDetail.data = response.data;
     modalState.cardDetail.editData.title = response.data.title;
-    modalState.cardDetail.editData.description =
-      response.data.description || "";
+    modalState.cardDetail.editData.description = response.data.description || "";
+    modalState.cardDetail.editData.card_type = response.data.card_type || "task";
   } catch (error) {
     console.error("Fetch card details failed", error);
     modalState.cardDetail.isOpen = false;
@@ -709,7 +762,8 @@ const submitEditCard = async () => {
   // Only update if changed
   if (
     data.title === editData.title &&
-    data.description === editData.description
+    data.description === editData.description &&
+    data.card_type === editData.card_type
   )
     return;
 
@@ -717,6 +771,7 @@ const submitEditCard = async () => {
     const response = await api.patch(`/cards/${data.id}`, {
       title: editData.title,
       description: editData.description,
+      card_type: editData.card_type,
     });
     modalState.cardDetail.data = { ...data, ...response.data };
     emit("refresh");
@@ -791,5 +846,30 @@ const submitRestoreCard = async (cardId) => {
 const formatDate = (dateString) => {
   if (!dateString) return "";
   return new Date(dateString).toLocaleString();
+  return new Date(dateString).toLocaleString();
+};
+
+const getCardBorderColor = (type) => {
+  switch (type) {
+    case 'story': return 'border-green-400 dark:border-green-500';
+    case 'bug': return 'border-red-400 dark:border-red-500';
+    default: return 'border-blue-400 dark:border-blue-500';
+  }
+};
+
+const getCardIcon = (type) => {
+  switch (type) {
+    case 'story': return 'bookmark';
+    case 'bug': return 'bug';
+    default: return 'check-square';
+  }
+};
+
+const getCardIconColor = (type) => {
+  switch (type) {
+    case 'story': return 'text-green-600 dark:text-green-400';
+    case 'bug': return 'text-red-600 dark:text-red-400';
+    default: return 'text-blue-600 dark:text-blue-400';
+  }
 };
 </script>

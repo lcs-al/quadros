@@ -4,6 +4,8 @@ class Card < ApplicationRecord
   belongs_to :creator, class_name: 'User', optional: true
   has_many :comments, dependent: :destroy
 
+  enum card_type: { story: 0, task: 1, bug: 2 }
+  
   validates :title, :creator, presence: true
   
   acts_as_list scope: :column
