@@ -4,24 +4,46 @@ class BoardPolicy < ApplicationPolicy
   end
 
   def show?
-    true
+    owner? || member?
   end
 
   def create?
-    user.admin?
+    true # Any authenticated user can create boards
   end
 
   def update?
-    user.admin?
+    owner? || editor?
   end
 
   def destroy?
-    user.admin?
+    owner?
+  end
+
+  def manage_members?
+    owner?
+  end
+
+  private
+
+  def owner?
+    record.created_by_id == user.id
+  end
+
+  def member?
+    record.board_memberships.exists?(user_id: user.id)
+  end
+
+  def editor?
+    membership = record.board_memberships.find_by(user_id: user.id)
+    membership&.editor?
   end
 
   class Scope < ApplicationPolicy::Scope
     def resolve
-      scope.all
+      scope.left_outer_joins(:board_memberships)
+           .where(created_by_id: user.id)
+           .or(scope.left_outer_joins(:board_memberships).where(board_memberships: { user_id: user.id }))
+           .distinct
     end
   end
 end

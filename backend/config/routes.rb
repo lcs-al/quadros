@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   post '/auth/signup', to: 'auth#signup'
 
   resources :boards do
+    resources :memberships, controller: 'board_memberships', only: [:index, :create, :update, :destroy]
+    
     resources :columns, only: [:create, :update, :destroy] do
       member do
         patch :move

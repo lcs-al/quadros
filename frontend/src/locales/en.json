@@ -40,6 +40,27 @@
     "back_to_boards": "Back to Boards",
     "delete_success": "Board deleted successfully!",
     "edit": "Edit Board",
+    "members": {
+      "title": "Board Members",
+      "invite": "Invite User",
+      "manage": "Manage Members",
+      "owner": "Owner",
+      "remove": "Remove",
+      "role": {
+        "viewer": "Viewer",
+        "editor": "Editor"
+      },
+      "invite_placeholder": "Enter user email",
+      "invite_success": "User invited successfully!",
+      "remove_success": "Member removed successfully!",
+      "update_success": "Permission updated successfully!",
+      "not_found": "User not found",
+      "already_member": "User is already a member of this board"
+    },
+    "access": {
+      "owned": "Your board",
+      "shared": "Shared"
+    },
     "column": {
       "add": "+ Add Column",
       "prompt_title": "Enter column title:",

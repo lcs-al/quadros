@@ -2,12 +2,13 @@ class BoardsController < ApplicationController
   before_action :set_board, only: %i[show update destroy]
 
   def index
-    @boards = Board.all
-    render json: @boards
+    @boards = policy_scope(Board)
+    render json: @boards, include: :created_by
   end
 
   def show
-    render json: @board, include: {
+    authorize @board
+    render json: @board.as_json(include: {
       columns: {
         include: {
           cards: {
@@ -18,8 +19,13 @@ class BoardsController < ApplicationController
             }
           }
         }
-      }
-    }
+      },
+      created_by: { only: [:id, :name, :email], methods: [:avatar_url] },
+      board_memberships: { include: { user: { only: [:id, :name, :email], methods: [:avatar_url] } } }
+    }).merge(
+      current_user_role: @board.permission_level(current_user),
+      members: @board.members.map { |m| m.as_json(only: [:id, :name, :email], methods: [:avatar_url]) }
+    )
   end
 
   def create
@@ -34,7 +40,6 @@ class BoardsController < ApplicationController
   def update
     authorize @board
     if @board.update(board_params)
-
       render json: @board
     else
       render json: @board.errors, status: :unprocessable_entity

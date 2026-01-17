@@ -7,6 +7,8 @@ class User < ApplicationRecord
   enum role: { user: 0, admin: 1 }
 
   has_many :boards, foreign_key: :created_by_id, dependent: :destroy
+  has_many :board_memberships, dependent: :destroy
+  has_many :accessible_boards, through: :board_memberships, source: :board
   has_many :assigned_cards, class_name: 'Card', foreign_key: :assignee_id
   has_many :comments, dependent: :destroy
 

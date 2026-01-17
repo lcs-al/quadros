@@ -9,7 +9,8 @@
       @end="onColumnDrop"
       item-key="id"
       class="flex space-x-4 h-full"
-      handle=".column-handle"
+      :handle="canEdit ? '.column-handle' : ''"
+      :disabled="!canEdit"
     >
       <template #item="{ element: column }">
         <div
@@ -25,14 +26,15 @@
             <div class="flex space-x-1">
               <!-- Add Card Button -->
               <button
+                v-if="canEdit"
                 @click="openAddCardModal(column)"
                 class="cursor-pointer text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
               >
                 <font-awesome-icon icon="plus" class="h-4 w-4" />
               </button>
-              <!-- Delete Column (Admin only or Creator) -->
+              <!-- Delete Column (Owner or Editor) -->
               <button
-                v-if="authStore.isAdmin"
+                v-if="canEdit"
                 @click="deleteColumn(column.id)"
                 class="cursor-pointer text-red-500 hover:text-red-700"
               >
@@ -49,6 +51,7 @@
               item-key="id"
               class="space-y-3 min-h-[50px]"
               @change="(evt) => onCardChange(evt, column.id)"
+              :disabled="!canEdit"
             >
               <template #item="{ element: card }">
                 <div
@@ -91,7 +94,7 @@
     </draggable>
 
     <!-- New Column Button -->
-    <div class="flex-shrink-0 w-80" v-if="authStore.isAdmin">
+    <div class="flex-shrink-0 w-80" v-if="canEdit">
       <button
         @click="openAddColumnModal"
         class="w-full py-4 border-2 border-dashed border-gray-400 dark:border-gray-600 rounded-md text-gray-500 hover:text-indigo-600 hover:border-indigo-400 dark:text-gray-400 dark:hover:text-indigo-400 dark:hover:border-indigo-600 font-medium transition-all transform active:scale-[0.98]"
@@ -214,7 +217,9 @@
                 v-model="modalState.cardDetail.editData.title"
                 type="text"
                 @blur="submitEditCard"
+                :readonly="!canEdit"
                 class="w-full text-2xl font-bold bg-transparent border-b-2 border-transparent hover:border-gray-200 dark:hover:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-400 focus:outline-none py-1 transition-all text-gray-900 dark:text-white"
+                :class="{ 'cursor-default': !canEdit }"
                 :placeholder="$t('card.title')"
               />
             </div>
@@ -229,7 +234,9 @@
                 v-model="modalState.cardDetail.editData.description"
                 rows="6"
                 @blur="submitEditCard"
+                :readonly="!canEdit"
                 class="w-full px-4 py-3 bg-gray-50/50 dark:bg-gray-700/30 border border-transparent rounded-xl focus:border-indigo-500 dark:focus:border-indigo-400 focus:bg-white dark:focus:bg-gray-700 focus:outline-none transition-all text-gray-700 dark:text-gray-200 resize-none text-sm leading-relaxed"
+                :class="{ 'cursor-default': !canEdit }"
                 :placeholder="$t('card.description_placeholder')"
               ></textarea>
             </div>
@@ -353,7 +360,7 @@
                   :value="modalState.cardDetail.data.assignee?.id"
                   @change="submitUpdateAssignee($event.target.value)"
                   class="block w-full pl-9 pr-10 py-2 text-sm border-2 border-transparent focus:border-indigo-500 rounded-xl dark:bg-gray-700 dark:text-gray-200 appearance-none transition-all hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer font-medium"
-                  :disabled="modalState.cardDetail.loadingUsers"
+                  :disabled="modalState.cardDetail.loadingUsers || !canEdit"
                 >
                   <option :value="null">
                     {{ $t("card.metadata.unassigned") }}
@@ -412,7 +419,7 @@
             </div>
           </div>
 
-          <div class="pt-2 px-1">
+          <div class="pt-2 px-1" v-if="canEdit">
             <BaseButton
               variant="ghost"
               size="sm"
@@ -485,7 +492,7 @@
 </template>
 
 <script setup>
-import { ref, watchEffect, reactive } from "vue";
+import { ref, watchEffect, reactive, computed } from "vue";
 import draggable from "vuedraggable";
 import api from "../api";
 import { useAuthStore } from "../stores/auth";
@@ -501,6 +508,16 @@ const authStore = useAuthStore();
 const uiStore = useUIStore();
 const { t } = useI18n();
 const columns = ref([]);
+
+const isOwner = computed(() => {
+  return props.board?.created_by?.id === authStore.user?.id;
+});
+
+const canEdit = computed(() => {
+  if (isOwner.value) return true;
+  const role = props.board?.current_user_role;
+  return role === 'editor' || role === 'owner';
+});
 
 // Modal States
 const modalState = reactive({

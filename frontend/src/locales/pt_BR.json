@@ -40,6 +40,27 @@
     "back_to_boards": "Voltar aos Quadros",
     "delete_success": "Quadro excluído com sucesso!",
     "edit": "Editar Quadro",
+    "members": {
+      "title": "Membros do Quadro",
+      "invite": "Convidar Usuário",
+      "manage": "Gerenciar Membros",
+      "owner": "Proprietário",
+      "remove": "Remover",
+      "role": {
+        "viewer": "Visualizador",
+        "editor": "Editor"
+      },
+      "invite_placeholder": "Digite o e-mail do usuário",
+      "invite_success": "Usuário convidado com sucesso!",
+      "remove_success": "Membro removido com sucesso!",
+      "update_success": "Permissão atualizada com sucesso!",
+      "not_found": "Usuário não encontrado",
+      "already_member": "Usuário já é membro deste quadro"
+    },
+    "access": {
+      "owned": "Seu quadro",
+      "shared": "Compartilhado"
+    },
     "column": {
       "add": "+ Adicionar Coluna",
       "prompt_title": "Digite o título da coluna:",

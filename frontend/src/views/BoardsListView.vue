@@ -38,9 +38,9 @@
                     class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 cursor-pointer hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group relative"
                     :style="{ transitionDelay: `${index * 50}ms` }"
                   >
-                    <!-- Delete Button (Admin Only) -->
+                    <!-- Delete Button (Owner Only) -->
                     <button
-                      v-if="authStore.isAdmin"
+                      v-if="board.created_by?.id === authStore.user?.id"
                       @click.stop="confirmDeleteBoard(board.id)"
                       class="absolute top-3 right-3 p-2 rounded-lg text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 opacity-0 group-hover:opacity-100 transition-all z-10"
                       :title="$t('board.delete')"
@@ -48,14 +48,38 @@
                       <font-awesome-icon icon="trash-alt" class="h-4 w-4" />
                     </button>
                     
-                    <div @click="navigateToBoard(board.id)" class="w-full h-full">
+                    <div @click="navigateToBoard(board.id)" class="w-full h-full text-left">
                       <div class="flex items-center justify-between mb-4">
                         <div class="p-3 bg-indigo-50 dark:bg-indigo-900/30 rounded-lg group-hover:bg-indigo-600 transition-colors">
                           <font-awesome-icon icon="columns" class="h-6 w-6 text-indigo-600 dark:text-indigo-400 group-hover:text-white" />
                         </div>
+                        
+                        <!-- Access Badge -->
+                        <div class="flex flex-col items-end">
+                          <span 
+                            v-if="board.created_by?.id === authStore.user?.id"
+                            class="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 rounded"
+                          >
+                            {{ $t('board.access.owned') }}
+                          </span>
+                          <span 
+                            v-else
+                            class="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 rounded"
+                          >
+                            {{ $t('board.access.shared') }}
+                          </span>
+                        </div>
                       </div>
                       <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ board.title }}</h3>
-                      <p class="text-sm text-gray-500 mt-2">{{ board.columns?.length || 0 }} {{ $t('board.columns') }}</p>
+                      <div class="flex items-center justify-between mt-2">
+                        <p class="text-sm text-gray-500">{{ board.columns?.length || 0 }} {{ $t('board.columns') }}</p>
+                        
+                        <!-- Owner Avatar -->
+                        <div v-if="board.created_by && board.created_by.id !== authStore.user?.id" class="flex items-center space-x-2">
+                           <UserAvatar :user="board.created_by" size="xs" />
+                           <span class="text-[10px] text-gray-400 font-medium">{{ board.created_by.name }}</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                </div>
@@ -135,6 +159,7 @@ import api from '../api';
 import { useI18n } from 'vue-i18n';
 import BaseModal from '../components/common/BaseModal.vue';
 import BaseButton from '../components/common/BaseButton.vue';
+import UserAvatar from '../components/common/UserAvatar.vue';
 
 const { t } = useI18n();
 

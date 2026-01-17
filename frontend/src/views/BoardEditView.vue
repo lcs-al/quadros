@@ -41,6 +41,46 @@
                    />
                  </div>
                </div>
+
+                <!-- Right Side Actions -->
+                <div class="flex items-center space-x-3" v-if="board">
+                  <!-- Manage Members Button (Owner Only) -->
+                  <BaseButton
+                    v-if="board.created_by?.id === authStore.user?.id"
+                    variant="secondary"
+                    size="sm"
+                    @click="isMembersModalOpen = true"
+                    class="flex items-center space-x-2"
+                  >
+                    <font-awesome-icon icon="users" class="h-4 w-4" />
+                    <span>{{ $t('board.members.manage') }}</span>
+                  </BaseButton>
+                  
+                  <!-- Member Avatars -->
+                  <div class="flex -space-x-2 overflow-hidden">
+                    <UserAvatar 
+                      v-if="board.created_by"
+                      :user="board.created_by" 
+                      size="sm" 
+                      class="inline-block ring-2 ring-white dark:ring-gray-800"
+                      :title="`${$t('board.members.owner')}: ${board.created_by.name}`"
+                    />
+                    <UserAvatar 
+                      v-for="member in board.members?.slice(0, 3)" 
+                      :key="member.id"
+                      :user="member" 
+                      size="sm" 
+                      class="inline-block ring-2 ring-white dark:ring-gray-800"
+                      :title="member.name"
+                    />
+                    <div 
+                      v-if="board.members?.length > 3"
+                      class="flex items-center justify-center w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-700 ring-2 ring-white dark:ring-gray-800 text-[10px] font-bold text-gray-500"
+                    >
+                      +{{ board.members.length - 3 }}
+                    </div>
+                  </div>
+                </div>
             </div>
           </Transition>
 
@@ -51,25 +91,42 @@
         </div>
       </Transition>
     </div>
+
+    <!-- Board Members Modal -->
+    <BoardMembersModal
+      v-if="board"
+      :isOpen="isMembersModalOpen"
+      :boardId="board.id"
+      :owner="board.created_by"
+      @close="isMembersModalOpen = false"
+      @refresh="fetchBoardDetails"
+    />
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted, watch, nextTick } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { useI18n } from 'vue-i18n';
+import { useAuthStore } from '../stores/auth';
+import { useI18n } from "vue-i18n";
 import api from '../api';
 import BoardDetail from '../components/BoardDetail.vue';
+import BoardMembersModal from '../components/BoardMembersModal.vue';
+import BaseButton from '../components/common/BaseButton.vue';
+import UserAvatar from '../components/common/UserAvatar.vue';
+
 
 const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
+const authStore = useAuthStore();
 
 const board = ref(null);
 const loading = ref(true);
 const isEditingTitle = ref(false);
 const editTitleValue = ref('');
 const titleInput = ref(null);
+const isMembersModalOpen = ref(false);
 
 const fetchBoardDetails = async () => {
   loading.value = true;
