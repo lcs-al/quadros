@@ -148,10 +148,7 @@ GEM
     nokogiri (1.15.7)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
-    nokogiri (1.15.7-x86_64-linux)
-      racc (~> 1.4)
-    pg (1.6.2)
-    pg (1.6.2-x86_64-linux)
+    pg (1.4.6)
     pp (0.6.3)
       prettyprint
     prettyprint (0.2.0)
@@ -215,7 +212,6 @@ GEM
     securerandom (0.3.2)
     sqlite3 (1.6.9)
       mini_portile2 (~> 2.8.0)
-    sqlite3 (1.6.9-x86_64-linux)
     stringio (3.2.0)
     thor (1.5.0)
     timeout (0.6.0)
@@ -230,7 +226,6 @@ GEM
 
 PLATFORMS
   ruby
-  x86_64-linux
 
 DEPENDENCIES
   acts_as_list
@@ -240,12 +235,12 @@ DEPENDENCIES
   dotenv-rails
   faker
   jwt
-  pg
+  pg (~> 1.4.6)
   puma (>= 5.0)
   pundit
   rack-cors
   rails (~> 7.1.5, >= 7.1.5.1)
-  sqlite3 (>= 1.4)
+  sqlite3 (~> 1.6.0)
   tzinfo-data
 
 RUBY VERSION
