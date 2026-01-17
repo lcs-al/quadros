@@ -11,9 +11,19 @@ const routes = [
   },
   {
     path: "/",
-    name: "Dashboard",
-    component: () => import("../views/DashboardView.vue"),
-    meta: { requiresAuth: true, title: "nav.dashboard" },
+    redirect: "/boards",
+  },
+  {
+    path: "/boards",
+    name: "BoardsList",
+    component: () => import("../views/BoardsListView.vue"),
+    meta: { requiresAuth: true, title: "nav.boards" },
+  },
+  {
+    path: "/boards/:id",
+    name: "BoardEdit",
+    component: () => import("../views/BoardEditView.vue"),
+    meta: { requiresAuth: true, title: "board.edit" },
   },
   {
     path: "/profile",

@@ -39,6 +39,7 @@
     "delete_confirm_body": "Are you sure you want to delete this board? All columns and cards will be permanently removed.",
     "back_to_boards": "Back to Boards",
     "delete_success": "Board deleted successfully!",
+    "edit": "Edit Board",
     "column": {
       "add": "+ Add Column",
       "prompt_title": "Enter column title:",

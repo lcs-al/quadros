@@ -15,9 +15,9 @@
           
           <div class="hidden md:flex items-center space-x-4">
             <router-link 
-              to="/" 
+              to="/boards" 
               class="text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 font-medium px-3 py-2 rounded-md transition-colors"
-              :class="{ 'text-indigo-600 dark:text-indigo-400': $route.name === 'Dashboard' }"
+              :class="{ 'text-indigo-600 dark:text-indigo-400': $route.name === 'BoardsList' || $route.name === 'BoardEdit' }"
             >
               {{ $t('navbar.boards') }}
             </router-link>
@@ -104,7 +104,7 @@
 
                 <div class="py-1 md:hidden">
                   <router-link 
-                    to="/" 
+                    to="/boards" 
                     class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
                     @click="closeMenus"
                   >

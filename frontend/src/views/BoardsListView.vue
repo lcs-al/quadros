@@ -7,9 +7,9 @@
           <p class="text-gray-500 animate-pulse-subtle">{{ $t('dashboard.loading') }}</p>
         </div>
         <div v-else>
-          <!-- Board Selection -->
+          <!-- Board Selection Header -->
           <Transition name="slide-up" appear>
-            <div class="mb-8 flex justify-between items-center" v-if="!currentBoard">
+            <div class="mb-8 flex justify-between items-center">
                <div>
                  <h1 class="text-3xl font-extrabold text-gray-900 dark:text-white mb-2">
                    {{ $t('dashboard.select_board') }}
@@ -26,44 +26,11 @@
                  <span>{{ $t('board.create') }}</span>
                </BaseButton>
             </div>
-            <!-- Board Detail View Header with Back Button -->
-            <div v-else class="mb-6 flex items-center justify-between">
-               <div class="flex items-center space-x-4">
-                 <!-- Back to Boards Button -->
-                 <button
-                   @click="backToBoards"
-                   class="p-2 rounded-lg text-gray-500 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 dark:text-gray-400 dark:hover:text-indigo-400 transition-all"
-                   :title="$t('board.back_to_boards')"
-                 >
-                   <font-awesome-icon icon="arrow-left" class="h-5 w-5" />
-                 </button>
-                 
-                 <div v-if="!isEditingTitle" @click="startEditing" class="flex items-center space-x-3 cursor-pointer group">
-                   <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
-                     {{ currentBoard.title }}
-                   </h1>
-                   <font-awesome-icon 
-                     icon="pencil-alt" 
-                     class="text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity duration-200 h-4 w-4" 
-                   />
-                 </div>
-                 <div v-else class="w-full max-w-md">
-                   <input 
-                     ref="titleInput"
-                     v-model="editTitleValue"
-                     @blur="saveTitle"
-                     @keyup.enter="saveTitle"
-                     @keyup.esc="cancelEditing"
-                     type="text" 
-                     class="text-2xl font-bold bg-white dark:bg-gray-800 border-2 border-indigo-500 rounded-md px-2 py-1 focus:outline-none w-full text-gray-900 dark:text-white shadow-sm"
-                   />
-                 </div>
-               </div>
-            </div>
           </Transition>
 
+          <!-- Boards Grid -->
           <Transition name="fade" mode="out-in">
-            <div v-if="!currentBoard && boards.length > 0">
+            <div v-if="boards.length > 0">
                <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                   <div 
                     v-for="(board, index) in boards" 
@@ -81,7 +48,7 @@
                       <font-awesome-icon icon="trash-alt" class="h-4 w-4" />
                     </button>
                     
-                    <div @click="selectBoard(board.id)" class="w-full h-full">
+                    <div @click="navigateToBoard(board.id)" class="w-full h-full">
                       <div class="flex items-center justify-between mb-4">
                         <div class="p-3 bg-indigo-50 dark:bg-indigo-900/30 rounded-lg group-hover:bg-indigo-600 transition-colors">
                           <font-awesome-icon icon="columns" class="h-6 w-6 text-indigo-600 dark:text-indigo-400 group-hover:text-white" />
@@ -93,7 +60,6 @@
                   </div>
                </div>
             </div>
-            <BoardDetail v-else-if="currentBoard" :board="currentBoard" @refresh="fetchBoardDetails" />
           </Transition>
         </div>
       </Transition>
@@ -161,13 +127,12 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch, nextTick, reactive } from 'vue';
+import { ref, onMounted, reactive } from 'vue';
 import { useAuthStore } from '../stores/auth';
 import { useUIStore } from '../stores/ui';
 import { useRouter } from 'vue-router';
 import api from '../api';
 import { useI18n } from 'vue-i18n';
-import BoardDetail from '../components/BoardDetail.vue';
 import BaseModal from '../components/common/BaseModal.vue';
 import BaseButton from '../components/common/BaseButton.vue';
 
@@ -177,61 +142,13 @@ const authStore = useAuthStore();
 const uiStore = useUIStore();
 const router = useRouter();
 const boards = ref([]);
-const currentBoard = ref(null);
 const loading = ref(true);
-
-const isEditingTitle = ref(false);
-const editTitleValue = ref('');
-const titleInput = ref(null);
 
 // Modal States
 const modalState = reactive({
   createBoard: { isOpen: false, title: '', loading: false },
   deleteBoard: { isOpen: false, boardId: null, loading: false }
 });
-
-const startEditing = () => {
-  if (currentBoard.value) {
-    editTitleValue.value = currentBoard.value.title;
-    isEditingTitle.value = true;
-    nextTick(() => {
-      titleInput.value?.focus();
-    });
-  }
-};
-
-const saveTitle = async () => {
-  if (!isEditingTitle.value) return;
-  const oldTitle = currentBoard.value.title;
-  const newTitle = editTitleValue.value.trim();
-
-  if (newTitle && newTitle !== oldTitle) {
-    try {
-      const response = await api.patch(`/boards/${currentBoard.value.id}`, {
-        board: { title: newTitle }
-      });
-      currentBoard.value.title = response.data.title;
-      // Also update the title in the boards list
-      const boardIndex = boards.value.findIndex(b => b.id === currentBoard.value.id);
-      if (boardIndex !== -1) {
-        boards.value[boardIndex].title = response.data.title;
-      }
-    } catch (error) {
-      console.error('Failed to update board title', error);
-      editTitleValue.value = oldTitle;
-    }
-  }
-  isEditingTitle.value = false;
-};
-
-const cancelEditing = () => {
-  isEditingTitle.value = false;
-};
-
-const logout = () => {
-  authStore.logout();
-  router.push('/login');
-};
 
 const fetchBoards = async () => {
   try {
@@ -244,20 +161,8 @@ const fetchBoards = async () => {
   }
 };
 
-const selectBoard = async (boardId) => {
-  loading.value = true;
-  try {
-    const response = await api.get(`/boards/${boardId}`);
-    currentBoard.value = response.data;
-  } catch (error) {
-    console.error('Failed to fetch board details', error);
-  } finally {
-     loading.value = false;
-  }
-}
-
-const backToBoards = () => {
-  currentBoard.value = null;
+const navigateToBoard = (boardId) => {
+  router.push({ name: 'BoardEdit', params: { id: boardId } });
 };
 
 const openCreateBoardModal = () => {
@@ -315,21 +220,6 @@ const submitDeleteBoard = async () => {
     modalState.deleteBoard.loading = false;
   }
 };
-
-watch(currentBoard, (newBoard) => {
-  const baseTitle = t('app.name') || 'Quadros';
-  if (newBoard) {
-    document.title = `${baseTitle} | ${newBoard.title}`;
-  } else {
-    document.title = `${baseTitle} | ${t('dashboard.title')}`;
-  }
-}, { immediate: true });
-
-const fetchBoardDetails = async () => {
-   if (currentBoard.value) {
-      await selectBoard(currentBoard.value.id);
-   }
-}
 
 onMounted(() => {
   fetchBoards();

@@ -39,6 +39,7 @@
     "delete_confirm_body": "Tem certeza que deseja excluir este quadro? Todas as colunas e cartões serão removidos permanentemente.",
     "back_to_boards": "Voltar aos Quadros",
     "delete_success": "Quadro excluído com sucesso!",
+    "edit": "Editar Quadro",
     "column": {
       "add": "+ Adicionar Coluna",
       "prompt_title": "Digite o título da coluna:",
