@@ -35,6 +35,12 @@ import {
   faExclamationCircle,
   faPencilAlt,
   faArrowLeft,
+  faChevronLeft,
+  faChevronRight,
+  faChartPie,
+  faUser,
+  faUsers,
+  faBars,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -64,6 +70,12 @@ library.add(
   faExclamationCircle,
   faPencilAlt,
   faArrowLeft,
+  faChevronLeft,
+  faChevronRight,
+  faChartPie,
+  faUser,
+  faUsers,
+  faBars,
 );
 
 const app = createApp(App)

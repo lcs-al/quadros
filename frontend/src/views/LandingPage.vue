@@ -34,7 +34,7 @@ const scrollToFeatures = () => {
             Uma plataforma intuitiva baseada no método GTD para organizar suas ideias, projetos e tarefas em um fluxo de trabalho natural.
           </p>
           <div class="flex items-center justify-center gap-4 pt-4">
-            <button @click="scrollToFeatures" class="px-8 py-4 rounded-full bg-indigo-600 text-white font-bold text-lg hover:bg-indigo-700 transition-all shadow-xl hover:shadow-indigo-500/30">
+            <button @click="scrollToFeatures" class="cursor-pointer px-8 py-4 rounded-full bg-indigo-600 text-white font-bold text-lg hover:bg-indigo-700 transition-all shadow-xl hover:shadow-indigo-500/30">
               Conheça o Método
             </button>
             <router-link to="/login" class="px-8 py-4 rounded-full bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-white font-bold text-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all">

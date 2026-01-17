@@ -40,6 +40,12 @@ const routes = [
     component: () => import("../views/ProfileView.vue"),
     meta: { requiresAuth: true, title: "nav.profile" },
   },
+  {
+    path: "/reports",
+    name: "Reports",
+    component: { template: '<div class="p-8"><h1>Relatórios (Em breve)</h1></div>' },
+    meta: {  requiresAuth: true, title: "nav.reports" },
+  }
 ];
 
 const router = createRouter({
