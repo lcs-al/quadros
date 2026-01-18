@@ -2,33 +2,35 @@ source "https://rubygems.org"
 
 ruby "2.7.6"
 
-gem "rails", "~> 7.1.5", ">= 7.1.5.1"
-
-gem "puma", ">= 5.0"
-
-gem "bcrypt", "~> 3.1.7"
-gem "jwt"
-gem "pundit"
-gem "acts_as_list"
-
-gem "tzinfo-data", platforms: %i[ mswin mswin64 mingw x64_mingw jruby ]
-
-gem "bootsnap", require: false
-
+# Core
+gem "rails",                        "~> 7.1.5", ">= 7.1.5.1"
+gem "puma",                         ">= 5.0"
+gem "bootsnap",                     require: false
 gem "rack-cors"
 
-group :development, :test do
-  gem "sqlite3", "~> 1.6.0"
-  gem "dotenv-rails", groups: [:development, :test]
+# Authentication / Authorization
+gem "bcrypt",                       "~> 3.1.7"
+gem "jwt"
+gem "pundit"
 
-  gem "debug", platforms: %i[ mri mswin mswin64 mingw x64_mingw ]
-end
+# Utilities / Domain
+gem "acts_as_list"
+gem "tzinfo-data",                  platforms: %i[mswin mswin64 mingw x64_mingw jruby]
 
+# Environment
+gem "dotenv-rails"
+
+# Database
 group :production do
-  gem 'pg', '~> 1.4.5'
+  gem "pg",                         "~> 1.4.5"
 end
 
-group :development do
+group :development, :test do
+  gem "sqlite3",                    "~> 1.6.0"
+  gem "debug",                      platforms: %i[mri mswin mswin64 mingw x64_mingw]
   gem "faker"
 end
 
+group :development do
+  # add dev-only gems here
+end
