@@ -87,4 +87,10 @@ Rails.application.configure do
   # ]
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+	config.action_controller.raise_on_missing_callback_actions = true
+
+  config.action_controller.default_url_options = { host: 'quadros-production.up.railway.app', port: 3000 }
+  config.action_mailer.default_url_options = { host: 'quadros-production.up.railway.app', port: 3000 }
+  routes.default_url_options = { host: 'quadros-production.up.railway.app', port: 3000 }
+  config.active_storage.variant_processor = :mini_magick # Optional but recommended
 end
