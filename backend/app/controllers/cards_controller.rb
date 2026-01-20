@@ -2,8 +2,13 @@ class CardsController < ApplicationController
   before_action :set_card, only: %i[show update destroy move]
 
   def create
-    @column = Column.find(params[:column_id])
-    @card = @column.cards.build(card_params)
+    if params[:column_id]
+      @container = Column.find(params[:column_id])
+    elsif params[:backlog_id]
+      @container = Backlog.find(params[:backlog_id])
+    end
+
+    @card = @container.cards.build(card_params)
     @card.creator = current_user
     @card.assignee = current_user if card_params[:assignee_id].blank?
     
@@ -50,10 +55,20 @@ class CardsController < ApplicationController
   end
 
   def move
-    # Move between columns if column_id is provided and different
-    if params[:column_id] && @card.column_id != params[:column_id].to_i
+    # Move between containers (columns or backlog)
+    new_column_id = params[:column_id]
+    new_backlog_id = params[:backlog_id]
+
+    if new_column_id && @card.column_id != new_column_id.to_i
       @card.remove_from_list
-      @card.column_id = params[:column_id]
+      @card.backlog_id = nil
+      @card.column_id = new_column_id
+      @card.save!
+      @card.insert_at(params[:position].to_i)
+    elsif new_backlog_id && @card.backlog_id != new_backlog_id.to_i
+      @card.remove_from_list
+      @card.column_id = nil
+      @card.backlog_id = new_backlog_id
       @card.save!
       @card.insert_at(params[:position].to_i)
     else
@@ -69,7 +84,7 @@ class CardsController < ApplicationController
   end
 
   def card_params
-    params.require(:card).permit(:title, :description, :assignee_id, :column_id, :card_type)
+    params.require(:card).permit(:title, :description, :assignee_id, :column_id, :backlog_id, :card_type)
   end
 end
 

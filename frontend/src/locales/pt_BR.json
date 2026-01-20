@@ -78,7 +78,14 @@
       "delete_confirm_title": "Confirmar Exclusão",
       "delete_confirm_body": "Tem certeza? Isso excluirá todos os cartões desta coluna."
     },
-    "columns": "colunas"
+		"columns": "colunas",
+		"backlog": {
+			"title": "Backlog do Quadro",
+			"go_to": "Ir para o Backlog",
+			"empty": "O backlog está vazio. Crie cartões para começar.",
+			"add_card": "Adicionar ao Backlog",
+			"move_to_board": "Mover para o Quadro"
+		}
   },
   "card": {
     "add": "Adicionar Cartão",

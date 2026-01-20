@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   resources :boards do
     resources :memberships, controller: 'board_memberships', only: [:index, :create, :update, :destroy]
+    resource :backlog, only: [:show]
     
     resources :columns, only: [:create, :update, :destroy] do
       member do

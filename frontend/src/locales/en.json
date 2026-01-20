@@ -78,7 +78,14 @@
       "delete_confirm_title": "Confirm Delete",
       "delete_confirm_body": "Are you sure? This will delete all cards in this column."
     },
-    "columns": "columns"
+		"columns": "columns",
+		"backlog": {
+			"title": "Board Backlog",
+			"go_to": "Go to Backlog",
+			"empty": "The backlog is empty. Create cards to get started.",
+			"add_card": "Add to Backlog",
+			"move_to_board": "Move to Board"
+		}
   },
   "card": {
     "add": "Add Card",

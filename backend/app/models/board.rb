@@ -2,10 +2,13 @@ class Board < ApplicationRecord
   belongs_to :created_by, class_name: 'User'
   has_many :columns, -> { order(position: :asc) }, dependent: :destroy
   has_many :cards, through: :columns
+  has_one :backlog, dependent: :destroy
   has_many :board_memberships, dependent: :destroy
   has_many :members, through: :board_memberships, source: :user
 
   validates :title, presence: true
+
+  after_create :create_backlog
 
   def owner?(user)
     created_by_id == user.id

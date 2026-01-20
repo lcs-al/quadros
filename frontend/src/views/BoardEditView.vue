@@ -55,6 +55,17 @@
                     <font-awesome-icon icon="users" class="h-4 w-4" />
                     <span>{{ $t('board.members.manage') }}</span>
                   </BaseButton>
+
+                  <!-- Backlog Button -->
+                  <BaseButton
+                    variant="secondary"
+                    size="sm"
+                    @click="goToBacklog"
+                    class="flex items-center space-x-2"
+                  >
+                    <font-awesome-icon icon="clipboard-list" class="h-4 w-4" />
+                    <span>{{ $t('board.backlog.go_to') }}</span>
+                  </BaseButton>
                   
                   <!-- Member Avatars -->
                   <div class="flex -space-x-2 overflow-hidden">
@@ -179,6 +190,10 @@ const cancelEditing = () => {
 
 const backToBoards = () => {
   router.push({ name: 'BoardsList' });
+};
+
+const goToBacklog = () => {
+  router.push({ name: 'BoardBacklog', params: { id: board.value.id } });
 };
 
 // Update document title when board changes

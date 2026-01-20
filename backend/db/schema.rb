@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_01_17_021116) do
+ActiveRecord::Schema[7.1].define(version: 2026_01_20_165711) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -39,6 +39,13 @@ ActiveRecord::Schema[7.1].define(version: 2026_01_17_021116) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "backlogs", force: :cascade do |t|
+    t.integer "board_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["board_id"], name: "index_backlogs_on_board_id"
+  end
+
   create_table "board_memberships", force: :cascade do |t|
     t.integer "board_id", null: false
     t.integer "user_id", null: false
@@ -59,7 +66,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_01_17_021116) do
   end
 
   create_table "cards", force: :cascade do |t|
-    t.integer "column_id", null: false
+    t.integer "column_id"
     t.string "title"
     t.text "description"
     t.integer "position"
@@ -69,7 +76,9 @@ ActiveRecord::Schema[7.1].define(version: 2026_01_17_021116) do
     t.integer "creator_id"
     t.datetime "deleted_at"
     t.integer "card_type", default: 1
+    t.integer "backlog_id"
     t.index ["assignee_id"], name: "index_cards_on_assignee_id"
+    t.index ["backlog_id"], name: "index_cards_on_backlog_id"
     t.index ["column_id"], name: "index_cards_on_column_id"
     t.index ["creator_id"], name: "index_cards_on_creator_id"
     t.index ["deleted_at"], name: "index_cards_on_deleted_at"
@@ -106,9 +115,11 @@ ActiveRecord::Schema[7.1].define(version: 2026_01_17_021116) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "backlogs", "boards"
   add_foreign_key "board_memberships", "boards"
   add_foreign_key "board_memberships", "users"
   add_foreign_key "boards", "users", column: "created_by_id"
+  add_foreign_key "cards", "backlogs"
   add_foreign_key "cards", "columns"
   add_foreign_key "cards", "users", column: "assignee_id"
   add_foreign_key "cards", "users", column: "creator_id"
