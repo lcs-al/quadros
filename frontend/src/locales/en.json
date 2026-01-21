@@ -130,6 +130,10 @@
     "dark": "Dark"
   },
   "nav": {
+		"boards": "Boards",
+		"reports": "Reports",
+		"privacy": "Privacy Policy",
+		"terms": "Terms of Use",
     "notifications": "Notifications",
     "profile": "Profile",
     "go_to_board": "Go to Board",

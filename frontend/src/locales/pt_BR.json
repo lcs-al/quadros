@@ -130,10 +130,14 @@
     "dark": "Escuro"
   },
   "nav": {
-    "notifications": "Notificações",
-    "profile": "Perfil",
-    "go_to_board": "Ir para o Quadro",
-    "dashboard": "Painel"
+		"boards": "Quadros",
+		"reports": "Relatórios",
+		"privacy": "Política de Privacidade",
+		"terms": "Termos de Uso",
+		"notifications": "Notificações",
+		"profile": "Perfil",
+		"go_to_board": "Ir para o Quadro",
+		"dashboard": "Painel"
   },
   "common": {
 		"select_all": "Selecionar tudo",

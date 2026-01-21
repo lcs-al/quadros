@@ -28,6 +28,13 @@
               <font-awesome-icon icon="archive" class="mr-3 text-gray-400" />
               {{ $t("card.return_to_backlog") }}
             </button>
+            <button
+              @click="confirmDelete"
+              class="flex items-center w-full px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/10 transition-colors"
+            >
+              <font-awesome-icon icon="trash-alt" class="mr-3" />
+              {{ $t("card.delete") }}
+            </button>
           </div>
         </div>
       </template>
@@ -281,20 +288,6 @@
             </div>
           </div>
 
-          <div class="pt-2 px-1" v-if="canEdit">
-            <BaseButton
-              variant="ghost"
-              size="sm"
-              class="text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/10 w-full justify-start rounded-xl group transition-all"
-              @click="confirmDelete"
-            >
-              <font-awesome-icon
-                icon="trash-alt"
-                class="mr-3 group-hover:scale-110 transition-transform"
-              />
-              <span class="font-bold">{{ $t("card.delete") }}</span>
-            </BaseButton>
-          </div>
         </div>
       </div>
     </BaseModal>
@@ -477,6 +470,7 @@ const returnToBacklog = async () => {
 };
 
 const confirmDelete = () => {
+  modalState.showActionsMenu = false;
   modalState.deleteOpen = true;
 };
 
