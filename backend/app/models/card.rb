@@ -6,6 +6,8 @@ class Card < ApplicationRecord
   has_many :comments, dependent: :destroy
 
   enum card_type: { story: 0, task: 1, bug: 2 }
+
+  attribute :priority, :integer, default: 0
   enum priority: { low: 0, medium: 1, high: 2, critical: 3 }
   
   validates :title, :creator, presence: true
