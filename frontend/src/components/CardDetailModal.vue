@@ -110,6 +110,47 @@
                 :placeholder="$t('card.description_placeholder')"
               ></textarea>
             </div>
+
+            <!-- Labels -->
+            <div class="space-y-2">
+              <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">
+                {{ $t("card.labels") }}
+              </label>
+              <div class="flex flex-wrap gap-2 mb-2">
+                <span
+                  v-for="label in modalState.editData.labels"
+                  :key="label"
+                  class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full text-xs flex items-center shadow-sm border border-gray-200 dark:border-gray-600"
+                >
+                  {{ label }}
+                  <button
+                    v-if="canEdit"
+                    @click="removeLabel(label)"
+                    class="ml-1 text-gray-400 hover:text-red-500 transition-colors"
+                  >
+                    <font-awesome-icon icon="times" />
+                  </button>
+                </span>
+              </div>
+              <div v-if="canEdit" class="flex items-center space-x-2">
+                <input
+                  v-model="modalState.newLabel"
+                  @keydown.enter.prevent="addLabel"
+                  type="text"
+                  class="flex-1 px-3 py-1.5 text-sm border border-gray-200 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
+                  :placeholder="$t('card.label_placeholder')"
+                />
+                <BaseButton
+                  v-if="modalState.newLabel"
+                  size="xs"
+                  @click="addLabel"
+                  variant="secondary"
+                  class="flex-shrink-0"
+                >
+                  <font-awesome-icon icon="plus" />
+                </BaseButton>
+              </div>
+            </div>
           </div>
 
           <!-- Comments Section -->
@@ -197,6 +238,52 @@
           <div
             class="bg-gray-50/50 dark:bg-gray-800/30 rounded-2xl p-5 border border-gray-100 dark:border-gray-700 space-y-6"
           >
+            <div>
+              <span class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">{{ $t("card.priority") }}</span>
+              <div class="relative">
+                <select
+                    v-model="modalState.editData.priority"
+                    @change="submitEditCard"
+                    :disabled="!canEdit"
+                    class="block w-full px-3 py-2 text-sm border-2 border-transparent focus:border-indigo-500 rounded-xl dark:bg-gray-700 dark:text-gray-200 appearance-none transition-all hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer font-medium capitalize"
+                >
+                    <option value="low">{{ $t("card.priorities.low") }}</option>
+                    <option value="medium">{{ $t("card.priorities.medium") }}</option>
+                    <option value="high">{{ $t("card.priorities.high") }}</option>
+                    <option value="critical">{{ $t("card.priorities.critical") }}</option>
+                </select>
+                <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-gray-400">
+                    <font-awesome-icon icon="chevron-down" class="text-[10px]" />
+                </div>
+              </div>
+            </div>
+
+            <div>
+            <span class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">{{ $t("card.story_points") }}</span>
+            <input
+                v-model="modalState.editData.story_points"
+                @change="submitEditCard"
+                type="number"
+                min="0"
+                :readonly="!canEdit"
+                class="block w-full px-3 py-2 text-sm border-2 border-transparent focus:border-indigo-500 rounded-xl dark:bg-gray-700 dark:text-gray-200 transition-all hover:bg-gray-100 dark:hover:bg-gray-600 focus:bg-white dark:focus:bg-gray-700"
+                :class="{ 'cursor-default': !canEdit }"
+                placeholder="-"
+            />
+            </div>
+
+            <div>
+                <span class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">{{ $t("card.due_date") }}</span>
+                <input
+                v-model="modalState.editData.due_date"
+                @change="submitEditCard"
+                type="date"
+                :readonly="!canEdit"
+                class="block w-full px-3 py-2 text-sm border-2 border-transparent focus:border-indigo-500 rounded-xl dark:bg-gray-700 dark:text-gray-200 transition-all hover:bg-gray-100 dark:hover:bg-gray-600 focus:bg-white dark:focus:bg-gray-700"
+                :class="{ 'cursor-default': !canEdit }"
+                />
+            </div>
+          
             <div>
               <span
                 class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2"
@@ -344,7 +431,8 @@ const { t } = useI18n();
 const modalState = reactive({
   loading: false,
   data: null,
-  editData: { title: "", description: "", card_type: "task" },
+  editData: { title: "", description: "", card_type: "task", priority: "medium", story_points: null, due_date: null, labels: [] },
+  newLabel: "",
   newComment: "",
   commentLoading: false,
   users: [],
@@ -376,6 +464,10 @@ const fetchCardDetails = async (id) => {
     modalState.editData.title = response.data.title;
     modalState.editData.description = response.data.description || "";
     modalState.editData.card_type = response.data.card_type || "task";
+    modalState.editData.priority = response.data.priority || "medium";
+    modalState.editData.story_points = response.data.story_points;
+    modalState.editData.due_date = response.data.due_date ? response.data.due_date.split('T')[0] : null;
+    modalState.editData.labels = response.data.labels ? [...response.data.labels] : [];
   } catch (error) {
     console.error("Fetch card details failed", error);
     emit("close");
@@ -424,12 +516,30 @@ const submitEditCard = async () => {
       title: modalState.editData.title,
       description: modalState.editData.description,
       card_type: modalState.editData.card_type,
+      priority: modalState.editData.priority,
+      story_points: modalState.editData.story_points,
+      due_date: modalState.editData.due_date,
+      labels: modalState.editData.labels,
     });
     modalState.data = { ...modalState.data, ...response.data };
     emit("refresh");
   } catch (error) {
     console.error("Update card failed", error);
   }
+};
+
+const addLabel = () => {
+  const label = modalState.newLabel.trim();
+  if (label && !modalState.editData.labels.includes(label)) {
+    modalState.editData.labels.push(label);
+    modalState.newLabel = "";
+    submitEditCard();
+  }
+};
+
+const removeLabel = (label) => {
+  modalState.editData.labels = modalState.editData.labels.filter(l => l !== label);
+  submitEditCard();
 };
 
 const submitAddComment = async () => {

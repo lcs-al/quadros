@@ -123,7 +123,7 @@ class CardsController < ApplicationController
   end
 
   def card_params
-    params.require(:card).permit(:title, :description, :assignee_id, :column_id, :backlog_id, :card_type)
+    params.require(:card).permit(:title, :description, :assignee_id, :column_id, :backlog_id, :card_type, :priority, :story_points, :due_date, labels: [])
   end
 end
 

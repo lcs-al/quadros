@@ -108,6 +108,17 @@
       "task": "Tarefa",
       "bug": "Bug"
     },
+		"priorities": {
+			"low": "Baixa",
+			"medium": "Média",
+			"high": "Alta",
+			"critical": "Crítica"
+		},
+		"priority": "Prioridade",
+		"story_points": "Pontos",
+		"due_date": "Data de Entrega",
+		"labels": "Etiquetas",
+		"label_placeholder": "Adicionar etiqueta...",
     "delete": "Excluir Cartão",
     "delete_confirm": "Tem certeza que deseja excluir este cartão?",
     "delete_success": "Cartão excluído!",

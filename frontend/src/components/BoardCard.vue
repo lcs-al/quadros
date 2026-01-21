@@ -26,6 +26,37 @@
       {{ card.description }}
     </div>
 
+    <!-- Labels -->
+    <div v-if="card.labels && card.labels.length" class="flex flex-wrap gap-1 mt-2">
+      <span
+        v-for="label in card.labels"
+        :key="label"
+        class="px-2 py-0.5 text-[10px] font-medium bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full"
+      >
+        {{ label }}
+      </span>
+    </div>
+
+    <!-- Metadata Row -->
+    <div class="flex items-center gap-3 mt-3 text-xs text-gray-500 dark:text-gray-400">
+      <!-- Priority -->
+      <div v-if="card.priority !== undefined" class="flex items-center" :class="getPriorityColor(card.priority)">
+        <font-awesome-icon :icon="getPriorityIcon(card.priority)" class="mr-1" />
+        <span class="capitalize font-bold">{{ $t(`card.priorities.${card.priority || 'medium'}`) }}</span>
+      </div>
+
+       <!-- Due Date -->
+      <div v-if="card.due_date" class="flex items-center" :class="getDueDateColor(card.due_date)">
+        <font-awesome-icon icon="calendar-alt" class="mr-1" />
+        <span>{{ formatDateShort(card.due_date) }}</span>
+      </div>
+
+      <!-- Story Points -->
+      <div v-if="card.story_points" class="flex items-center bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded">
+        <span class="font-bold text-gray-700 dark:text-gray-300">{{ card.story_points }}</span>
+      </div>
+    </div>
+
     <!-- Assignee Avatar -->
     <div class="mt-2 flex items-center justify-between">
       <div v-if="card.assignee" class="flex items-center">
@@ -88,5 +119,42 @@ const getCardIconColor = (type) => {
     default:
       return "text-blue-600 dark:text-blue-400";
   }
+};
+
+const getPriorityColor = (priority) => {
+  switch (priority) {
+    case 'critical': return 'text-red-600 font-bold';
+    case 'high': return 'text-orange-500';
+    case 'medium': return 'text-yellow-500';
+    case 'low': return 'text-green-500';
+    default: return 'text-gray-400';
+  }
+};
+
+const getPriorityIcon = (priority) => {
+  switch (priority) {
+    case 'critical': return 'fire';
+    case 'high': return 'arrow-up';
+    case 'medium': return 'minus';
+    case 'low': return 'arrow-down';
+    default: return 'minus';
+  }
+};
+
+const getDueDateColor = (date) => {
+  if (!date) return '';
+  const now = new Date();
+  const due = new Date(date);
+  if (due < now) return 'text-red-600 font-bold'; // Overdue
+  const diffTime = Math.abs(due - now);
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+  if (diffDays <= 2) return 'text-orange-500'; // Due soon
+  return 'text-gray-500';
+};
+
+const formatDateShort = (dateString) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
 };
 </script>

@@ -108,6 +108,17 @@
       "task": "Task",
       "bug": "Bug"
     },
+		"priorities": {
+			"low": "Low",
+			"medium": "Medium",
+			"high": "High",
+			"critical": "Critical"
+		},
+		"priority": "Priority",
+		"story_points": "Story Points",
+		"due_date": "Due Date",
+		"labels": "Labels",
+		"label_placeholder": "Add label...",
     "delete": "Delete Card",
     "delete_confirm": "Are you sure you want to delete this card?",
     "delete_success": "Card deleted!",
