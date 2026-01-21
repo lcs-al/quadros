@@ -73,7 +73,7 @@
       "shared": "Compartilhado"
     },
     "column": {
-      "add": "+ Adicionar Coluna",
+			"add": "Adicionar Coluna",
       "prompt_title": "Digite o título da coluna:",
       "delete_confirm_title": "Confirmar Exclusão",
       "delete_confirm_body": "Tem certeza? Isso excluirá todos os cartões desta coluna."

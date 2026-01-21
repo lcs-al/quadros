@@ -13,89 +13,14 @@
       :disabled="!canEdit"
     >
       <template #item="{ element: column }">
-        <div
-          class="flex-shrink-0 w-80 bg-gray-200 dark:bg-gray-800 rounded-md shadow-md flex flex-col max-h-full"
-        >
-          <!-- Column Header -->
-          <div
-            class="p-3 flex justify-between items-center bg-gray-300 dark:bg-gray-700 rounded-t-md column-handle cursor-move"
-          >
-            <h3 class="font-bold text-gray-700 dark:text-gray-200">
-              {{ column.title }}
-            </h3>
-            <div class="flex space-x-1">
-              <!-- Add Card Button -->
-              <button
-                v-if="canEdit"
-                @click="openAddCardModal(column)"
-                class="cursor-pointer text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-              >
-                <font-awesome-icon icon="plus" class="h-4 w-4" />
-              </button>
-              <!-- Delete Column (Owner or Editor) -->
-              <button
-                v-if="canEdit"
-                @click="deleteColumn(column.id)"
-                class="cursor-pointer text-red-500 hover:text-red-700"
-              >
-                <font-awesome-icon icon="trash-alt" class="h-4 w-4" />
-              </button>
-            </div>
-          </div>
-
-          <!-- Cards List -->
-          <div class="p-2 flex-1 overflow-y-auto min-h-0">
-            <draggable
-              :list="column.cards"
-              group="cards"
-              item-key="id"
-              class="space-y-3 min-h-[50px]"
-              @change="(evt) => onCardChange(evt, column.id)"
-              :disabled="!canEdit"
-            >
-              <template #item="{ element: card }">
-                <div
-                  @click="openCardDetail(card)"
-                  class="bg-white dark:bg-gray-600 p-3 rounded shadow cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-500 text-left border-l-4 group transition-all"
-                  :class="getCardBorderColor(card.card_type)"
-                >
-                    <div class="flex items-center mb-1">
-                      <font-awesome-icon 
-                        :icon="getCardIcon(card.card_type)" 
-                        class="text-xs mr-2 opacity-70"
-                        :class="getCardIconColor(card.card_type)"
-                      />
-                      <span class="text-xs uppercase font-bold tracking-wider opacity-60" :class="getCardIconColor(card.card_type)">{{ $t(`card.types.${card.card_type || 'task'}`) }}</span>
-                    </div>
-                    {{ card.title }}
-                  
-                  <div
-                    class="text-sm text-gray-500 dark:text-gray-300 mt-1 line-clamp-2"
-                    v-if="card.description"
-                  >
-                    {{ card.description }}
-                  </div>
-                  <!-- Assignee Avatar -->
-                  <div class="mt-2 flex items-center justify-between">
-                    <div v-if="card.assignee" class="flex items-center">
-                      <UserAvatar :user="card.assignee" size="sm" />
-                      <span class="text-[10px] text-gray-400 ml-2">{{
-                        card.assignee.name
-                      }}</span>
-                    </div>
-                    <div class="flex items-center space-x-2 text-gray-400">
-                      <font-awesome-icon
-                        v-if="card.description"
-                        icon="align-left"
-                        class="text-[10px]"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </template>
-            </draggable>
-          </div>
-        </div>
+        <BoardColumn
+          :column="column"
+          :canEdit="canEdit"
+          @add-card="openAddCardModal"
+          @delete-column="deleteColumn"
+          @card-click="openCardDetail"
+          @card-change="onCardChange"
+        />
       </template>
     </draggable>
 
@@ -167,22 +92,55 @@
             autofocus
           />
         </div>
-        
+
         <!-- Card Type Selection -->
         <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ $t("card.type") }}</label>
+          <label
+            class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+            >{{ $t("card.type") }}</label
+          >
           <div class="flex space-x-4">
             <label class="flex items-center space-x-2 cursor-pointer">
-              <input type="radio" v-model="modalState.addCard.card_type" value="story" class="text-green-500 focus:ring-green-500" />
-              <span class="text-sm text-gray-700 dark:text-gray-300"><font-awesome-icon icon="bookmark" class="text-green-500 mr-1" /> {{ $t('card.types.story') }}</span>
+              <input
+                type="radio"
+                v-model="modalState.addCard.card_type"
+                value="story"
+                class="text-green-500 focus:ring-green-500"
+              />
+              <span class="text-sm text-gray-700 dark:text-gray-300"
+                ><font-awesome-icon
+                  icon="bookmark"
+                  class="text-green-500 mr-1"
+                />
+                {{ $t("card.types.story") }}</span
+              >
             </label>
             <label class="flex items-center space-x-2 cursor-pointer">
-              <input type="radio" v-model="modalState.addCard.card_type" value="task" class="text-blue-500 focus:ring-blue-500" />
-              <span class="text-sm text-gray-700 dark:text-gray-300"><font-awesome-icon icon="check-square" class="text-blue-500 mr-1" /> {{ $t('card.types.task') }}</span>
+              <input
+                type="radio"
+                v-model="modalState.addCard.card_type"
+                value="task"
+                class="text-blue-500 focus:ring-blue-500"
+              />
+              <span class="text-sm text-gray-700 dark:text-gray-300"
+                ><font-awesome-icon
+                  icon="check-square"
+                  class="text-blue-500 mr-1"
+                />
+                {{ $t("card.types.task") }}</span
+              >
             </label>
             <label class="flex items-center space-x-2 cursor-pointer">
-              <input type="radio" v-model="modalState.addCard.card_type" value="bug" class="text-red-500 focus:ring-red-500" />
-              <span class="text-sm text-gray-700 dark:text-gray-300"><font-awesome-icon icon="bug" class="text-red-500 mr-1" /> {{ $t('card.types.bug') }}</span>
+              <input
+                type="radio"
+                v-model="modalState.addCard.card_type"
+                value="bug"
+                class="text-red-500 focus:ring-red-500"
+              />
+              <span class="text-sm text-gray-700 dark:text-gray-300"
+                ><font-awesome-icon icon="bug" class="text-red-500 mr-1" />
+                {{ $t("card.types.bug") }}</span
+              >
             </label>
           </div>
         </div>
@@ -215,302 +173,14 @@
     </BaseModal>
 
     <!-- Card Detail Modal -->
-    <BaseModal
+    <CardDetailModal
       :isOpen="modalState.cardDetail.isOpen"
-      :title="modalState.cardDetail.data?.title || $t('card.title')"
-      @close="closeCardDetail"
-    >
-      <template #headerActions v-if="canEdit && modalState.cardDetail.data">
-        <div class="relative">
-          <button
-            @click.stop="toggleActionsMenu"
-            class="p-1 px-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500 transition-colors"
-            :title="$t('card.actions')"
-          >
-            <font-awesome-icon icon="ellipsis-h" />
-          </button>
-          
-          <div
-            v-if="modalState.cardDetail.showActionsMenu"
-            class="absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 z-[70] py-1 focus:outline-none"
-            v-click-outside="() => modalState.cardDetail.showActionsMenu = false"
-          >
-            <button
-              @click="returnToBacklog"
-              class="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-            >
-              <font-awesome-icon icon="archive" class="mr-3 text-gray-400" />
-              {{ $t('card.return_to_backlog') }}
-            </button>
-          </div>
-        </div>
-      </template>
-      <div
-        v-if="modalState.cardDetail.loading"
-        class="flex justify-center py-12"
-      >
-        <font-awesome-icon
-          icon="spinner"
-          spin
-          class="text-3xl text-indigo-600"
-        />
-      </div>
-      <div
-        v-else-if="modalState.cardDetail.data"
-        class="grid grid-cols-1 lg:grid-cols-3 gap-8"
-      >
-          <!-- Main Column (Left) -->
-        <div class="lg:col-span-2 space-y-8">
-          <!-- Title & Description & Type Editing -->
-          <div class="space-y-6">
-            <!-- Type Selector in Edit Mode -->
-             <div class="flex items-center space-x-4" v-if="canEdit">
-                <select 
-                  v-model="modalState.cardDetail.editData.card_type" 
-                  @change="submitEditCard"
-                  class="text-xs font-bold uppercase tracking-wider border-none bg-transparent focus:ring-0 cursor-pointer pl-0"
-                  :class="getCardIconColor(modalState.cardDetail.editData.card_type)"
-                >
-                  <option value="story">{{ $t('card.types.story') }}</option>
-                  <option value="task">{{ $t('card.types.task') }}</option>
-                  <option value="bug">{{ $t('card.types.bug') }}</option>
-                </select>
-             </div>
-             <div v-else class="flex items-center space-x-2">
-                <font-awesome-icon 
-                  :icon="getCardIcon(modalState.cardDetail.data.card_type)" 
-                  class="text-sm"
-                  :class="getCardIconColor(modalState.cardDetail.data.card_type)"
-                />
-                <span class="text-xs font-bold uppercase tracking-wider" :class="getCardIconColor(modalState.cardDetail.data.card_type)">
-                  {{ $t(`card.types.${modalState.cardDetail.data.card_type || 'task'}`) }}
-                </span>
-             </div>
-
-            <div>
-              <input
-                v-model="modalState.cardDetail.editData.title"
-                type="text"
-                @blur="submitEditCard"
-                :readonly="!canEdit"
-                class="w-full text-2xl font-bold bg-transparent border-b-2 border-transparent hover:border-gray-200 dark:hover:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-400 focus:outline-none py-1 transition-all text-gray-900 dark:text-white"
-                :class="{ 'cursor-default': !canEdit }"
-                :placeholder="$t('card.title')"
-              />
-            </div>
-
-            <div>
-              <label
-                class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2"
-              >
-                {{ $t("card.description") }}
-              </label>
-              <textarea
-                v-model="modalState.cardDetail.editData.description"
-                rows="6"
-                @blur="submitEditCard"
-                :readonly="!canEdit"
-                class="w-full px-4 py-3 bg-gray-50/50 dark:bg-gray-700/30 border border-transparent rounded-xl focus:border-indigo-500 dark:focus:border-indigo-400 focus:bg-white dark:focus:bg-gray-700 focus:outline-none transition-all text-gray-700 dark:text-gray-200 resize-none text-sm leading-relaxed"
-                :class="{ 'cursor-default': !canEdit }"
-                :placeholder="$t('card.description_placeholder')"
-              ></textarea>
-            </div>
-          </div>
-
-          <!-- Comments Section -->
-          <div
-            class="space-y-6 pt-6 border-t border-gray-100 dark:border-gray-700"
-          >
-            <h4
-              class="text-sm font-bold text-gray-900 dark:text-white flex items-center"
-            >
-              <font-awesome-icon icon="comment" class="mr-2 text-gray-400" />
-              {{ $t("card.comments.title") }}
-            </h4>
-
-            <!-- Comment List -->
-            <div
-              class="space-y-4 max-h-[400px] overflow-y-auto pr-2 scrollbar-thin"
-            >
-              <div
-                v-for="comment in modalState.cardDetail.data.comments"
-                :key="comment.id"
-                class="flex space-x-3 group"
-              >
-                <div class="flex-shrink-0">
-                  <UserAvatar :user="comment.user" size="md" />
-                </div>
-                <div class="flex-1">
-                  <div class="flex items-center space-x-2 mb-1">
-                    <span
-                      class="text-sm font-bold text-gray-900 dark:text-white"
-                      >{{ comment.user?.name }}</span
-                    >
-                    <span class="text-[10px] text-gray-400 font-medium">{{
-                      formatDate(comment.created_at)
-                    }}</span>
-                  </div>
-                  <p
-                    class="text-sm text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-800/50 p-3 rounded-lg border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition-colors"
-                  >
-                    {{ comment.content }}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <!-- Add Comment -->
-            <div class="flex space-x-3 mt-6">
-              <div class="flex-shrink-0">
-                <UserAvatar
-                  v-if="authStore.user"
-                  :user="authStore.user"
-                  size="md"
-                />
-              </div>
-              <div class="flex-1 space-y-3">
-                <textarea
-                  v-model="modalState.cardDetail.newComment"
-                  @keydown.enter.ctrl.prevent="submitAddComment"
-                  rows="3"
-                  class="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-xl dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-sm transition-shadow"
-                  :placeholder="$t('card.comments.placeholder')"
-                ></textarea>
-                <div
-                  class="flex justify-between items-center text-[10px] text-gray-400"
-                >
-                  <span>{{
-                    $t("common.ctrl_enter_to_post") || "Ctrl + Enter to post"
-                  }}</span>
-                  <BaseButton
-                    size="sm"
-                    :loading="modalState.cardDetail.commentLoading"
-                    @click="submitAddComment"
-                    :disabled="!modalState.cardDetail.newComment.trim()"
-                    class="rounded-full px-6"
-                  >
-                    {{ $t("card.comments.post") }}
-                  </BaseButton>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Sidebar Column (Right) -->
-        <div class="space-y-6">
-          <div
-            class="bg-gray-50/50 dark:bg-gray-800/30 rounded-2xl p-5 border border-gray-100 dark:border-gray-700 space-y-6"
-          >
-            <div>
-              <span
-                class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2"
-                >{{ $t("card.metadata.creator") }}</span
-              >
-              <div class="flex items-center">
-                <UserAvatar
-                  v-if="modalState.cardDetail.data.creator"
-                  :user="modalState.cardDetail.data.creator"
-                  size="sm"
-                  class="mr-3"
-                />
-                <span
-                  class="text-sm font-medium text-gray-700 dark:text-gray-200"
-                >
-                  {{
-                    modalState.cardDetail.data.creator?.name ||
-                    $t("card.metadata.unknown")
-                  }}
-                </span>
-              </div>
-            </div>
-
-            <div>
-              <span
-                class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2"
-                >{{ $t("card.metadata.assignee") }}</span
-              >
-              <div class="relative group">
-                <select
-                  :value="modalState.cardDetail.data.assignee?.id"
-                  @change="submitUpdateAssignee($event.target.value)"
-                  class="block w-full pl-9 pr-10 py-2 text-sm border-2 border-transparent focus:border-indigo-500 rounded-xl dark:bg-gray-700 dark:text-gray-200 appearance-none transition-all hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer font-medium"
-                  :disabled="modalState.cardDetail.loadingUsers || !canEdit"
-                >
-                  <option :value="null">
-                    {{ $t("card.metadata.unassigned") }}
-                  </option>
-                  <option
-                    v-for="user in modalState.cardDetail.users"
-                    :key="user.id"
-                    :value="user.id"
-                  >
-                    {{ user.name }}
-                  </option>
-                </select>
-                <div
-                  class="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none"
-                >
-                  <UserAvatar
-                    v-if="modalState.cardDetail.data.assignee"
-                    :user="modalState.cardDetail.data.assignee"
-                    size="xs"
-                  />
-                  <font-awesome-icon
-                    v-else
-                    icon="user-circle"
-                    class="text-gray-400 h-4 w-4"
-                  />
-                </div>
-                <div
-                  class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-gray-400 group-hover:text-indigo-500 transition-colors"
-                >
-                  <font-awesome-icon icon="chevron-down" class="text-[10px]" />
-                </div>
-                <div
-                  v-if="modalState.cardDetail.loadingUsers"
-                  class="absolute inset-y-0 right-8 flex items-center pointer-events-none"
-                >
-                  <font-awesome-icon
-                    icon="spinner"
-                    spin
-                    class="text-indigo-500 text-xs"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <span
-                class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2"
-                >{{ $t("card.metadata.created_at") }}</span
-              >
-              <span
-                class="text-sm font-medium text-gray-600 dark:text-gray-400 flex items-center"
-              >
-                <font-awesome-icon icon="clock" class="mr-2 text-xs" />
-                {{ formatDate(modalState.cardDetail.data.created_at) }}
-              </span>
-            </div>
-          </div>
-
-          <div class="pt-2 px-1" v-if="canEdit">
-            <BaseButton
-              variant="ghost"
-              size="sm"
-              class="text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/10 w-full justify-start rounded-xl group transition-all"
-              @click="confirmDeleteCard"
-            >
-              <font-awesome-icon
-                icon="trash-alt"
-                class="mr-3 group-hover:scale-110 transition-transform"
-              />
-              <span class="font-bold">{{ $t("card.delete") }}</span>
-            </BaseButton>
-          </div>
-        </div>
-      </div>
-    </BaseModal>
+      :cardId="modalState.cardDetail.cardId"
+      :board="board"
+      :canEdit="canEdit"
+      @close="modalState.cardDetail.isOpen = false"
+      @refresh="emit('refresh')"
+    />
 
     <!-- Delete Column Confirm Modal -->
     <BaseModal
@@ -537,32 +207,6 @@
         </BaseButton>
       </div>
     </BaseModal>
-
-    <!-- Delete Card Confirm Modal -->
-    <BaseModal
-      :isOpen="modalState.deleteCard.isOpen"
-      :title="$t('common.confirm_delete')"
-      @close="modalState.deleteCard.isOpen = false"
-    >
-      <p class="text-gray-600 dark:text-gray-400 mb-6">
-        {{ $t("card.delete_confirm") }}
-      </p>
-      <div class="flex justify-end space-x-3">
-        <BaseButton
-          variant="secondary"
-          @click="modalState.deleteCard.isOpen = false"
-        >
-          {{ $t("common.cancel") }}
-        </BaseButton>
-        <BaseButton
-          variant="danger"
-          :loading="modalState.deleteCard.loading"
-          @click="submitDeleteCard"
-        >
-          {{ $t("common.delete") }}
-        </BaseButton>
-      </div>
-    </BaseModal>
   </div>
 </template>
 
@@ -572,16 +216,15 @@ import draggable from "vuedraggable";
 import api from "../api";
 import { useAuthStore } from "../stores/auth";
 import { useUIStore } from "../stores/ui";
-import { useI18n } from "vue-i18n";
 import BaseModal from "./common/BaseModal.vue";
 import BaseButton from "./common/BaseButton.vue";
-import UserAvatar from "./common/UserAvatar.vue";
+import BoardColumn from "./BoardColumn.vue";
+import CardDetailModal from "./CardDetailModal.vue";
 
 const props = defineProps(["board"]);
 const emit = defineEmits(["refresh"]);
 const authStore = useAuthStore();
 const uiStore = useUIStore();
-const { t } = useI18n();
 const columns = ref([]);
 
 const isOwner = computed(() => {
@@ -591,7 +234,7 @@ const isOwner = computed(() => {
 const canEdit = computed(() => {
   if (isOwner.value) return true;
   const role = props.board?.current_user_role;
-  return role === 'editor' || role === 'owner';
+  return role === "editor" || role === "owner";
 });
 
 // Modal States
@@ -608,16 +251,8 @@ const modalState = reactive({
   deleteColumn: { isOpen: false, columnId: null, loading: false },
   cardDetail: {
     isOpen: false,
-    loading: false,
-    data: null,
-    editData: { title: "", description: "", card_type: "task" },
-    newComment: "",
-    commentLoading: false,
-    users: [],
-    loadingUsers: false,
-    showActionsMenu: false,
+    cardId: null,
   },
-  deleteCard: { isOpen: false, cardId: null, loading: false },
 });
 
 watchEffect(() => {
@@ -691,7 +326,7 @@ const submitDeleteColumn = async () => {
   modalState.deleteColumn.loading = true;
   try {
     await api.delete(
-      `/boards/${props.board.id}/columns/${modalState.deleteColumn.columnId}`,
+      `/boards/${props.board.id}/columns/${modalState.deleteColumn.columnId}`
     );
     modalState.deleteColumn.isOpen = false;
     emit("refresh");
@@ -730,198 +365,8 @@ const submitAddCard = async () => {
   }
 };
 
-const fetchUsers = async () => {
-  if (modalState.cardDetail.users.length > 0) return;
-  modalState.cardDetail.loadingUsers = true;
-  try {
-    const response = await api.get("/users");
-    modalState.cardDetail.users = response.data;
-  } catch (error) {
-    console.error("Fetch users failed", error);
-  } finally {
-    modalState.cardDetail.loadingUsers = false;
-  }
-};
-
-const openCardDetail = async (card) => {
+const openCardDetail = (card) => {
+  modalState.cardDetail.cardId = card.id;
   modalState.cardDetail.isOpen = true;
-  modalState.cardDetail.loading = true;
-  fetchUsers();
-  try {
-    const response = await api.get(`/cards/${card.id}`);
-    modalState.cardDetail.data = response.data;
-    modalState.cardDetail.editData.title = response.data.title;
-    modalState.cardDetail.editData.description = response.data.description || "";
-    modalState.cardDetail.editData.card_type = response.data.card_type || "task";
-  } catch (error) {
-    console.error("Fetch card details failed", error);
-    modalState.cardDetail.isOpen = false;
-  } finally {
-    modalState.cardDetail.loading = false;
-  }
-};
-
-const submitUpdateAssignee = async (userId) => {
-  const { data } = modalState.cardDetail;
-  if (!data) return;
-  try {
-    const response = await api.patch(`/cards/${data.id}`, {
-      assignee_id: userId,
-    });
-    modalState.cardDetail.data = { ...data, ...response.data };
-    emit("refresh");
-  } catch (error) {
-    console.error("Update assignee failed", error);
-  }
-};
-
-const closeCardDetail = () => {
-  modalState.cardDetail.isOpen = false;
-  modalState.cardDetail.data = null;
-  modalState.cardDetail.newComment = "";
-  modalState.cardDetail.showActionsMenu = false;
-};
-
-const submitEditCard = async () => {
-  const { data, editData } = modalState.cardDetail;
-  if (!data || !editData.title) return;
-
-  // Only update if changed
-  if (
-    data.title === editData.title &&
-    data.description === editData.description &&
-    data.card_type === editData.card_type
-  )
-    return;
-
-  try {
-    const response = await api.patch(`/cards/${data.id}`, {
-      title: editData.title,
-      description: editData.description,
-      card_type: editData.card_type,
-    });
-    modalState.cardDetail.data = { ...data, ...response.data };
-    emit("refresh");
-  } catch (error) {
-    console.error("Update card failed", error);
-  }
-};
-
-const submitAddComment = async () => {
-  const { data, newComment } = modalState.cardDetail;
-  if (!data || !newComment.trim()) return;
-
-  modalState.cardDetail.commentLoading = true;
-  try {
-    const response = await api.post(`/cards/${data.id}/comments`, {
-      content: newComment,
-    });
-    // Append comment with user info (current user)
-    const commentWithUser = { ...response.data, user: authStore.user };
-    modalState.cardDetail.data.comments.push(commentWithUser);
-    modalState.cardDetail.newComment = "";
-  } catch (error) {
-    console.error("Add comment failed", error);
-  } finally {
-    modalState.cardDetail.commentLoading = false;
-  }
-};
-
-const confirmDeleteCard = () => {
-  modalState.deleteCard.cardId = modalState.cardDetail.data.id;
-  modalState.deleteCard.isOpen = true;
-};
-
-const submitDeleteCard = async () => {
-  const cardId = modalState.deleteCard.cardId;
-  modalState.deleteCard.loading = true;
-  try {
-    await api.delete(`/cards/${cardId}`);
-    modalState.deleteCard.isOpen = false;
-    closeCardDetail();
-    emit("refresh");
-
-    // Add undo notification
-    uiStore.addNotification({
-      type: "info",
-      message: t("card.delete_success") || "Card deleted",
-      action: {
-        label: t("common.undo"),
-        callback: () => submitRestoreCard(cardId),
-      },
-    });
-  } catch (error) {
-    console.error("Delete card failed", error);
-  } finally {
-    modalState.deleteCard.loading = false;
-  }
-};
-
-const returnToBacklog = async () => {
-  const cardId = modalState.cardDetail.data?.id;
-  const backlogId = props.board?.backlog?.id;
-  if (!cardId || !backlogId) return;
-
-  try {
-    await api.patch(`/cards/${cardId}/move`, {
-      backlog_id: backlogId,
-      position: 1
-    });
-    closeCardDetail();
-    emit("refresh");
-    uiStore.addNotification({
-      type: "success",
-      message: t("card.return_to_backlog_success") || "Card returned to backlog"
-    });
-  } catch (error) {
-    console.error("Return to backlog failed", error);
-  }
-};
-
-const submitRestoreCard = async (cardId) => {
-  try {
-    await api.post(`/cards/${cardId}/restore`);
-    emit("refresh");
-    uiStore.addNotification({
-      type: "success",
-      message: t("card.restore_success"),
-    });
-  } catch (error) {
-    console.error("Restore card failed", error);
-  }
-};
-
-const formatDate = (dateString) => {
-  if (!dateString) return "";
-  return new Date(dateString).toLocaleString();
-  return new Date(dateString).toLocaleString();
-};
-
-const getCardBorderColor = (type) => {
-  switch (type) {
-    case 'story': return 'border-green-400 dark:border-green-500';
-    case 'bug': return 'border-red-400 dark:border-red-500';
-    default: return 'border-blue-400 dark:border-blue-500';
-  }
-};
-
-const getCardIcon = (type) => {
-  switch (type) {
-    case 'story': return 'bookmark';
-    case 'bug': return 'bug';
-    default: return 'check-square';
-  }
-};
-
-const getCardIconColor = (type) => {
-  switch (type) {
-    case 'story': return 'text-green-600 dark:text-green-400';
-    case 'bug': return 'text-red-600 dark:text-red-400';
-    default: return 'text-blue-600 dark:text-blue-400';
-  }
-};
-
-const toggleActionsMenu = () => {
-  modalState.cardDetail.showActionsMenu = !modalState.cardDetail.showActionsMenu;
 };
 </script>

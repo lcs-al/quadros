@@ -73,7 +73,7 @@
       "shared": "Shared"
     },
     "column": {
-      "add": "+ Add Column",
+			"add": "Add Column",
       "prompt_title": "Enter column title:",
       "delete_confirm_title": "Confirm Delete",
       "delete_confirm_body": "Are you sure? This will delete all cards in this column."
