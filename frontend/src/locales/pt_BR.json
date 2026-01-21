@@ -95,7 +95,9 @@
 			"high_priority": "Alta Prioridade",
 			"overdue": "Atrasados",
 			"clear_all": "Limpar todos",
-			"search_placeholder": "Buscar por título..."
+			"search_placeholder": "Buscar por título...",
+			"all_types": "Todos os Tipos",
+			"all_assignees": "Todos os Responsáveis"
 		}
   },
   "card": {

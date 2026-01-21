@@ -14,6 +14,32 @@
 
       <div class="h-6 w-px bg-gray-300 dark:bg-gray-600 mx-2"></div>
 
+      <!-- Type Filter -->
+      <select
+        v-model="selectedType"
+        class="pl-3 pr-8 py-1.5 text-xs rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all appearance-none cursor-pointer"
+        style="background-image: none;"
+      >
+        <option value="">{{ $t('board.filters.all_types') }}</option>
+        <option value="story">{{ $t('card.types.story') }}</option>
+        <option value="task">{{ $t('card.types.task') }}</option>
+        <option value="bug">{{ $t('card.types.bug') }}</option>
+      </select>
+
+      <!-- Assignee Filter -->
+      <select
+        v-model="selectedAssignee"
+        class="pl-3 pr-8 py-1.5 text-xs rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all appearance-none cursor-pointer max-w-[150px] truncate"
+        style="background-image: none;"
+      >
+        <option value="">{{ $t('board.filters.all_assignees') }}</option>
+        <option v-for="user in uniqueAssignees" :key="user.id" :value="user.id">
+          {{ user.name }}
+        </option>
+      </select>
+            
+      <div class="h-6 w-px bg-gray-300 dark:bg-gray-600 mx-2"></div>
+
       <button
         @click="toggleFilter('my_cards')"
         class="px-3 py-1.5 rounded-full text-xs font-medium transition-colors border"
@@ -290,6 +316,8 @@ const uiStore = useUIStore();
 const columns = ref([]);
 const activeFilters = ref([]);
 const searchQuery = ref("");
+const selectedType = ref("");
+const selectedAssignee = ref("");
 
 const isOwner = computed(() => {
   return props.board?.created_by?.id === authStore.user?.id;
@@ -299,6 +327,18 @@ const canEdit = computed(() => {
   if (isOwner.value) return true;
   const role = props.board?.current_user_role;
   return role === "editor" || role === "owner";
+});
+
+const uniqueAssignees = computed(() => {
+  const users = new Map();
+  columns.value.forEach(column => {
+    column.cards.forEach(card => {
+      if (card.assignee) {
+        users.set(card.assignee.id, card.assignee);
+      }
+    });
+  });
+  return Array.from(users.values());
 });
 
 // Modal States
@@ -444,10 +484,13 @@ const toggleFilter = (filter) => {
 
 const clearFilters = () => {
     activeFilters.value = [];
+    searchQuery.value = "";
+    selectedType.value = "";
+    selectedAssignee.value = "";
 }
 
 const getFilteredColumn = (column) => {
-    if (activeFilters.value.length === 0 && !searchQuery.value.trim()) return column;
+    if (activeFilters.value.length === 0 && !searchQuery.value.trim() && !selectedType.value && !selectedAssignee.value) return column;
 
     const filteredCards = column.cards.filter(card => {
         let matches = true;
@@ -455,6 +498,14 @@ const getFilteredColumn = (column) => {
         if (searchQuery.value.trim()) {
             const query = searchQuery.value.toLowerCase();
             matches = matches && card.title.toLowerCase().includes(query);
+        }
+
+        if (selectedType.value) {
+            matches = matches && card.card_type === selectedType.value;
+        }
+
+        if (selectedAssignee.value) {
+            matches = matches && card.assignee?.id === parseInt(selectedAssignee.value);
         }
 
         if (activeFilters.value.includes('my_cards')) {
