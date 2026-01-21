@@ -84,7 +84,10 @@
 			"go_to": "Go to Backlog",
 			"empty": "The backlog is empty. Create cards to get started.",
 			"add_card": "Add to Backlog",
-			"move_to_board": "Move to Board"
+			"move_to_board": "Move to Board",
+			"bulk_actions": "Bulk Actions",
+			"selected_count": "{count} cards selected",
+			"bulk_move_success": "Cards moved to board successfully!"
 		}
   },
   "card": {
@@ -133,6 +136,7 @@
     "dashboard": "Dashboard"
   },
   "common": {
+		"select_all": "Select All",
     "optional": "optional",
     "save": "Save",
     "cancel": "Cancel",

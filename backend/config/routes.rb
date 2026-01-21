@@ -18,6 +18,9 @@ Rails.application.routes.draw do
       patch :move
       post :restore
     end
+    collection do
+      post :bulk_move
+    end
     resources :comments, only: [:create, :update, :destroy]
   end
 

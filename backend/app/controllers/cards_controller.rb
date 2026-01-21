@@ -80,6 +80,42 @@ class CardsController < ApplicationController
     render json: @card
   end
 
+  def bulk_move
+    card_ids = params[:card_ids]
+    new_column_id = params[:column_id]
+    new_backlog_id = params[:backlog_id]
+    position = params[:position].to_i
+
+    @cards = Card.where(id: card_ids)
+    return render json: { error: 'No cards found' }, status: :not_found if @cards.empty?
+
+    # All cards must belong to the same board for simplicity of authorization
+    board = @cards.first.column&.board || @cards.first.backlog&.board
+    authorize board, :update?, policy_class: BoardPolicy if board
+
+    ActiveRecord::Base.transaction do
+      @cards.each do |card|
+        if new_column_id && card.column_id != new_column_id.to_i
+          card.remove_from_list
+          card.backlog_id = nil
+          card.column_id = new_column_id
+          card.save!
+          card.insert_at(position)
+        elsif new_backlog_id && card.backlog_id != new_backlog_id.to_i
+          card.remove_from_list
+          card.column_id = nil
+          card.backlog_id = new_backlog_id
+          card.save!
+          card.insert_at(position)
+        end
+      end
+    end
+
+    render json: { success: true, count: @cards.count }
+  rescue => e
+    render json: { error: e.message }, status: :unprocessable_entity
+  end
+
   private
 
   def set_card

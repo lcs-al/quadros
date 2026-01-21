@@ -37,19 +37,39 @@
             </BaseButton>
           </div>
           <div v-else class="divide-y divide-gray-100 dark:divide-gray-700">
+            <!-- Select All Row -->
+            <div class="p-4 bg-gray-50/50 dark:bg-gray-800/50 flex items-center space-x-4 border-b border-gray-100 dark:border-gray-700">
+              <input 
+                type="checkbox" 
+                :checked="isAllSelected" 
+                @change="toggleSelectAll"
+                class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 h-4 w-4"
+              />
+              <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">{{ $t('common.select_all') || 'Select All' }}</span>
+            </div>
+
             <div v-for="card in backlog.cards" :key="card.id" 
                  class="p-4 hover:bg-gray-50 dark:hover:bg-gray-750 transition-colors flex items-center justify-between group">
-              <div class="flex items-center space-x-4 flex-1 cursor-pointer" @click="openCardDetail(card)">
-                <div class="w-2 h-10 rounded-full" :class="getCardBorderColorClass(card.card_type)"></div>
-                <div>
-                  <div class="flex items-center space-x-2 mb-1">
-                    <font-awesome-icon :icon="getCardIcon(card.card_type)" class="text-xs opacity-70" :class="getCardIconColor(card.card_type)" />
-                    <span class="text-[10px] uppercase font-bold tracking-wider opacity-60" :class="getCardIconColor(card.card_type)">
-                      {{ $t(`card.types.${card.card_type || 'task'}`) }}
-                    </span>
+              <div class="flex items-center space-x-4 flex-1">
+                <input 
+                  type="checkbox" 
+                  :checked="selectedCards.has(card.id)" 
+                  @change="toggleCardSelection(card.id)"
+                  class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 h-4 w-4"
+                />
+                
+                <div class="flex items-center space-x-4 flex-1 cursor-pointer" @click="openCardDetail(card)">
+                  <div class="w-2 h-10 rounded-full" :class="getCardBorderColorClass(card.card_type)"></div>
+                  <div>
+                    <div class="flex items-center space-x-2 mb-1">
+                      <font-awesome-icon :icon="getCardIcon(card.card_type)" class="text-xs opacity-70" :class="getCardIconColor(card.card_type)" />
+                      <span class="text-[10px] uppercase font-bold tracking-wider opacity-60" :class="getCardIconColor(card.card_type)">
+                        {{ $t(`card.types.${card.card_type || 'task'}`) }}
+                      </span>
+                    </div>
+                    <h3 class="font-medium text-gray-900 dark:text-white">{{ card.title }}</h3>
+                    <p v-if="card.description" class="text-sm text-gray-500 dark:text-gray-400 line-clamp-1 mt-0.5">{{ card.description }}</p>
                   </div>
-                  <h3 class="font-medium text-gray-900 dark:text-white">{{ card.title }}</h3>
-                  <p v-if="card.description" class="text-sm text-gray-500 dark:text-gray-400 line-clamp-1 mt-0.5">{{ card.description }}</p>
                 </div>
               </div>
               
@@ -75,6 +95,41 @@
       </div>
     </div>
 
+    <!-- Bulk Action Bar -->
+    <Transition name="slide-up">
+      <div v-if="selectedCards.size > 0" 
+           class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-white dark:bg-gray-800 shadow-2xl rounded-full px-6 py-4 flex items-center space-x-8 border border-gray-100 dark:border-gray-700 z-[100] min-w-[400px]">
+        <div class="flex items-center space-x-4 pr-8 border-r border-gray-100 dark:border-gray-700">
+          <div class="bg-indigo-600 text-white text-xs font-bold px-2 py-1 rounded-full min-w-[24px] text-center">
+            {{ selectedCards.size }}
+          </div>
+          <span class="text-sm font-semibold text-gray-700 dark:text-gray-200">
+            {{ $t('board.backlog.selected_count', { count: selectedCards.size }) }}
+          </span>
+        </div>
+        
+        <div class="flex items-center space-x-3">
+          <BaseButton 
+            v-if="firstColumnId"
+            size="sm" 
+            :loading="bulkLoading"
+            @click="submitBulkMoveToBoard"
+            class="flex items-center space-x-2"
+          >
+            <font-awesome-icon icon="arrow-right" class="h-4 w-4" />
+            <span>{{ $t('board.backlog.move_to_board') }}</span>
+          </BaseButton>
+          
+          <button 
+            @click="selectedCards.clear()"
+            class="text-xs font-bold text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 uppercase tracking-widest transition-colors"
+          >
+            {{ $t('common.cancel') }}
+          </button>
+        </div>
+      </div>
+    </Transition>
+
     <!-- Modals (Re-using some logic/structure from BoardDetail) -->
     <BaseModal :isOpen="modalState.addCard.isOpen" :title="$t('card.add')" @close="modalState.addCard.isOpen = false">
       <form @submit.prevent="submitAddCard" class="space-y-4">
@@ -85,15 +140,13 @@
         <div>
           <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ $t('card.type') }}</label>
           <div class="flex space-x-4">
-            <template v-for="type in ['story', 'task', 'bug']" :key="type">
-              <label class="flex items-center space-x-2 cursor-pointer">
-                <input type="radio" v-model="modalState.addCard.card_type" :value="type" class="text-indigo-600 focus:ring-indigo-500" />
-                <span class="text-sm text-gray-700 dark:text-gray-300">
-                  <font-awesome-icon :icon="getCardIcon(type)" class="mr-1" :class="getCardIconColor(type)" />
-                  {{ $t(`card.types.${type}`) }}
-                </span>
-              </label>
-            </template>
+            <label v-for="type in ['story', 'task', 'bug']" :key="type" class="flex items-center space-x-2 cursor-pointer">
+              <input type="radio" v-model="modalState.addCard.card_type" :value="type" class="text-indigo-600 focus:ring-indigo-500" />
+              <span class="text-sm text-gray-700 dark:text-gray-300">
+                <font-awesome-icon :icon="getCardIcon(type)" class="mr-1" :class="getCardIconColor(type)" />
+                {{ $t(`card.types.${type}`) }}
+              </span>
+            </label>
           </div>
         </div>
         <div>
@@ -140,19 +193,45 @@
 <script setup>
 import { ref, onMounted, reactive, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 import api from '../api';
 import BaseButton from '../components/common/BaseButton.vue';
 import BaseModal from '../components/common/BaseModal.vue';
 import UserAvatar from '../components/common/UserAvatar.vue';
 import { useAuthStore } from '../stores/auth';
+import { useUIStore } from '../stores/ui';
 
 const route = useRoute();
 const router = useRouter();
 const authStore = useAuthStore();
+const uiStore = useUIStore();
+const { t } = useI18n();
 
 const board = ref(null);
 const backlog = ref(null);
 const loading = ref(true);
+const bulkLoading = ref(false);
+const selectedCards = ref(new Set());
+
+const isAllSelected = computed(() => {
+  return backlog.value?.cards?.length > 0 && selectedCards.value.size === backlog.value.cards.length;
+});
+
+const toggleCardSelection = (cardId) => {
+  if (selectedCards.value.has(cardId)) {
+    selectedCards.value.delete(cardId);
+  } else {
+    selectedCards.value.add(cardId);
+  }
+};
+
+const toggleSelectAll = () => {
+  if (isAllSelected.value) {
+    selectedCards.value.clear();
+  } else {
+    backlog.value.cards.forEach(card => selectedCards.value.add(card.id));
+  }
+};
 
 const modalState = reactive({
   addCard: { isOpen: false, title: '', description: '', card_type: 'task', loading: false },
@@ -264,6 +343,35 @@ const submitDeleteCard = async () => {
     }
 };
 
+const submitBulkMoveToBoard = async () => {
+    if (selectedCards.value.size === 0 || !firstColumnId.value) return;
+    
+    bulkLoading.value = true;
+    try {
+        await api.post('/cards/bulk_move', {
+            card_ids: Array.from(selectedCards.value),
+            column_id: firstColumnId.value,
+            position: 1
+        });
+        
+        uiStore.addNotification({
+            type: 'success',
+            message: t('board.backlog.bulk_move_success')
+        });
+        
+        selectedCards.value.clear();
+        fetchBacklog();
+    } catch (error) {
+        console.error('Bulk move failed', error);
+        uiStore.addNotification({
+            type: 'error',
+            message: error.response?.data?.error || 'Bulk move failed'
+        });
+    } finally {
+        bulkLoading.value = false;
+    }
+};
+
 // UI Helpers (could be shared later)
 const getCardIcon = (type) => {
   switch (type) {
@@ -296,6 +404,7 @@ onMounted(fetchBacklog);
 .line-clamp-1 {
   display: -webkit-box;
   -webkit-line-clamp: 1;
+  line-clamp: 1;
   -webkit-box-orient: vertical;  
   overflow: hidden;
 }

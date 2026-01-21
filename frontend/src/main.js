@@ -47,6 +47,7 @@ import {
 	faCheckSquare,
 	faBug,
 	faClipboardList,
+	faArrowRight,
 } from "@fortawesome/free-solid-svg-icons";
 import {
 	faGithub,
@@ -94,6 +95,7 @@ library.add(
 	faClipboardList,
 	faGithub,
 	faLinkedin,
+	faArrowRight,
 );
 
 const app = createApp(App)
