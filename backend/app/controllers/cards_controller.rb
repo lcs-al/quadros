@@ -56,6 +56,9 @@ class CardsController < ApplicationController
 
   def move
     # Move between containers (columns or backlog)
+    board = @card.column&.board || @card.backlog&.board
+    authorize board, :update?, policy_class: BoardPolicy
+
     new_column_id = params[:column_id]
     new_backlog_id = params[:backlog_id]
 

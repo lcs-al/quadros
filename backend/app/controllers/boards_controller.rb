@@ -21,7 +21,8 @@ class BoardsController < ApplicationController
         }
       },
       created_by: { only: [:id, :name, :email], methods: [:avatar_url] },
-      board_memberships: { include: { user: { only: [:id, :name, :email], methods: [:avatar_url] } } }
+      board_memberships: { include: { user: { only: [:id, :name, :email], methods: [:avatar_url] } } },
+      backlog: { only: [:id] }
     }).merge(
       current_user_role: @board.permission_level(current_user),
       members: @board.members.map { |m| m.as_json(only: [:id, :name, :email], methods: [:avatar_url]) }

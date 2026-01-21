@@ -110,6 +110,9 @@
     "delete_success": "Cartão excluído!",
     "restore": "Restaurar Cartão",
     "restore_success": "Cartão restaurado com sucesso!",
+		"return_to_backlog": "Devolver ao backlog",
+		"return_to_backlog_success": "Cartão devolvido ao backlog com sucesso!",
+		"actions": "Ações",
     "comments": {
       "title": "Comentários",
       "placeholder": "Escreva um comentário...",

@@ -11,15 +11,17 @@
             v-if="isOpen"
             class="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-4xl overflow-hidden"
           >
-            <!-- Header -->
             <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center">
               <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ title }}</h3>
-              <button 
-                @click="close"
-                class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
-              >
-                <font-awesome-icon icon="times" class="h-5 w-5" />
-              </button>
+              <div class="flex items-center space-x-2">
+                <slot name="headerActions"></slot>
+                <button 
+                  @click="close"
+                  class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
+                >
+                  <font-awesome-icon icon="times" class="h-5 w-5" />
+                </button>
+              </div>
             </div>
 
             <!-- Body -->

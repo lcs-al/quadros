@@ -110,6 +110,9 @@
     "delete_success": "Card deleted!",
     "restore": "Restore Card",
     "restore_success": "Card restored successfully!",
+		"return_to_backlog": "Return to backlog",
+		"return_to_backlog_success": "Card returned to backlog successfully!",
+		"actions": "Actions",
     "comments": {
       "title": "Comments",
       "placeholder": "Write a comment...",

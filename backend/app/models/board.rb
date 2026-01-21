@@ -23,5 +23,11 @@ class Board < ApplicationRecord
     membership = board_memberships.find_by(user: user)
     membership&.role&.to_sym
   end
+
+  private
+
+  def create_backlog
+    Backlog.create!(board: self)
+  end
 end
 

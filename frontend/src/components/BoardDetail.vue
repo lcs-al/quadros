@@ -220,6 +220,31 @@
       :title="modalState.cardDetail.data?.title || $t('card.title')"
       @close="closeCardDetail"
     >
+      <template #headerActions v-if="canEdit && modalState.cardDetail.data">
+        <div class="relative">
+          <button
+            @click.stop="toggleActionsMenu"
+            class="p-1 px-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-500 transition-colors"
+            :title="$t('card.actions')"
+          >
+            <font-awesome-icon icon="ellipsis-h" />
+          </button>
+          
+          <div
+            v-if="modalState.cardDetail.showActionsMenu"
+            class="absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 z-[70] py-1 focus:outline-none"
+            v-click-outside="() => modalState.cardDetail.showActionsMenu = false"
+          >
+            <button
+              @click="returnToBacklog"
+              class="flex items-center w-full px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+            >
+              <font-awesome-icon icon="archive" class="mr-3 text-gray-400" />
+              {{ $t('card.return_to_backlog') }}
+            </button>
+          </div>
+        </div>
+      </template>
       <div
         v-if="modalState.cardDetail.loading"
         class="flex justify-center py-12"
@@ -590,6 +615,7 @@ const modalState = reactive({
     commentLoading: false,
     users: [],
     loadingUsers: false,
+    showActionsMenu: false,
   },
   deleteCard: { isOpen: false, cardId: null, loading: false },
 });
@@ -753,6 +779,7 @@ const closeCardDetail = () => {
   modalState.cardDetail.isOpen = false;
   modalState.cardDetail.data = null;
   modalState.cardDetail.newComment = "";
+  modalState.cardDetail.showActionsMenu = false;
 };
 
 const submitEditCard = async () => {
@@ -830,6 +857,27 @@ const submitDeleteCard = async () => {
   }
 };
 
+const returnToBacklog = async () => {
+  const cardId = modalState.cardDetail.data?.id;
+  const backlogId = props.board?.backlog?.id;
+  if (!cardId || !backlogId) return;
+
+  try {
+    await api.patch(`/cards/${cardId}/move`, {
+      backlog_id: backlogId,
+      position: 1
+    });
+    closeCardDetail();
+    emit("refresh");
+    uiStore.addNotification({
+      type: "success",
+      message: t("card.return_to_backlog_success") || "Card returned to backlog"
+    });
+  } catch (error) {
+    console.error("Return to backlog failed", error);
+  }
+};
+
 const submitRestoreCard = async (cardId) => {
   try {
     await api.post(`/cards/${cardId}/restore`);
@@ -871,5 +919,9 @@ const getCardIconColor = (type) => {
     case 'bug': return 'text-red-600 dark:text-red-400';
     default: return 'text-blue-600 dark:text-blue-400';
   }
+};
+
+const toggleActionsMenu = () => {
+  modalState.cardDetail.showActionsMenu = !modalState.cardDetail.showActionsMenu;
 };
 </script>
