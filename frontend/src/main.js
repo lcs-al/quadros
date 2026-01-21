@@ -48,6 +48,10 @@ import {
 	faBug,
 	faClipboardList,
 	faArrowRight,
+	faArrowDown,
+	faFilter,
+	faFire,
+	faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 import {
 	faGithub,
@@ -96,6 +100,10 @@ library.add(
 	faGithub,
 	faLinkedin,
 	faArrowRight,
+	faArrowDown,
+	faFilter,
+	faFire,
+	faSearch,
 );
 
 const app = createApp(App)

@@ -88,6 +88,14 @@
 			"bulk_actions": "Ações em massa",
 			"selected_count": "{count} cards selecionados",
 			"bulk_move_success": "Cards movidos para o board com sucesso!"
+		},
+		"filters": {
+			"my_cards": "Meus Cards",
+			"bugs": "Bugs",
+			"high_priority": "Alta Prioridade",
+			"overdue": "Atrasados",
+			"clear_all": "Limpar todos",
+			"search_placeholder": "Buscar por título..."
 		}
   },
   "card": {

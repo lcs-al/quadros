@@ -37,7 +37,7 @@
         item-key="id"
         class="space-y-3 min-h-[50px]"
         @change="(evt) => $emit('card-change', evt, column.id)"
-        :disabled="!canEdit"
+        :disabled="!canEdit || isFiltered"
       >
         <template #item="{ element: card }">
           <BoardCard :card="card" @click="$emit('card-click', card)" />
@@ -57,6 +57,10 @@ defineProps({
     required: true,
   },
   canEdit: {
+    type: Boolean,
+    default: false,
+  },
+  isFiltered: {
     type: Boolean,
     default: false,
   },

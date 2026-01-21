@@ -1,10 +1,70 @@
 <template>
+  <div class="h-full flex flex-col">
+    <!-- Quick Filters -->
+    <div class="flex items-center space-x-2 py-3 px-1">
+      <div class="relative">
+        <input
+          v-model="searchQuery"
+          type="text"
+          :placeholder="$t('board.filters.search_placeholder')"
+          class="pl-8 pr-3 py-1.5 text-xs rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all w-48"
+        />
+        <font-awesome-icon icon="search" class="absolute left-2.5 top-1/2 transform -translate-y-1/2 text-gray-400 text-xs" />
+      </div>
+
+      <div class="h-6 w-px bg-gray-300 dark:bg-gray-600 mx-2"></div>
+
+      <button
+        @click="toggleFilter('my_cards')"
+        class="px-3 py-1.5 rounded-full text-xs font-medium transition-colors border"
+        :class="activeFilters.includes('my_cards') ? 'bg-indigo-100 text-indigo-700 border-indigo-200 dark:bg-indigo-900/30 dark:text-indigo-300 dark:border-indigo-700' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700 dark:hover:bg-gray-700'"
+      >
+        <font-awesome-icon icon="user" class="mr-1.5" />
+        {{ $t('board.filters.my_cards') }}
+      </button>
+      <button
+        @click="toggleFilter('bugs')"
+        class="px-3 py-1.5 rounded-full text-xs font-medium transition-colors border"
+        :class="activeFilters.includes('bugs') ? 'bg-red-100 text-red-700 border-red-200 dark:bg-red-900/30 dark:text-red-300 dark:border-red-700' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700 dark:hover:bg-gray-700'"
+      >
+        <font-awesome-icon icon="bug" class="mr-1.5" />
+        {{ $t('board.filters.bugs') }}
+      </button>
+      <button
+        @click="toggleFilter('high_priority')"
+        class="px-3 py-1.5 rounded-full text-xs font-medium transition-colors border"
+        :class="activeFilters.includes('high_priority') ? 'bg-orange-100 text-orange-700 border-orange-200 dark:bg-orange-900/30 dark:text-orange-300 dark:border-orange-700' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700 dark:hover:bg-gray-700'"
+      >
+        <font-awesome-icon icon="fire" class="mr-1.5" />
+        {{ $t('board.filters.high_priority') }}
+      </button>
+      <button
+        @click="toggleFilter('overdue')"
+        class="px-3 py-1.5 rounded-full text-xs font-medium transition-colors border"
+        :class="activeFilters.includes('overdue') ? 'bg-yellow-100 text-yellow-700 border-yellow-200 dark:bg-yellow-900/30 dark:text-yellow-300 dark:border-yellow-700' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700 dark:hover:bg-gray-700'"
+      >
+        <font-awesome-icon icon="clock" class="mr-1.5" />
+        {{ $t('board.filters.overdue') }}
+      </button>
+
+      <div v-if="activeFilters.length > 0" class="h-6 w-px bg-gray-300 dark:bg-gray-600 mx-2"></div>
+
+      <button
+        v-if="activeFilters.length > 0"
+        @click="clearFilters"
+        class="text-xs text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 font-medium hover:underline"
+      >
+        {{ $t('board.filters.clear_all') }}
+      </button>
+    </div>
+
   <div
-    class="flex overflow-x-auto h-[calc(100vh-10rem)] pb-4 items-start space-x-4"
+    class="flex overflow-x-auto h-[calc(100vh-13rem)] pb-4 items-start space-x-4"
   >
     <!-- Columns -->
+    <!-- Columns -->
     <draggable
-      v-model="columns"
+      :list="columns"
       group="columns"
       @end="onColumnDrop"
       item-key="id"
@@ -14,8 +74,9 @@
     >
       <template #item="{ element: column }">
         <BoardColumn
-          :column="column"
+          :column="getFilteredColumn(column)"
           :canEdit="canEdit"
+          :isFiltered="activeFilters.length > 0"
           @add-card="openAddCardModal"
           @delete-column="deleteColumn"
           @card-click="openCardDetail"
@@ -208,6 +269,7 @@
       </div>
     </BaseModal>
   </div>
+  </div>
 </template>
 
 <script setup>
@@ -226,6 +288,8 @@ const emit = defineEmits(["refresh"]);
 const authStore = useAuthStore();
 const uiStore = useUIStore();
 const columns = ref([]);
+const activeFilters = ref([]);
+const searchQuery = ref("");
 
 const isOwner = computed(() => {
   return props.board?.created_by?.id === authStore.user?.id;
@@ -368,5 +432,54 @@ const submitAddCard = async () => {
 const openCardDetail = (card) => {
   modalState.cardDetail.cardId = card.id;
   modalState.cardDetail.isOpen = true;
+};
+
+const toggleFilter = (filter) => {
+  if (activeFilters.value.includes(filter)) {
+    activeFilters.value = activeFilters.value.filter(f => f !== filter);
+  } else {
+    activeFilters.value.push(filter);
+  }
+};
+
+const clearFilters = () => {
+    activeFilters.value = [];
+}
+
+const getFilteredColumn = (column) => {
+    if (activeFilters.value.length === 0 && !searchQuery.value.trim()) return column;
+
+    const filteredCards = column.cards.filter(card => {
+        let matches = true;
+
+        if (searchQuery.value.trim()) {
+            const query = searchQuery.value.toLowerCase();
+            matches = matches && card.title.toLowerCase().includes(query);
+        }
+
+        if (activeFilters.value.includes('my_cards')) {
+            matches = matches && card.assignee?.id === authStore.user?.id;
+        }
+        if (activeFilters.value.includes('bugs')) {
+            matches = matches && card.card_type === 'bug';
+        }
+        if (activeFilters.value.includes('high_priority')) {
+             matches = matches && (card.priority === 'high' || card.priority === 'critical');
+        }
+        if (activeFilters.value.includes('overdue')) {
+             if (!card.due_date) matches = false;
+             else {
+                 const now = new Date();
+                 const due = new Date(card.due_date);
+                 matches = matches && due < now;
+             }
+        }
+        return matches;
+    });
+
+    return {
+        ...column,
+        cards: filteredCards
+    };
 };
 </script>
