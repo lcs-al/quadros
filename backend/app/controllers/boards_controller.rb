@@ -9,24 +9,27 @@ class BoardsController < ApplicationController
   def show
     authorize @board
     render json: @board.as_json(include: {
-      columns: {
-        include: {
-          cards: {
-            include: {
-              assignee: { 
-                methods: [:avatar_url]
-              }
-            }
-          }
-        }
-      },
-      created_by: { only: [:id, :name, :email], methods: [:avatar_url] },
-      board_memberships: { include: { user: { only: [:id, :name, :email], methods: [:avatar_url] } } },
-      backlog: { only: [:id] }
-    }).merge(
-      current_user_role: @board.permission_level(current_user),
-      members: @board.members.map { |m| m.as_json(only: [:id, :name, :email], methods: [:avatar_url]) }
-    )
+                                  columns: {
+                                    include: {
+                                      cards: {
+                                        include: {
+                                          assignee: {
+                                            methods: [:avatar_url]
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  created_by: { only: %i[id name email], methods: [:avatar_url] },
+                                  board_memberships: { include: { user: { only: %i[id name email],
+                                                                          methods: [:avatar_url] } } },
+                                  backlog: { only: [:id] }
+                                }).merge(
+                                  current_user_role: @board.permission_level(current_user),
+                                  members: @board.members.map do |m|
+                                             m.as_json(only: %i[id name email], methods: [:avatar_url])
+                                           end
+                                )
   end
 
   def create
@@ -52,7 +55,6 @@ class BoardsController < ApplicationController
     @board.destroy
   end
 
-
   private
 
   def set_board
@@ -63,4 +65,3 @@ class BoardsController < ApplicationController
     params.require(:board).permit(:title)
   end
 end
-

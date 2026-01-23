@@ -9,7 +9,7 @@ class JsonWebToken
   def self.decode(token)
     decoded = JWT.decode(token, SECRET_KEY)[0]
     HashWithIndifferentAccess.new decoded
-  rescue
+  rescue StandardError
     nil
   end
 end

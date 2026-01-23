@@ -20,6 +20,7 @@ class Board < ApplicationRecord
 
   def permission_level(user)
     return :owner if owner?(user)
+
     membership = board_memberships.find_by(user: user)
     membership&.role&.to_sym
   end
@@ -30,4 +31,3 @@ class Board < ApplicationRecord
     Backlog.create!(board: self)
   end
 end
-

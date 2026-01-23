@@ -9,7 +9,7 @@ class BoardMembershipsController < ApplicationController
 
   def create
     user = User.find_by(email: membership_params[:email])
-    
+
     if user.nil?
       render json: { error: 'User not found' }, status: :not_found
       return
@@ -34,7 +34,7 @@ class BoardMembershipsController < ApplicationController
 
   def update
     membership = @board.board_memberships.find(params[:id])
-    
+
     if membership.update(role: membership_params[:role])
       render json: membership, include: { user: { methods: [:avatar_url] } }
     else

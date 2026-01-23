@@ -27,11 +27,12 @@ if todo.cards.empty?
   Card.create!(column: todo, title: 'Setup Repo', description: 'Initialize git repo', assignee: admin, creator: admin)
 end
 if in_progress.cards.empty?
-  Card.create!(column: in_progress, title: 'Backend API', description: 'Build Rails API', assignee: user, creator: admin)
+  Card.create!(column: in_progress, title: 'Backend API', description: 'Build Rails API', assignee: user,
+               creator: admin)
 end
 if done.cards.empty?
-  Card.create!(column: done, title: 'Planning', description: 'Write implementation plan', assignee: admin, creator: admin)
+  Card.create!(column: done, title: 'Planning', description: 'Write implementation plan', assignee: admin,
+               creator: admin)
 end
 
-puts "Seeding completed."
-
+puts 'Seeding completed.'

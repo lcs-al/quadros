@@ -4,7 +4,6 @@ class CreateBoards < ActiveRecord::Migration[7.1]
       t.string :title
       t.references :created_by, null: false, foreign_key: { to_table: :users }
 
-
       t.timestamps
     end
   end

@@ -1,6 +1,6 @@
 class User < ApplicationRecord
   include Rails.application.routes.url_helpers
-  
+
   has_secure_password
   has_one_attached :avatar
 
@@ -16,11 +16,9 @@ class User < ApplicationRecord
   validates :name, presence: true
 
   def avatar_url
-    if avatar.attached?
-      url_for(avatar)
-    else
-      nil
-    end
+    return unless avatar.attached?
+
+    url_for(avatar)
   end
 
   def as_json(options = {})
@@ -31,5 +29,3 @@ class User < ApplicationRecord
     avatar.attached? ? Rails.application.routes.url_helpers.url_for(avatar) : nil
   end
 end
-
-

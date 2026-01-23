@@ -42,4 +42,3 @@ class ColumnsController < ApplicationController
     params.require(:column).permit(:title)
   end
 end
-

@@ -9,11 +9,11 @@ class Card < ApplicationRecord
 
   attribute :priority, :integer, default: 0
   enum priority: { low: 0, medium: 1, high: 2, critical: 3 }
-  
+
   validates :title, :creator, presence: true
   validate :must_belong_to_column_or_backlog
 
-  acts_as_list scope: [:column_id, :backlog_id]
+  acts_as_list scope: %i[column_id backlog_id]
 
   default_scope { where(deleted_at: nil) }
   scope :active, -> { where(deleted_at: nil) }
@@ -39,4 +39,3 @@ class Card < ApplicationRecord
     end
   end
 end
-

@@ -7,7 +7,7 @@ class CreateBoardMemberships < ActiveRecord::Migration[7.1]
 
       t.timestamps
     end
-    
-    add_index :board_memberships, [:board_id, :user_id], unique: true
+
+    add_index :board_memberships, %i[board_id user_id], unique: true
   end
 end

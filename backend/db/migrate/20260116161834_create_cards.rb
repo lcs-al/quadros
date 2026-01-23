@@ -7,7 +7,6 @@ class CreateCards < ActiveRecord::Migration[7.1]
       t.integer :position
       t.references :assignee, null: false, foreign_key: { to_table: :users }
 
-
       t.timestamps
     end
   end

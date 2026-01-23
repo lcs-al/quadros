@@ -6,7 +6,7 @@ class BacklogsController < ApplicationController
     authorize @board, policy_class: BoardPolicy
     render json: @backlog, include: {
       cards: {
-        include: [:assignee, :creator]
+        include: %i[assignee creator]
       }
     }
   end

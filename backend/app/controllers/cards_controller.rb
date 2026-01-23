@@ -11,7 +11,7 @@ class CardsController < ApplicationController
     @card = @container.cards.build(card_params)
     @card.creator = current_user
     @card.assignee = current_user if card_params[:assignee_id].blank?
-    
+
     if @card.save
       render json: @card, status: :created
     else
@@ -112,7 +112,7 @@ class CardsController < ApplicationController
     end
 
     render json: { success: true, count: @cards.count }
-  rescue => e
+  rescue StandardError => e
     render json: { error: e.message }, status: :unprocessable_entity
   end
 
@@ -123,7 +123,7 @@ class CardsController < ApplicationController
   end
 
   def card_params
-    params.require(:card).permit(:title, :description, :assignee_id, :column_id, :backlog_id, :card_type, :priority, :story_points, :due_date, labels: [])
+    params.require(:card).permit(:title, :description, :assignee_id, :column_id, :backlog_id, :card_type, :priority,
+                                 :story_points, :due_date, labels: [])
   end
 end
-

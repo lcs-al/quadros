@@ -31,4 +31,3 @@ class AuthController < ApplicationController
     params.permit(:name, :email, :password, :password_confirmation, :avatar)
   end
 end
-

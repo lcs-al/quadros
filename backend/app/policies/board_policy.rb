@@ -47,4 +47,3 @@ class BoardPolicy < ApplicationPolicy
     end
   end
 end
-
