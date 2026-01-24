@@ -1,25 +1,21 @@
 <template>
   <!-- Main Container with Cosmic Background -->
-  <div class="min-h-screen w-full flex items-center justify-center relative overflow-hidden bg-[#0F111A]">
+  <div class="min-h-screen w-full flex items-center justify-center relative overflow-hidden">
     
     <!-- Cosmic Background Effects -->
-    <div class="absolute inset-0 w-full h-full z-0 pointer-events-none">
+    <div class="absolute inset-0 w-full h-full z-0">
        <!-- Radial Gradient Center (Purple/Amber glow) -->
-       <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-[radial-gradient(ellipse_at_center,rgba(88,28,135,0.15)_0%,transparent_70%)] blur-3xl"></div>
+       <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-[radial-gradient(ellipse_at_center,rgba(186,28,135,0.15)_0%,transparent_70%)] blur-3xl"></div>
        
        <!-- Floating Orbs/Elements (Stylized representations of the image elements) -->
        <!-- Top Left: Notification Bell Area -->
-       <div class="absolute top-1/4 left-[15%] w-16 h-16 bg-gradient-to-br from-orange-400/20 to-red-500/20 rounded-full blur-xl animate-float-slow"></div>
+       <div class="absolute top-1/4 left-[18%] w-18 h-18 bg-gradient-to-br from-orange-400/20 to-red-500/20 rounded-full blur-xl animate-float-slow"></div>
        
        <!-- Top Right: Success Check Area -->
        <div class="absolute top-[20%] right-[15%] w-24 h-24 bg-gradient-to-br from-green-400/20 to-emerald-600/20 rounded-full blur-2xl animate-float-delayed"></div>
 
        <!-- Bottom Right: List/Task Area -->
-       <div class="absolute bottom-[20%] right-[20%] w-32 h-32 bg-gradient-to-tr from-blue-500/10 to-indigo-600/10 rounded-full blur-2xl animate-pulse-slow"></div>
-
-       <!-- Bottom Left: Orbit Lines (CSS Border) -->
-       <div class="absolute -bottom-20 -left-20 w-[600px] h-[600px] border border-white/5 rounded-full z-0 opacity-30 rotate-12"></div>
-       <div class="absolute top-20 right-20 w-[800px] h-[800px] border border-white/5 rounded-full z-0 opacity-20 -rotate-12"></div>
+       <div class="absolute bottom-[20%] right-[20%] w-24 h-24 bg-gradient-to-tr from-blue-500/10 to-indigo-600/10 rounded-full blur-2xl animate-pulse-slow"></div>
     </div>
 
     <!-- Floating 3D Elements (Visual Decoration) -->
@@ -40,7 +36,7 @@
 
     <!-- Rocket (Right Side) -->
     <div class="absolute bottom-[35%] right-[25%] hidden lg:block animate-launch">
-         <font-awesome-icon icon="rocket" class="text-4xl text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-red-500 transform rotate-45 drop-shadow-lg" />
+         <font-awesome-icon icon="rocket" class="text-4xl bg-clip-text bg-gradient-to-r from-orange-500 to-red-500 transform rotate-45 drop-shadow-lg" />
     </div>
 
     <!-- List Card (Bottom Right) -->
@@ -142,14 +138,11 @@
              </div>
              
              <!-- Forgot Password Link Area -->
-             <div class="flex justify-end pt-1">
+             <div class="flex justify-start py-1 pb-4">
                 <div class="text-right space-y-0.5">
                    <a href="#" class="text-xs text-gray-400 hover:text-white transition-colors block">
                      {{ $t('auth.login.forgot_password') }}
                    </a>
-                   <p class="text-[10px] text-gray-600 uppercase tracking-wider">
-                     {{ $t('auth.login.min_chars') }}
-                   </p>
                 </div>
              </div>
           </div>
@@ -158,7 +151,7 @@
           <button
               type="submit"
               :disabled="loading"
-              class="w-full py-3.5 px-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:to-indigo-500 text-white font-bold rounded-xl shadow-lg shadow-indigo-500/20 transform hover:-translate-y-0.5 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
+              class="cursor-pointer w-full py-3.5 px-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:to-indigo-500 text-white font-bold rounded-xl shadow-lg shadow-indigo-500/20 transform hover:-translate-y-0.5 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
           >
              <span v-if="!loading">{{ $t('auth.login.submit') }}</span>
              <span v-else class="flex items-center justify-center gap-2">
@@ -179,6 +172,7 @@
           <div class="text-center pt-2">
              <p class="text-gray-500 text-sm">
                {{ $t('auth.login.no_account') }}
+							 <br/>
                <router-link to="/register" class="text-indigo-400 hover:text-indigo-300 font-medium underline-offset-4 hover:underline transition-all ml-1">
                  {{ $t('auth.login.create_account') }}
                </router-link>
@@ -187,16 +181,16 @@
         </form>
 
         <!-- Footer / Lock Icon -->
-         <div class="mt-8 text-center space-y-3">
-             <div class="flex items-center justify-center gap-2 text-gray-500/60 text-xs">
+         <div class="mt-8 text-center space-y-2">
+             <div class="flex items-center justify-center gap-2 text-gray-200/60 text-xs">
                 <font-awesome-icon icon="lock" />
                 <span>{{ $t('auth.login.security_notice') }}</span>
              </div>
              
-             <div class="flex items-center justify-center gap-4 text-[11px] text-gray-600">
-                <router-link to="/terms" class="hover:text-gray-400 transition-colors">{{ $t('auth.login.terms') }}</router-link>
+             <div class="flex items-center justify-center gap-1 text-[11px] text-gray-200/60">
+                <router-link to="/terms" class="hover:text-gray-100 transition-colors">{{ $t('auth.login.terms') }}</router-link>
                 <span>&</span>
-                <router-link to="/privacy" class="hover:text-gray-400 transition-colors">{{ $t('auth.login.privacy') }}</router-link>
+                <router-link to="/privacy" class="hover:text-gray-100 transition-colors">{{ $t('auth.login.privacy') }}</router-link>
              </div>
          </div>
 
