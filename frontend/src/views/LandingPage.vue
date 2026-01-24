@@ -301,7 +301,7 @@ const scrollToFeatures = () => {
           <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] bg-[radial-gradient(circle_at_center,rgba(88,28,135,0.15)_0%,transparent_60%)] blur-3xl -z-10 pointer-events-none"></div>
           <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-purple-600/10 blur-[100px] rounded-full -z-10 animate-pulse"></div>
           
-          <div class="max-w-6xl mx-auto w-full space-y-12">
+          <div class="max-w-7xl mx-auto w-full space-y-10">
             
             <div class="space-y-6">
               <div class="inline-block px-4 py-1.5 rounded-full bg-green-500/10 text-green-300 font-bold text-xs uppercase tracking-wider border border-green-500/20 shadow-[0_0_15px_rgba(168,85,247,0.3)]">
