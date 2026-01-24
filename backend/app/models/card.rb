@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Represents a task or issue (Card) in the system, which can belong to a column or backlog.
 class Card < ApplicationRecord
   belongs_to :column, optional: true
   belongs_to :backlog, optional: true

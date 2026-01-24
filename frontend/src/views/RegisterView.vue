@@ -191,16 +191,17 @@
 <script setup>
 import { ref, reactive } from 'vue';
 import { useAuthStore } from '../stores/auth';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 
 const authStore = useAuthStore();
 const router = useRouter();
+const route = useRoute();
 const { t } = useI18n();
 
 const form = reactive({
   name: '',
-  email: '',
+  email: route.query.email || '',
   password: '',
   password_confirmation: '',
   avatar: null,
