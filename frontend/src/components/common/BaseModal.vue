@@ -9,7 +9,7 @@
         <Transition name="scale" appear>
           <div 
             v-if="isOpen"
-            class="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-4xl overflow-hidden"
+            class="bg-white dark:bg-[#1A1D26] rounded-lg shadow-xl w-full max-w-4xl overflow-hidden"
           >
             <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center">
               <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ title }}</h3>
@@ -30,7 +30,7 @@
             </div>
 
             <!-- Footer -->
-            <div v-if="$slots.footer" class="px-6 py-4 bg-gray-50 dark:bg-gray-800/50 border-t border-gray-100 dark:border-gray-700 flex justify-end space-x-3">
+            <div v-if="$slots.footer" class="px-6 py-4 bg-gray-50 dark:bg-[#1A1D26]/50 border-t border-gray-100 dark:border-gray-700 flex justify-end space-x-3">
               <slot name="footer"></slot>
             </div>
           </div>

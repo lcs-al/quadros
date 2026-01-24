@@ -3,7 +3,7 @@ import Navbar from '../components/common/Navbar.vue';
 </script>
 
 <template>
-  <div class="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans">
+  <div class="min-h-screen bg-gray-50 dark:bg-[#0F111A] text-gray-900 dark:text-gray-100 font-sans">
     <Navbar />
     <div class="max-w-4xl mx-auto px-6 py-24">
       <h1 class="text-4xl font-bold mb-8 text-indigo-600 dark:text-indigo-400">Termos de Uso</h1>

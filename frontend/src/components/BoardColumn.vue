@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex-shrink-0 w-80 bg-gray-200 dark:bg-gray-800 rounded-md shadow-md flex flex-col max-h-full"
+    class="flex-shrink-0 w-80 bg-gray-200 dark:bg-[#1A1D26] rounded-md shadow-md flex flex-col max-h-full"
   >
     <!-- Column Header -->
     <div

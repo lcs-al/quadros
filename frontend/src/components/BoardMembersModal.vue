@@ -8,7 +8,7 @@
       <!-- Members List -->
       <div class="space-y-4 max-h-[300px] overflow-y-auto pr-2">
         <!-- Owner -->
-        <div v-if="owner" class="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
+        <div v-if="owner" class="flex items-center justify-between p-3 bg-gray-50 dark:bg-[#1A1D26]/50 rounded-lg">
           <div class="flex items-center space-x-3">
             <UserAvatar :user="owner" size="md" />
             <div>

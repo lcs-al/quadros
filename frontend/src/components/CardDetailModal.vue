@@ -18,7 +18,7 @@
 
           <div
             v-if="modalState.showActionsMenu"
-            class="absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 z-[70] py-1 focus:outline-none"
+            class="absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white dark:bg-[#1A1D26] ring-1 ring-black ring-opacity-5 z-[70] py-1 focus:outline-none"
             v-click-outside="() => (modalState.showActionsMenu = false)"
           >
             <button
@@ -187,7 +187,7 @@
                     }}</span>
                   </div>
                   <p
-                    class="text-sm text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-gray-800/50 p-3 rounded-lg border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition-colors"
+                    class="text-sm text-gray-700 dark:text-gray-300 bg-gray-50 dark:bg-[#1A1D26]/50 p-3 rounded-lg border border-transparent hover:border-gray-200 dark:hover:border-gray-700 transition-colors"
                   >
                     {{ comment.content }}
                   </p>
@@ -236,7 +236,7 @@
         <!-- Sidebar Column (Right) -->
         <div class="space-y-6">
           <div
-            class="bg-gray-50/50 dark:bg-gray-800/30 rounded-2xl p-5 border border-gray-100 dark:border-gray-700 space-y-6"
+            class="bg-gray-50/50 dark:bg-[#1A1D26]/30 rounded-2xl p-5 border border-gray-100 dark:border-gray-700 space-y-6"
           >
             <div>
               <span class="block text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">{{ $t("card.priority") }}</span>

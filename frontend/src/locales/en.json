@@ -9,7 +9,15 @@
 			"email_placeholder": "Email address",
 			"password_label": "Password",
 			"password_placeholder": "Password",
-			"submit": "Sign in"
+			"submit": "Enter Quadros",
+			"subtitle": "Your system is ready for you.",
+			"forgot_password": "Forgot your password?",
+			"min_chars": "Minimum 8 characters",
+			"no_account": "Not using Quadros yet?",
+			"create_account": "Create free account",
+			"security_notice": "Your data is safe and protected.",
+			"terms": "Terms of Use",
+			"privacy": "Privacy Policy"
 		},
 		"register": {
 			"title": "Create your account",

@@ -32,7 +32,7 @@
                   <div 
                     v-for="(board, index) in boards" 
                     :key="board.id" 
-                    class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 cursor-pointer hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group relative"
+                    class="bg-white dark:bg-[#1A1D26] p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 cursor-pointer hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group relative"
                     :style="{ transitionDelay: `${index * 50}ms` }"
                   >
                     <button

@@ -28,7 +28,7 @@
         </div>
 
         <!-- Backlog Cards List -->
-        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
+        <div class="bg-white dark:bg-[#1A1D26] rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
           <div v-if="backlog && backlog.cards.length === 0" class="p-12 text-center space-y-4">
             <font-awesome-icon icon="clipboard-list" class="text-5xl text-gray-300 dark:text-gray-600" />
             <p class="text-gray-500 dark:text-gray-400">{{ $t('board.backlog.empty') }}</p>
@@ -38,7 +38,7 @@
           </div>
           <div v-else class="divide-y divide-gray-100 dark:divide-gray-700">
             <!-- Select All Row -->
-            <div class="p-4 bg-gray-50/50 dark:bg-gray-800/50 flex items-center space-x-4 border-b border-gray-100 dark:border-gray-700">
+            <div class="p-4 bg-gray-50/50 dark:bg-[#1A1D26]/50 flex items-center space-x-4 border-b border-gray-100 dark:border-gray-700">
               <input 
                 type="checkbox" 
                 :checked="isAllSelected" 
@@ -98,7 +98,7 @@
     <!-- Bulk Action Bar -->
     <Transition name="slide-up">
       <div v-if="selectedCards.size > 0" 
-           class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-white dark:bg-gray-800 shadow-2xl rounded-full px-6 py-4 flex items-center space-x-8 border border-gray-100 dark:border-gray-700 z-[100] min-w-[400px]">
+           class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-white dark:bg-[#1A1D26] shadow-2xl rounded-full px-6 py-4 flex items-center space-x-8 border border-gray-100 dark:border-gray-700 z-[100] min-w-[400px]">
         <div class="flex items-center space-x-4 pr-8 border-r border-gray-100 dark:border-gray-700">
           <div class="bg-indigo-600 text-white text-xs font-bold px-2 py-1 rounded-full min-w-[24px] text-center">
             {{ selectedCards.size }}
@@ -167,7 +167,7 @@
                 <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">{{ $t('card.description') }}</label>
                 <textarea v-model="modalState.cardDetail.editData.description" rows="6" @blur="saveCardEdit" class="w-full px-4 py-3 bg-gray-50/50 dark:bg-gray-700/30 border border-transparent rounded-xl focus:border-indigo-500 focus:outline-none transition-all text-gray-700 dark:text-gray-200 text-sm" :placeholder="$t('card.description_placeholder')"></textarea>
             </div>
-            <div class="flex justify-between items-center bg-gray-50 dark:bg-gray-800 p-4 rounded-xl">
+            <div class="flex justify-between items-center bg-gray-50 dark:bg-[#1A1D26] p-4 rounded-xl">
                  <div v-if="modalState.cardDetail.data.creator" class="text-xs text-gray-500">
                      {{ $t('card.metadata.creator') }}: {{ modalState.cardDetail.data.creator.name }}
                  </div>

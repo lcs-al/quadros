@@ -4,7 +4,7 @@
       <div 
         v-for="notification in uiStore.notifications" 
         :key="notification.id"
-        class="pointer-events-auto flex items-center p-4 rounded-lg shadow-lg border bg-white dark:bg-gray-800 border-gray-100 dark:border-gray-700 max-w-sm w-full animate-slide-in"
+        class="pointer-events-auto flex items-center p-4 rounded-lg shadow-lg border bg-white dark:bg-[#1A1D26] border-gray-100 dark:border-gray-700 max-w-sm w-full animate-slide-in"
       >
         <div class="flex-1">
           <p class="text-sm font-medium text-gray-900 dark:text-white">{{ notification.message }}</p>

@@ -19,12 +19,12 @@ const toggleSidebar = () => {
 
 <template>
   <aside 
-    class="fixed left-0 top-16 h-[calc(100vh-4rem)] bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 transition-all duration-300 z-40 flex flex-col"
+    class="fixed left-0 top-16 h-[calc(100vh-4rem)] bg-white dark:bg-[#0F111A] border-r border-gray-200 dark:border-gray-800 transition-all duration-300 z-40 flex flex-col"
     :class="[isExpanded ? 'w-64' : 'w-20']"
   >
     <button 
       @click="toggleSidebar"
-      class="absolute top-1/2 -right-3 transform -translate-y-1/2 w-6 h-6 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-full flex items-center justify-center cursor-pointer text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 shadow-sm z-50 transition-colors"
+      class="absolute top-1/2 -right-3 transform -translate-y-1/2 w-6 h-6 bg-white dark:bg-[#0F111A] border border-gray-200 dark:border-gray-800 rounded-full flex items-center justify-center cursor-pointer text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 shadow-sm z-50 transition-colors"
       :title="isExpanded ? 'Collapse sidebar' : 'Expand sidebar'"
     >
       <font-awesome-icon :icon="isExpanded ? 'chevron-left' : 'chevron-right'" class="text-xs" />

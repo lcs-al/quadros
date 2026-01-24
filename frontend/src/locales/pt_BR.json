@@ -9,7 +9,15 @@
 			"email_placeholder": "Endereço de e-mail",
 			"password_label": "Senha",
 			"password_placeholder": "Senha",
-			"submit": "Entrar"
+			"submit": "Entrar no Quadros",
+			"subtitle": "Seu sistema está pronto para você.",
+			"forgot_password": "Esqueceu sua senha?",
+			"min_chars": "Mínimo 8 caracteres",
+			"no_account": "Ainda não usa o Quadros?",
+			"create_account": "Criar conta gratuita",
+			"security_notice": "Seus dados estão seguros e protegidos.",
+			"terms": "Termos de Uso",
+			"privacy": "Política de Privacidade"
 		},
 		"register": {
 			"title": "Crie sua conta",

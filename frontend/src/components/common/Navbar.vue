@@ -7,7 +7,7 @@ const isLoginPage = computed(() => route.path === '/login');
 </script>
 
 <template>
-  <nav class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-100 dark:border-gray-800 transition-colors duration-300">
+  <nav class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-20 py-4 bg-white/80 dark:bg-[#0F111A]/80 backdrop-blur-md border-b border-gray-100 dark:border-gray-800 transition-colors duration-300">
     <router-link to="/" class="flex items-center gap-2 cursor-pointer select-none">
         <div class="grid grid-cols-2 gap-0.5 w-6 h-6 rounded overflow-hidden">
         <div class="bg-indigo-600"></div>

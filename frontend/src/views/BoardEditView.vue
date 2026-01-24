@@ -37,7 +37,7 @@
                      @keyup.enter="saveTitle"
                      @keyup.esc="cancelEditing"
                      type="text" 
-                     class="text-2xl font-bold bg-white dark:bg-gray-800 border-2 border-indigo-500 rounded-md px-2 py-1 focus:outline-none w-full text-gray-900 dark:text-white shadow-sm"
+                     class="text-2xl font-bold bg-white dark:bg-[#1A1D26] border-2 border-indigo-500 rounded-md px-2 py-1 focus:outline-none w-full text-gray-900 dark:text-white shadow-sm"
                    />
                  </div>
                </div>

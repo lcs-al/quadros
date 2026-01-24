@@ -7,7 +7,7 @@
           v-model="searchQuery"
           type="text"
           :placeholder="$t('board.filters.search_placeholder')"
-          class="pl-8 pr-3 py-1.5 text-xs rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all w-48"
+          class="pl-8 pr-3 py-1.5 text-xs rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-[#1A1D26] text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all w-48"
         />
         <font-awesome-icon icon="search" class="absolute left-2.5 top-1/2 transform -translate-y-1/2 text-gray-400 text-xs" />
       </div>
@@ -17,7 +17,7 @@
       <!-- Type Filter -->
       <select
         v-model="selectedType"
-        class="pl-3 pr-8 py-1.5 text-xs rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all appearance-none cursor-pointer"
+        class="pl-3 pr-8 py-1.5 text-xs rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-[#1A1D26] text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all appearance-none cursor-pointer"
         style="background-image: none;"
       >
         <option value="">{{ $t('board.filters.all_types') }}</option>
@@ -29,7 +29,7 @@
       <!-- Assignee Filter -->
       <select
         v-model="selectedAssignee"
-        class="pl-3 pr-8 py-1.5 text-xs rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all appearance-none cursor-pointer max-w-[150px] truncate"
+        class="pl-3 pr-8 py-1.5 text-xs rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-[#1A1D26] text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all appearance-none cursor-pointer max-w-[150px] truncate"
         style="background-image: none;"
       >
         <option value="">{{ $t('board.filters.all_assignees') }}</option>
@@ -43,7 +43,7 @@
       <button
         @click="toggleFilter('my_cards')"
         class="px-3 py-1.5 rounded-full text-xs font-medium transition-colors border"
-        :class="activeFilters.includes('my_cards') ? 'bg-indigo-100 text-indigo-700 border-indigo-200 dark:bg-indigo-900/30 dark:text-indigo-300 dark:border-indigo-700' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700 dark:hover:bg-gray-700'"
+        :class="activeFilters.includes('my_cards') ? 'bg-indigo-100 text-indigo-700 border-indigo-200 dark:bg-indigo-900/30 dark:text-indigo-300 dark:border-indigo-700' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 dark:bg-[#1A1D26] dark:text-gray-300 dark:border-gray-700 dark:hover:bg-gray-700'"
       >
         <font-awesome-icon icon="user" class="mr-1.5" />
         {{ $t('board.filters.my_cards') }}
@@ -51,7 +51,7 @@
       <button
         @click="toggleFilter('bugs')"
         class="px-3 py-1.5 rounded-full text-xs font-medium transition-colors border"
-        :class="activeFilters.includes('bugs') ? 'bg-red-100 text-red-700 border-red-200 dark:bg-red-900/30 dark:text-red-300 dark:border-red-700' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700 dark:hover:bg-gray-700'"
+        :class="activeFilters.includes('bugs') ? 'bg-red-100 text-red-700 border-red-200 dark:bg-red-900/30 dark:text-red-300 dark:border-red-700' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 dark:bg-[#1A1D26] dark:text-gray-300 dark:border-gray-700 dark:hover:bg-gray-700'"
       >
         <font-awesome-icon icon="bug" class="mr-1.5" />
         {{ $t('board.filters.bugs') }}
@@ -59,7 +59,7 @@
       <button
         @click="toggleFilter('high_priority')"
         class="px-3 py-1.5 rounded-full text-xs font-medium transition-colors border"
-        :class="activeFilters.includes('high_priority') ? 'bg-orange-100 text-orange-700 border-orange-200 dark:bg-orange-900/30 dark:text-orange-300 dark:border-orange-700' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700 dark:hover:bg-gray-700'"
+        :class="activeFilters.includes('high_priority') ? 'bg-orange-100 text-orange-700 border-orange-200 dark:bg-orange-900/30 dark:text-orange-300 dark:border-orange-700' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 dark:bg-[#1A1D26] dark:text-gray-300 dark:border-gray-700 dark:hover:bg-gray-700'"
       >
         <font-awesome-icon icon="fire" class="mr-1.5" />
         {{ $t('board.filters.high_priority') }}
@@ -67,7 +67,7 @@
       <button
         @click="toggleFilter('overdue')"
         class="px-3 py-1.5 rounded-full text-xs font-medium transition-colors border"
-        :class="activeFilters.includes('overdue') ? 'bg-yellow-100 text-yellow-700 border-yellow-200 dark:bg-yellow-900/30 dark:text-yellow-300 dark:border-yellow-700' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-700 dark:hover:bg-gray-700'"
+        :class="activeFilters.includes('overdue') ? 'bg-yellow-100 text-yellow-700 border-yellow-200 dark:bg-yellow-900/30 dark:text-yellow-300 dark:border-yellow-700' : 'bg-white text-gray-600 border-gray-200 hover:bg-gray-50 dark:bg-[#1A1D26] dark:text-gray-300 dark:border-gray-700 dark:hover:bg-gray-700'"
       >
         <font-awesome-icon icon="clock" class="mr-1.5" />
         {{ $t('board.filters.overdue') }}

@@ -1,6 +1,6 @@
 <template>
   <div class="max-w-4xl mx-auto py-8 px-4 sm:px-6 lg:px-8 mt-16">
-    <div class="bg-white dark:bg-gray-800 shadow rounded-lg overflow-hidden transition-colors duration-200">
+    <div class="bg-white dark:bg-[#1A1D26] shadow rounded-lg overflow-hidden transition-colors duration-200">
       <div class="px-4 py-5 border-b border-gray-200 dark:border-gray-700 sm:px-6">
         <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{{ $t('profile.title') }}</h1>
       </div>

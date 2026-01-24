@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen flex flex-col items-center justify-center">
-    <div class="w-full max-w-md p-8 space-y-8 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-100 dark:border-gray-700">
+    <div class="w-full max-w-md p-8 space-y-8 bg-white dark:bg-[#1A1D26] rounded-lg shadow-lg border border-gray-100 dark:border-gray-700">
       <div class="flex flex-col items-center justify-center mb-4">
         <span class="mb-2 text-2xl font-semibold text-gray-900 dark:text-white">
           {{ $t('navbar.brand') }}

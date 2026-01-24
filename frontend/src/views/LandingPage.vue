@@ -2,9 +2,10 @@
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
 
+import Navbar from '../components/common/Navbar.vue';
+
 import _imports_0 from '../assets/landing/capturar.png'
 import _imports_1 from '../assets/landing/organizar.png'
-import _imports_2 from '../assets/landing/engajar.png'
 
 const router = useRouter(); 
 const email = ref('');
@@ -27,24 +28,7 @@ const scrollToFeatures = () => {
 
 <template>
   <div class="font-sans antialiased text-gray-100 bg-[#0F111A] min-h-screen overflow-x-hidden selection:bg-indigo-500/30">
-    <nav class="absolute top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-6 md:px-12 max-w-7xl mx-auto">
-      <div class="flex items-center gap-3 cursor-pointer select-none">
-        <div class="grid grid-cols-2 gap-0.5 w-6 h-6 rounded overflow-hidden">
-          <div class="bg-indigo-600"></div>
-          <div class="bg-green-500"></div>
-          <div class="bg-orange-500"></div>
-          <div class="bg-purple-600"></div>
-        </div>
-        <span class="text-xl font-bold tracking-tight text-white">{{ $t('navbar.brand') }}</span>
-      </div>
-
-      <router-link 
-        to="/login"
-        class="px-6 py-2 rounded-full text-sm font-semibold text-gray-900 bg-white hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
-      >
-        {{ $t('auth.login.submit') }}
-      </router-link>
-    </nav>
+    <Navbar />
 
     <div class="snap-y snap-mandatory h-screen overflow-y-scroll scroll-smooth">
       <section class="snap-start h-screen flex flex-col justify-center px-6 relative overflow-hidden">
@@ -294,14 +278,24 @@ const scrollToFeatures = () => {
             </div>
           </div>
 
-          <div class="relative h-full w-full flex items-center justify-center group">
-             <div class="absolute inset-0 bg-purple-600/20 blur-[100px] rounded-full opacity-0 group-hover:opacity-40 transition-opacity duration-700"></div>
-             <img :src="_imports_1" alt="Organizar" class="relative w-full h-auto object-contain transform transition-transform duration-700 hover:scale-105 drop-shadow-2xl">
+          <div class="relative h-full w-full flex items-center justify-center group pointer-events-none">
+             <div class="absolute inset-0 bg-gradient-to-tr from-blue-900/20 via-indigo-900/20 to-purple-900/20 blur-3xl opacity-60"></div>
+             
+             <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[10%] h-[120%] bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.15)_0%,transparent_70%)] blur-2xl"></div>
+
+             <div class="relative w-full h-auto flex items-center justify-center">
+               <img 
+                :src="_imports_1" 
+                alt="Capturar" 
+                class="relative w-[140%] h-auto max-w-none object-contain drop-shadow-2xl"
+                style="mask-image: radial-gradient(circle at center, black 40%, transparent 95%); -webkit-mask-image: radial-gradient(circle at center, black 20%, transparent 95%);"
+               >
+             </div>
           </div>
         </div>
       </section>
 
-      <section class="snap-start h-screen flex flex-col justify-between p-6 md:p-12 md:px-24 bg-[#13151D]">
+      <section class="snap-start h-screen flex flex-col justify-between md:p-24">
         <div class="flex-grow flex flex-col items-center justify-center w-full relative z-10 px-4 md:px-0">
           
           <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150%] h-[150%] bg-[radial-gradient(circle_at_center,rgba(88,28,135,0.15)_0%,transparent_60%)] blur-3xl -z-10 pointer-events-none"></div>
@@ -309,11 +303,11 @@ const scrollToFeatures = () => {
           
           <div class="max-w-6xl mx-auto w-full space-y-12">
             
-            <div class="text-center space-y-6">
-              <div class="inline-block px-4 py-1.5 rounded-full bg-purple-500/10 text-purple-300 font-bold text-xs uppercase tracking-wider border border-purple-500/20 shadow-[0_0_15px_rgba(168,85,247,0.3)]">
+            <div class="space-y-6">
+              <div class="inline-block px-4 py-1.5 rounded-full bg-green-500/10 text-green-300 font-bold text-xs uppercase tracking-wider border border-green-500/20 shadow-[0_0_15px_rgba(168,85,247,0.3)]">
                 {{ $t('landing.step3.badge') }}
               </div>
-              <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight tracking-tight drop-shadow-lg">
+              <h2 class="text-center text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight tracking-tight drop-shadow-lg">
                 {{ $t('landing.step3.title_start') }} <br />
                 <span class="text-transparent bg-clip-text bg-gradient-to-r from-gray-100 to-gray-400">
                   {{ $t('landing.step3.title_end') }}
@@ -424,33 +418,32 @@ const scrollToFeatures = () => {
           </div>
         </div>
 
-        <footer class="w-full py-8 border-t border-gray-800 mt-8">
-          <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-            <div class="text-sm text-gray-500">
-              {{ $t('landing.footer.copyright') }}
-            </div>
-
-            <div class="flex items-center gap-6 text-sm font-medium">
-               <router-link to="/terms" class="text-gray-500 hover:text-indigo-400 transition-colors">
-                {{ $t('nav.terms') }}
-              </router-link>
-              <router-link to="/privacy" class="text-gray-500 hover:text-indigo-400 transition-colors">
-                {{ $t('nav.privacy') }}
-              </router-link>
-            </div>
-            
-            <div class="flex items-center gap-6">
-              <a href="https://github.com/lcs-al" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-white transition-colors" title="GitHub">
-                <font-awesome-icon :icon="['fab', 'github']" class="text-xl" />
-              </a>
-              <a href="https://www.linkedin.com/in/lcs-al/" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-blue-400 transition-colors" title="LinkedIn">
-                <font-awesome-icon :icon="['fab', 'linkedin']" class="text-xl" />
-              </a>
-            </div>
-          </div>
-        </footer>
+				<footer class="w-full py-6 border-t border-gray-800 mt-8">
+					<div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+						<div class="text-sm text-gray-500">
+							{{ $t('landing.footer.copyright') }}
+						</div>
+	
+						<div class="flex items-center gap-6 text-sm font-medium">
+							 <router-link to="/terms" class="text-gray-500 hover:text-indigo-400 transition-colors">
+								{{ $t('nav.terms') }}
+							</router-link>
+							<router-link to="/privacy" class="text-gray-500 hover:text-indigo-400 transition-colors">
+								{{ $t('nav.privacy') }}
+							</router-link>
+						</div>
+						
+						<div class="flex items-center gap-6">
+							<a href="https://github.com/lcs-al" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-white transition-colors" title="GitHub">
+								<font-awesome-icon :icon="['fab', 'github']" class="text-xl" />
+							</a>
+							<a href="https://www.linkedin.com/in/lcs-al/" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-blue-400 transition-colors" title="LinkedIn">
+								<font-awesome-icon :icon="['fab', 'linkedin']" class="text-xl" />
+							</a>
+						</div>
+					</div>
+				</footer>
       </section>
-
     </div>
   </div>
 </template>
