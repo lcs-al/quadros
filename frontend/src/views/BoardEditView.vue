@@ -66,6 +66,19 @@
                     <font-awesome-icon icon="clipboard-list" class="h-4 w-4" />
                     <span>{{ $t('board.backlog.go_to') }}</span>
                   </BaseButton>
+
+                  <!-- Conclude Tasks Button (Owner/Editor) -->
+                  <BaseButton
+                    variant="success"
+                    size="sm"
+                    @click="concludeTasks"
+                    :loading="concludingTasks"
+                    class="flex items-center space-x-2"
+                    :title="$t('board.conclude_tasks_tooltip')"
+                  >
+                    <font-awesome-icon icon="check-double" class="h-4 w-4" />
+                    <span>{{ $t('board.conclude_tasks') }}</span>
+                  </BaseButton>
                   
                   <!-- Member Avatars -->
                   <div class="flex -space-x-2 overflow-hidden">
@@ -140,6 +153,21 @@ const isEditingTitle = ref(false);
 const editTitleValue = ref('');
 const titleInput = ref(null);
 const isMembersModalOpen = ref(false);
+const concludingTasks = ref(false);
+
+const concludeTasks = async () => {
+  if (!confirm(t('board.confirm_conclude_tasks'))) return;
+
+  concludingTasks.value = true;
+  try {
+    await api.post(`/boards/${board.value.id}/conclude_cards`);
+    await fetchBoardDetails();
+  } catch (error) {
+    console.error('Failed to conclude cards', error);
+  } finally {
+    concludingTasks.value = false;
+  }
+};
 
 const fetchBoardDetails = async () => {
   loading.value = true;

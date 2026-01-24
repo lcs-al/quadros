@@ -87,6 +87,9 @@
 			"delete_confirm_title": "Confirm Delete",
 			"delete_confirm_body": "Are you sure? This will delete all cards in this column."
 		},
+		"conclude_tasks": "Conclude Tasks",
+		"conclude_tasks_tooltip": "Conclude all tasks in the final column",
+		"confirm_conclude_tasks": "Are you sure you want to conclude all tasks in the final column?",
 		"columns": "columns",
 		"backlog": {
 			"title": "Board Backlog",

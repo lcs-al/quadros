@@ -85,8 +85,12 @@
 			"add": "Adicionar Coluna",
 			"prompt_title": "Digite o título da coluna:",
 			"delete_confirm_title": "Confirmar Exclusão",
-			"delete_confirm_body": "Tem certeza? Isso excluirá todos os cartões desta coluna."
+			"delete_confirm_body": "Tem certeza? Isso excluirá todos os cartões desta coluna.",
+			"completed_column": "Coluna de finalização (cards aqui podem ser concluídos)"
 		},
+		"conclude_tasks": "Concluir tarefas",
+		"conclude_tasks_tooltip": "Concluir todas as tarefas da coluna de finalização",
+		"confirm_conclude_tasks": "Tem certeza que deseja concluir todas as tarefas da última coluna?",
 		"columns": "colunas",
 		"backlog": {
 			"title": "Backlog do Quadro",

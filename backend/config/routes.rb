@@ -11,6 +11,9 @@ Rails.application.routes.draw do
         patch :move
       end
     end
+    member do
+      post 'conclude_cards'
+    end
   end
 
   resources :cards, only: %i[create show update destroy] do

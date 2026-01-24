@@ -23,6 +23,10 @@ class BoardPolicy < ApplicationPolicy
     owner?
   end
 
+  def conclude_cards?
+    owner? || editor?
+  end
+
   private
 
   def owner?

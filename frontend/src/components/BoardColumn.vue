@@ -6,8 +6,9 @@
     <div
       class="p-3 flex justify-between items-center bg-gray-300 dark:bg-gray-700 rounded-t-md column-handle cursor-move"
     >
-      <h3 class="font-bold text-gray-700 dark:text-gray-200">
+      <h3 class="font-bold text-gray-700 dark:text-gray-200 flex items-center gap-2">
         {{ column.title }}
+        <font-awesome-icon v-if="isLastColumn" icon="check" class="text-green-500" :title="$t('board.column.completed_column')" />
       </h3>
       <div class="flex space-x-1">
         <!-- Add Card Button -->
@@ -61,6 +62,10 @@ defineProps({
     default: false,
   },
   isFiltered: {
+    type: Boolean,
+    default: false,
+  },
+  isLastColumn: {
     type: Boolean,
     default: false,
   },

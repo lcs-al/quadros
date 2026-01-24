@@ -1,5 +1,5 @@
 class BoardsController < ApplicationController
-  before_action :set_board, only: %i[show update destroy]
+  before_action :set_board, only: %i[show update destroy conclude_cards]
 
   def index
     @boards = policy_scope(Board)
@@ -53,6 +53,20 @@ class BoardsController < ApplicationController
   def destroy
     authorize @board
     @board.destroy
+  end
+
+  def conclude_cards
+    authorize @board
+    last_column = @board.columns.order(position: :asc).last
+    
+    if last_column
+      ActiveRecord::Base.transaction do
+        last_column.cards.active.each(&:conclude)
+      end
+      render json: { message: 'Cards concluded successfully' }
+    else
+      render json: { error: 'No columns found' }, status: :unprocessable_entity
+    end
   end
 
   private

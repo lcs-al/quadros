@@ -19,8 +19,14 @@ class Card < ApplicationRecord
   acts_as_list scope: %i[column_id backlog_id]
 
   default_scope { where(deleted_at: nil) }
-  scope :active, -> { where(deleted_at: nil) }
+  scope :active, -> { where(deleted_at: nil, completed_at: nil) }
   scope :deleted, -> { unscope(where: :deleted_at).where.not(deleted_at: nil) }
+  scope :completed, -> { where(deleted_at: nil).where.not(completed_at: nil) }
+
+  def conclude
+    update(completed_at: Time.current)
+    remove_from_list
+  end
 
   def soft_delete
     remove_from_list

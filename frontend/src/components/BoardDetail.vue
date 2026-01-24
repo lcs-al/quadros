@@ -98,11 +98,12 @@
       :handle="canEdit ? '.column-handle' : ''"
       :disabled="!canEdit"
     >
-      <template #item="{ element: column }">
+      <template #item="{ element: column, index }">
         <BoardColumn
           :column="getFilteredColumn(column)"
           :canEdit="canEdit"
           :isFiltered="activeFilters.length > 0"
+          :isLastColumn="index === columns.length - 1"
           @add-card="openAddCardModal"
           @delete-column="deleteColumn"
           @card-click="openCardDetail"
