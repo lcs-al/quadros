@@ -1,83 +1,84 @@
 {
-  "app": {
-    "name": "Quadros"
-  },
-  "auth": {
-    "login": {
-      "title": "Entre na sua conta",
-      "email_label": "Endereço de e-mail",
-      "email_placeholder": "Endereço de e-mail",
-      "password_label": "Senha",
-      "password_placeholder": "Senha",
-      "submit": "Entrar"
-    },
-    "register": {
-      "title": "Crie sua conta",
-      "subtitle": "Junte-se a nós e comece a gerenciar seus projetos",
-      "name_label": "Nome Completo",
-      "name_placeholder": "Nome Completo",
-      "password_confirmation_label": "Confirmar Senha",
-      "password_confirmation_placeholder": "Confirmar Senha",
-      "submit": "Criar Conta",
-      "login_link": "Já tem uma conta? Entrar",
-      "password_mismatch": "As senhas não conferem"
-    },
-    "roles": {
-      "admin": "Administrador",
-      "user": "Usuário"
-    },
-    "error": {
-      "invalid_credentials": "E-mail ou senha inválidos"
-    }
-  },
-  "navbar": {
-    "brand": "Quadros",
-    "boards": "Quadros",
-    "logout": "Sair"
-  },
-  "dashboard": {
-    "title": "Painel",
-    "loading": "Carregando...",
-    "select_board": "Selecione um Quadro",
-    "pick_board_msg": "Escolha um quadro para começar"
-  },
-  "board": {
-    "create": "Criar Quadro",
-    "create_new": "Criar Novo Quadro",
-    "title_prompt": "Digite o título do quadro:",
-    "delete": "Excluir Quadro",
-    "delete_confirm_title": "Excluir Quadro?",
-    "delete_confirm_body": "Tem certeza que deseja excluir este quadro? Todas as colunas e cartões serão removidos permanentemente.",
-    "back_to_boards": "Voltar aos Quadros",
-    "delete_success": "Quadro excluído com sucesso!",
-    "edit": "Editar Quadro",
-    "members": {
-      "title": "Membros do Quadro",
-      "invite": "Convidar Usuário",
-      "manage": "Gerenciar Membros",
-      "owner": "Proprietário",
-      "remove": "Remover",
-      "role": {
-        "viewer": "Visualizador",
-        "editor": "Editor"
-      },
-      "invite_placeholder": "Digite o e-mail do usuário",
-      "invite_success": "Usuário convidado com sucesso!",
-      "remove_success": "Membro removido com sucesso!",
-      "update_success": "Permissão atualizada com sucesso!",
-      "not_found": "Usuário não encontrado",
-      "already_member": "Usuário já é membro deste quadro"
-    },
-    "access": {
-      "owned": "Seu quadro",
-      "shared": "Compartilhado"
-    },
-    "column": {
+	"app": {
+		"name": "Quadros"
+	},
+	"auth": {
+		"login": {
+			"title": "Entre na sua conta",
+			"email_label": "Endereço de e-mail",
+			"email_placeholder": "Endereço de e-mail",
+			"password_label": "Senha",
+			"password_placeholder": "Senha",
+			"submit": "Entrar"
+		},
+		"register": {
+			"title": "Crie sua conta",
+			"subtitle": "Junte-se a nós e comece a gerenciar seus projetos",
+			"name_label": "Nome Completo",
+			"name_placeholder": "Nome Completo",
+			"password_confirmation_label": "Confirmar Senha",
+			"password_confirmation_placeholder": "Confirmar Senha",
+			"submit": "Criar Conta",
+			"login_link": "Já tem uma conta? Entrar",
+			"password_mismatch": "As senhas não conferem"
+		},
+		"roles": {
+			"admin": "Administrador",
+			"user": "Usuário"
+		},
+		"error": {
+			"invalid_credentials": "E-mail ou senha inválidos"
+		}
+	},
+	"navbar": {
+		"brand": "Quadros",
+		"boards": "Quadros",
+		"logout": "Sair",
+		"login": "Entrar"
+	},
+	"dashboard": {
+		"title": "Painel",
+		"loading": "Carregando...",
+		"select_board": "Selecione um Quadro",
+		"pick_board_msg": "Escolha um quadro para começar"
+	},
+	"board": {
+		"create": "Criar Quadro",
+		"create_new": "Criar Novo Quadro",
+		"title_prompt": "Digite o título do quadro:",
+		"delete": "Excluir Quadro",
+		"delete_confirm_title": "Excluir Quadro?",
+		"delete_confirm_body": "Tem certeza que deseja excluir este quadro? Todas as colunas e cartões serão removidos permanentemente.",
+		"back_to_boards": "Voltar aos Quadros",
+		"delete_success": "Quadro excluído com sucesso!",
+		"edit": "Editar Quadro",
+		"members": {
+			"title": "Membros do Quadro",
+			"invite": "Convidar Usuário",
+			"manage": "Gerenciar Membros",
+			"owner": "Proprietário",
+			"remove": "Remover",
+			"role": {
+				"viewer": "Visualizador",
+				"editor": "Editor"
+			},
+			"invite_placeholder": "Digite o e-mail do usuário",
+			"invite_success": "Usuário convidado com sucesso!",
+			"remove_success": "Membro removido com sucesso!",
+			"update_success": "Permissão atualizada com sucesso!",
+			"not_found": "Usuário não encontrado",
+			"already_member": "Usuário já é membro deste quadro"
+		},
+		"access": {
+			"owned": "Seu quadro",
+			"shared": "Compartilhado"
+		},
+		"column": {
 			"add": "Adicionar Coluna",
-      "prompt_title": "Digite o título da coluna:",
-      "delete_confirm_title": "Confirmar Exclusão",
-      "delete_confirm_body": "Tem certeza? Isso excluirá todos os cartões desta coluna."
-    },
+			"prompt_title": "Digite o título da coluna:",
+			"delete_confirm_title": "Confirmar Exclusão",
+			"delete_confirm_body": "Tem certeza? Isso excluirá todos os cartões desta coluna."
+		},
 		"columns": "colunas",
 		"backlog": {
 			"title": "Backlog do Quadro",
@@ -99,25 +100,25 @@
 			"all_types": "Todos os Tipos",
 			"all_assignees": "Todos os Responsáveis"
 		}
-  },
-  "card": {
-    "add": "Adicionar Cartão",
-    "title": "Título do Cartão",
-    "description": "Descrição",
-    "description_placeholder": "Adicione uma descrição mais detalhada...",
-    "metadata": {
-      "created_at": "Criado em",
-      "creator": "Criado por",
-      "assignee": "Responsável",
-      "unassigned": "Sem responsável",
-      "unknown": "Desconhecido",
-      "deleted_at": "Excluído em"
-    },
-    "types": {
-      "story": "História",
-      "task": "Tarefa",
-      "bug": "Bug"
-    },
+	},
+	"card": {
+		"add": "Adicionar Cartão",
+		"title": "Título do Cartão",
+		"description": "Descrição",
+		"description_placeholder": "Adicione uma descrição mais detalhada...",
+		"metadata": {
+			"created_at": "Criado em",
+			"creator": "Criado por",
+			"assignee": "Responsável",
+			"unassigned": "Sem responsável",
+			"unknown": "Desconhecido",
+			"deleted_at": "Excluído em"
+		},
+		"types": {
+			"story": "História",
+			"task": "Tarefa",
+			"bug": "Bug"
+		},
 		"priorities": {
 			"low": "Baixa",
 			"medium": "Média",
@@ -129,28 +130,28 @@
 		"due_date": "Data de Entrega",
 		"labels": "Etiquetas",
 		"label_placeholder": "Adicionar etiqueta...",
-    "delete": "Excluir Cartão",
-    "delete_confirm": "Tem certeza que deseja excluir este cartão?",
-    "delete_success": "Cartão excluído!",
-    "restore": "Restaurar Cartão",
-    "restore_success": "Cartão restaurado com sucesso!",
+		"delete": "Excluir Cartão",
+		"delete_confirm": "Tem certeza que deseja excluir este cartão?",
+		"delete_success": "Cartão excluído!",
+		"restore": "Restaurar Cartão",
+		"restore_success": "Cartão restaurado com sucesso!",
 		"return_to_backlog": "Devolver ao backlog",
 		"return_to_backlog_success": "Cartão devolvido ao backlog com sucesso!",
 		"actions": "Ações",
-    "comments": {
-      "title": "Comentários",
-      "placeholder": "Escreva um comentário...",
-      "post": "Comentar"
-    }
-  },
-  "settings": {
-    "title": "Configurações",
-    "language": "Idioma",
-    "theme": "Tema",
-    "light": "Claro",
-    "dark": "Escuro"
-  },
-  "nav": {
+		"comments": {
+			"title": "Comentários",
+			"placeholder": "Escreva um comentário...",
+			"post": "Comentar"
+		}
+	},
+	"settings": {
+		"title": "Configurações",
+		"language": "Idioma",
+		"theme": "Tema",
+		"light": "Claro",
+		"dark": "Escuro"
+	},
+	"nav": {
 		"boards": "Quadros",
 		"reports": "Relatórios",
 		"privacy": "Política de Privacidade",
@@ -159,39 +160,126 @@
 		"profile": "Perfil",
 		"go_to_board": "Ir para o Quadro",
 		"dashboard": "Painel"
-  },
-  "common": {
+	},
+	"common": {
 		"select_all": "Selecionar tudo",
-    "optional": "opcional",
-    "save": "Salvar",
-    "cancel": "Cancelar",
-    "confirm_delete": "Confirmar Exclusão",
-    "delete": "Excluir",
-    "undo": "Desfazer",
-    "ctrl_enter_to_post": "Ctrl + Enter para postar"
-  },
-  "profile": {
-    "title": "Perfil do Usuário",
-    "personal_info": "Informações Pessoais",
-    "security": "Segurança",
-    "avatar": {
-      "title": "Foto de Perfil",
-      "change": "Alterar Foto",
-      "upload": "Fazer Upload",
-      "preview": "Prévia",
-      "error": "Erro ao fazer upload da imagem",
-      "file_format_hint": "JPG, PNG ou GIF. Máx 2MB.",
-      "size_error": "Imagem muito grande (máx 2MB)"
-    },
-    "fields": {
-      "name": "Nome",
-      "email": "E-mail",
-      "password": "Nova Senha",
-      "password_confirmation": "Confirmar Nova Senha"
-    },
-    "success": "Perfil atualizado com sucesso!",
-    "errors": {
-      "update_failed": "Falha ao atualizar perfil"
-    }
-  }
+		"optional": "opcional",
+		"save": "Salvar",
+		"cancel": "Cancelar",
+		"confirm_delete": "Confirmar Exclusão",
+		"delete": "Excluir",
+		"undo": "Desfazer",
+		"ctrl_enter_to_post": "Ctrl + Enter para postar"
+	},
+	"profile": {
+		"title": "Perfil do Usuário",
+		"personal_info": "Informações Pessoais",
+		"security": "Segurança",
+		"avatar": {
+			"title": "Foto de Perfil",
+			"change": "Alterar Foto",
+			"upload": "Fazer Upload",
+			"preview": "Prévia",
+			"error": "Erro ao fazer upload da imagem",
+			"file_format_hint": "JPG, PNG ou GIF. Máx 2MB.",
+			"size_error": "Imagem muito grande (máx 2MB)"
+		},
+		"fields": {
+			"name": "Nome",
+			"email": "E-mail",
+			"password": "Nova Senha",
+			"password_confirmation": "Confirmar Nova Senha"
+		},
+		"success": "Perfil atualizado com sucesso!",
+		"errors": {
+			"update_failed": "Falha ao atualizar perfil"
+		}
+	},
+	"landing": {
+		"hero": {
+			"title_start": "Liberte sua mente.",
+			"title_end": "Foque no que importa.",
+			"description": "Organize suas tarefas, projetos e ideias com um fluxo de trabalho claro e intuitivo.",
+			"email_placeholder": "Seu melhor e-mail",
+			"cta": "Criar conta grátis",
+			"card": {
+				"todo": "A Fazer",
+				"doing": "Em Andamento",
+				"done": "Concluído"
+			}
+		},
+		"step1": {
+			"badge": "Passo 1: Capturar",
+			"title_start": "Tire tudo da",
+			"title_end": "sua cabeça.",
+			"description": "Escreva, grave ou tire tudo da sua cabeça. Anote ideias, tarefas, lembretes ou qualquer coisa que requer sua atenção. Alivie sua mente e elimine o estresse mental despejando tudo na sua Inbox.",
+			"features": {
+				"capture": {
+					"title": "Capture tudo:",
+					"description": "Evite esquecimentos capturando rapidamente todas as suas ideias e tarefas em um só lugar."
+				},
+				"unload": {
+					"title": "Descarregue a mente:",
+					"description": "Elimine o estresse mental despejando suas preocupações na caixa de entrada, liberando espaço para criar."
+				},
+				"action": {
+					"title": "Preferência por ação:",
+					"description": "Transforme anotações em tarefas acionáveis, convertendo caos mental em um plano claro."
+				}
+			}
+		},
+		"step2": {
+			"badge": "Passo 2: Organizar",
+			"title_start": "Cada coisa em",
+			"title_end": "seu lugar.",
+			"description": "Organize suas tarefas em listas claras. Categorize seus itens em Próximas Ações, Projetos, Aguardando e Lixo para manter tudo sob controle e saber exatamente o que fazer a seguir.",
+			"features": {
+				"next_actions": {
+					"title": "Próximas Ações:",
+					"description": "Simplifique seus próximos passos, destacando o que precisa ser feito imediatamente."
+				},
+				"projects": {
+					"title": "Projetos:",
+					"description": "Centralize seus projetos em uma lista dedicada, mantendo tudo organizado e acessível."
+				},
+				"waiting": {
+					"title": "Aguardando:",
+					"description": "Acompanhe tarefas delegadas ou informações pendentes em uma lista 'Aguardando' para não perder o controle."
+				}
+			}
+		},
+		"step3": {
+			"badge": "Passo 3. Engajar",
+			"title_start": "Você não decide tarefas.",
+			"title_end": "Você escolhe ações baseadas no momento.",
+			"cards": {
+				"time": {
+					"duration": "15 minutos",
+					"task": "Responder e-mails",
+					"recommended": "Recomendado",
+					"tip": "Escolha uma tarefa rápida e avance um pouco mais"
+				},
+				"energy": {
+					"level": "Energia baixa",
+					"task": "Organizar notas antigas",
+					"productivity": "Produtividade",
+					"tip": "Faça algo produtivo, mas sem consumir muita energia"
+				},
+				"context": {
+					"location": "Casa",
+					"task": "Regar as plantas",
+					"environment": "Ambiente",
+					"tip": "Aproveite que você está em casa e cuide do ambiente"
+				}
+			},
+			"search_placeholder": "O que você pode fazer agora...",
+			"tags": {
+				"out": "Fora",
+				"scheduled": "Agendado"
+			}
+		},
+		"footer": {
+			"copyright": "Copyright © 2026 lcs-al"
+		}
+	}
 }

@@ -1,83 +1,84 @@
 {
-  "app": {
-    "name": "Quadros"
-  },
-  "auth": {
-    "login": {
-      "title": "Sign in to your account",
-      "email_label": "Email address",
-      "email_placeholder": "Email address",
-      "password_label": "Password",
-      "password_placeholder": "Password",
-      "submit": "Sign in"
-    },
-    "register": {
-      "title": "Create your account",
-      "subtitle": "Join us and start managing your projects",
-      "name_label": "Full Name",
-      "name_placeholder": "Full Name",
-      "password_confirmation_label": "Confirm Password",
-      "password_confirmation_placeholder": "Confirm Password",
-      "submit": "Create Account",
-      "login_link": "Already have an account? Sign in",
-      "password_mismatch": "Passwords do not match"
-    },
-    "roles": {
-      "admin": "Administrator",
-      "user": "User"
-    },
-    "error": {
-      "invalid_credentials": "Invalid email or password"
-    }
-  },
-  "navbar": {
-    "brand": "Quadros",
-    "boards": "Boards",
-    "logout": "Logout"
-  },
-  "dashboard": {
-    "title": "Dashboard",
-    "loading": "Loading...",
-    "select_board": "Select a Board",
-    "pick_board_msg": "Pick a board to start"
-  },
-  "board": {
-    "create": "Create Board",
-    "create_new": "Create New Board",
-    "title_prompt": "Enter board title:",
-    "delete": "Delete Board",
-    "delete_confirm_title": "Delete Board?",
-    "delete_confirm_body": "Are you sure you want to delete this board? All columns and cards will be permanently removed.",
-    "back_to_boards": "Back to Boards",
-    "delete_success": "Board deleted successfully!",
-    "edit": "Edit Board",
-    "members": {
-      "title": "Board Members",
-      "invite": "Invite User",
-      "manage": "Manage Members",
-      "owner": "Owner",
-      "remove": "Remove",
-      "role": {
-        "viewer": "Viewer",
-        "editor": "Editor"
-      },
-      "invite_placeholder": "Enter user email",
-      "invite_success": "User invited successfully!",
-      "remove_success": "Member removed successfully!",
-      "update_success": "Permission updated successfully!",
-      "not_found": "User not found",
-      "already_member": "User is already a member of this board"
-    },
-    "access": {
-      "owned": "Your board",
-      "shared": "Shared"
-    },
-    "column": {
+	"app": {
+		"name": "Quadros"
+	},
+	"auth": {
+		"login": {
+			"title": "Sign in to your account",
+			"email_label": "Email address",
+			"email_placeholder": "Email address",
+			"password_label": "Password",
+			"password_placeholder": "Password",
+			"submit": "Sign in"
+		},
+		"register": {
+			"title": "Create your account",
+			"subtitle": "Join us and start managing your projects",
+			"name_label": "Full Name",
+			"name_placeholder": "Full Name",
+			"password_confirmation_label": "Confirm Password",
+			"password_confirmation_placeholder": "Confirm Password",
+			"submit": "Create Account",
+			"login_link": "Already have an account? Sign in",
+			"password_mismatch": "Passwords do not match"
+		},
+		"roles": {
+			"admin": "Administrator",
+			"user": "User"
+		},
+		"error": {
+			"invalid_credentials": "Invalid email or password"
+		}
+	},
+	"navbar": {
+		"brand": "Quadros",
+		"boards": "Boards",
+		"logout": "Logout",
+		"login": "Sign in"
+	},
+	"dashboard": {
+		"title": "Dashboard",
+		"loading": "Loading...",
+		"select_board": "Select a Board",
+		"pick_board_msg": "Pick a board to start"
+	},
+	"board": {
+		"create": "Create Board",
+		"create_new": "Create New Board",
+		"title_prompt": "Enter board title:",
+		"delete": "Delete Board",
+		"delete_confirm_title": "Delete Board?",
+		"delete_confirm_body": "Are you sure you want to delete this board? All columns and cards will be permanently removed.",
+		"back_to_boards": "Back to Boards",
+		"delete_success": "Board deleted successfully!",
+		"edit": "Edit Board",
+		"members": {
+			"title": "Board Members",
+			"invite": "Invite User",
+			"manage": "Manage Members",
+			"owner": "Owner",
+			"remove": "Remove",
+			"role": {
+				"viewer": "Viewer",
+				"editor": "Editor"
+			},
+			"invite_placeholder": "Enter user email",
+			"invite_success": "User invited successfully!",
+			"remove_success": "Member removed successfully!",
+			"update_success": "Permission updated successfully!",
+			"not_found": "User not found",
+			"already_member": "User is already a member of this board"
+		},
+		"access": {
+			"owned": "Your board",
+			"shared": "Shared"
+		},
+		"column": {
 			"add": "Add Column",
-      "prompt_title": "Enter column title:",
-      "delete_confirm_title": "Confirm Delete",
-      "delete_confirm_body": "Are you sure? This will delete all cards in this column."
-    },
+			"prompt_title": "Enter column title:",
+			"delete_confirm_title": "Confirm Delete",
+			"delete_confirm_body": "Are you sure? This will delete all cards in this column."
+		},
 		"columns": "columns",
 		"backlog": {
 			"title": "Board Backlog",
@@ -99,25 +100,25 @@
 			"all_types": "All Types",
 			"all_assignees": "All Assignees"
 		}
-  },
-  "card": {
-    "add": "Add Card",
-    "title": "Card Title",
-    "description": "Description",
-    "description_placeholder": "Add a more detailed description...",
-    "metadata": {
-      "created_at": "Created at",
-      "creator": "Created by",
-      "assignee": "Assignee",
-      "unassigned": "Unassigned",
-      "unknown": "Unknown",
-      "deleted_at": "Deleted at"
-    },
-    "types": {
-      "story": "Story",
-      "task": "Task",
-      "bug": "Bug"
-    },
+	},
+	"card": {
+		"add": "Add Card",
+		"title": "Card Title",
+		"description": "Description",
+		"description_placeholder": "Add a more detailed description...",
+		"metadata": {
+			"created_at": "Created at",
+			"creator": "Created by",
+			"assignee": "Assignee",
+			"unassigned": "Unassigned",
+			"unknown": "Unknown",
+			"deleted_at": "Deleted at"
+		},
+		"types": {
+			"story": "Story",
+			"task": "Task",
+			"bug": "Bug"
+		},
 		"priorities": {
 			"low": "Low",
 			"medium": "Medium",
@@ -129,69 +130,156 @@
 		"due_date": "Due Date",
 		"labels": "Labels",
 		"label_placeholder": "Add label...",
-    "delete": "Delete Card",
-    "delete_confirm": "Are you sure you want to delete this card?",
-    "delete_success": "Card deleted!",
-    "restore": "Restore Card",
-    "restore_success": "Card restored successfully!",
+		"delete": "Delete Card",
+		"delete_confirm": "Are you sure you want to delete this card?",
+		"delete_success": "Card deleted!",
+		"restore": "Restore Card",
+		"restore_success": "Card restored successfully!",
 		"return_to_backlog": "Return to backlog",
 		"return_to_backlog_success": "Card returned to backlog successfully!",
 		"actions": "Actions",
-    "comments": {
-      "title": "Comments",
-      "placeholder": "Write a comment...",
-      "post": "Comment"
-    }
-  },
-  "settings": {
-    "title": "Settings",
-    "language": "Language",
-    "theme": "Theme",
-    "light": "Light",
-    "dark": "Dark"
-  },
-  "nav": {
+		"comments": {
+			"title": "Comments",
+			"placeholder": "Write a comment...",
+			"post": "Comment"
+		}
+	},
+	"settings": {
+		"title": "Settings",
+		"language": "Language",
+		"theme": "Theme",
+		"light": "Light",
+		"dark": "Dark"
+	},
+	"nav": {
 		"boards": "Boards",
 		"reports": "Reports",
 		"privacy": "Privacy Policy",
 		"terms": "Terms of Use",
-    "notifications": "Notifications",
-    "profile": "Profile",
-    "go_to_board": "Go to Board",
-    "dashboard": "Dashboard"
-  },
-  "common": {
+		"notifications": "Notifications",
+		"profile": "Profile",
+		"go_to_board": "Go to Board",
+		"dashboard": "Dashboard"
+	},
+	"common": {
 		"select_all": "Select All",
-    "optional": "optional",
-    "save": "Save",
-    "cancel": "Cancel",
-    "confirm_delete": "Confirm Delete",
-    "delete": "Delete",
-    "undo": "Undo",
-    "ctrl_enter_to_post": "Ctrl + Enter to post"
-  },
-  "profile": {
-    "title": "User Profile",
-    "personal_info": "Personal Information",
-    "security": "Security",
-    "avatar": {
-      "title": "Profile Photo",
-      "change": "Change Photo",
-      "upload": "Upload",
-      "preview": "Preview",
-      "error": "Error uploading image",
-      "file_format_hint": "JPG, PNG or GIF. Max 2MB.",
-      "size_error": "Image size too large (max 2MB)"
-    },
-    "fields": {
-      "name": "Name",
-      "email": "Email",
-      "password": "New Password",
-      "password_confirmation": "Confirm New Password"
-    },
-    "success": "Profile updated successfully!",
-    "errors": {
-      "update_failed": "Failed to update profile"
-    }
-  }
+		"optional": "optional",
+		"save": "Save",
+		"cancel": "Cancel",
+		"confirm_delete": "Confirm Delete",
+		"delete": "Delete",
+		"undo": "Undo",
+		"ctrl_enter_to_post": "Ctrl + Enter to post"
+	},
+	"profile": {
+		"title": "User Profile",
+		"personal_info": "Personal Information",
+		"security": "Security",
+		"avatar": {
+			"title": "Profile Photo",
+			"change": "Change Photo",
+			"upload": "Upload",
+			"preview": "Preview",
+			"error": "Error uploading image",
+			"file_format_hint": "JPG, PNG or GIF. Max 2MB.",
+			"size_error": "Image size too large (max 2MB)"
+		},
+		"fields": {
+			"name": "Name",
+			"email": "Email",
+			"password": "New Password",
+			"password_confirmation": "Confirm New Password"
+		},
+		"success": "Profile updated successfully!",
+		"errors": {
+			"update_failed": "Failed to update profile"
+		}
+	},
+	"landing": {
+		"hero": {
+			"title_start": "Free your mind.",
+			"title_end": "Focus on what matters.",
+			"description": "Organize your tasks, projects, and ideas with a clear and intuitive workflow.",
+			"email_placeholder": "Your best email",
+			"cta": "Create free account",
+			"card": {
+				"todo": "To Do",
+				"doing": "Doing",
+				"done": "Done"
+			}
+		},
+		"step1": {
+			"badge": "Step 1: Capture",
+			"title_start": "Get everything out of",
+			"title_end": "your head.",
+			"description": "Write, record, or get everything out of your head. Note down ideas, tasks, reminders, or anything that requires your attention. Relieve your mind and eliminate mental stress by dumping everything into your Inbox.",
+			"features": {
+				"capture": {
+					"title": "Capture everything:",
+					"description": "Avoid forgetting things by quickly capturing all your ideas and tasks in one place."
+				},
+				"unload": {
+					"title": "Unload your mind:",
+					"description": "Eliminate mental stress by dumping your worries into the inbox, freeing up space to create."
+				},
+				"action": {
+					"title": "Action preference:",
+					"description": "Turn notes into actionable tasks, converting mental chaos into a clear plan."
+				}
+			}
+		},
+		"step2": {
+			"badge": "Step 2: Organize",
+			"title_start": "A place for",
+			"title_end": "everything.",
+			"description": "Organize your tasks into clear lists. Categorize your items into Next Actions, Projects, Waiting, and Trash to keep everything under control and know exactly what to do next.",
+			"features": {
+				"next_actions": {
+					"title": "Next Actions:",
+					"description": "Simplify your next steps, highlighting what needs to be done immediately."
+				},
+				"projects": {
+					"title": "Projects:",
+					"description": "Centralize your projects in a dedicated list, keeping everything organized and accessible."
+				},
+				"waiting": {
+					"title": "Waiting:",
+					"description": "Track delegated tasks or pending information in a 'Waiting' list so you don't lose control."
+				}
+			}
+		},
+		"step3": {
+			"badge": "Step 3. Engage",
+			"title_start": "You don't decide tasks.",
+			"title_end": "You choose actions based on the moment.",
+			"cards": {
+				"time": {
+					"duration": "15 minutes",
+					"task": "Reply to emails",
+					"recommended": "Recommended",
+					"tip": "Pick a quick task and move forward a bit more"
+				},
+				"energy": {
+					"level": "Low energy",
+					"task": "Organize old notes",
+					"productivity": "Productivity",
+					"tip": "Do something productive, but without consuming too much energy"
+				},
+				"context": {
+					"location": "Home",
+					"task": "Water the plants",
+					"environment": "Environment",
+					"tip": "Enjoy being at home and take care of the environment"
+				}
+			},
+			"search_placeholder": "What can you do right now...",
+			"tags": {
+				"out": "Out",
+				"scheduled": "Scheduled"
+			}
+		},
+		"footer": {
+			"copyright": "Copyright © 2026 lcs-al"
+		}
+	}
 }
