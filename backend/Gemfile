@@ -22,7 +22,8 @@ gem 'dotenv-rails'
 
 # Database
 group :production do
-  gem 'aws-sdk-s3', '~> 1.115.0'
+  gem 'aws-sdk-core', '3.211', require: false
+  gem 'aws-sdk-s3', '1.170', require: false
   gem 'pg', '~> 1.4.5'
 end
 
