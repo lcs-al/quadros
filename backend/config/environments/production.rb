@@ -35,4 +35,5 @@ Rails.application.configure do
   config.active_storage.variant_processor = :mini_magick
   config.active_storage.checksum_implementation = OpenSSL::Digest::MD5
   config.active_storage.service = :cloudflare
+  config.active_storage.resolve_model_to_route = :rails_storage_proxy
 end
