@@ -29,11 +29,10 @@ Rails.application.configure do
 
   config.action_controller.raise_on_missing_callback_actions = true
 
-  Rails.application.routes.default_url_options[:host] = ENV['APP_HOST']
-  config.action_mailer.default_url_options = { host: 'quadros-production.up.railway.app', port: 3000 }
-  routes.default_url_options = { host: 'quadros-production.up.railway.app', port: 3000 }
+  routes.default_url_options = { host: ENV['APP_HOST'] }
+  config.action_mailer.default_url_options = { host: ENV['APP_HOST'] }
+  Rails.application.routes.default_url_options = { host: ENV['APP_HOST'] }
   config.active_storage.variant_processor = :mini_magick
   config.active_storage.checksum_implementation = OpenSSL::Digest::MD5
   config.active_storage.service = :cloudflare
-  config.active_storage.resolve_model_to_route = :rails_storage_proxy
 end

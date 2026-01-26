@@ -18,14 +18,10 @@ class User < ApplicationRecord
   def avatar_url
     return unless avatar.attached?
 
-    url_for(avatar)
+    avatar.url(expires_in: 1.hour)
   end
 
   def as_json(options = {})
     super(options.merge(methods: :avatar_url))
-  end
-
-  def avatar_url
-    avatar.attached? ? Rails.application.routes.url_helpers.url_for(avatar) : nil
   end
 end
