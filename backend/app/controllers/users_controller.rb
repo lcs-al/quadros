@@ -9,7 +9,17 @@ class UsersController < ApplicationController
   end
 
   def update_profile
-    if current_user.update(user_params)
+    if params[:avatar].present?
+      file = params[:avatar]
+      current_user.avatar.attach(
+        io: file,
+        filename: file.original_filename,
+        content_type: file.content_type,
+        key: "profile_pictures/#{SecureRandom.uuid}#{File.extname(file.original_filename)}"
+      )
+    end
+
+    if current_user.update(user_params.except(:avatar))
       render json: current_user.as_json(only: %i[id name email role])
     else
       render json: { errors: current_user.errors.full_messages }, status: :unprocessable_entity
