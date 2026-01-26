@@ -58,7 +58,7 @@ class BoardsController < ApplicationController
   def conclude_cards
     authorize @board
     last_column = @board.columns.order(position: :asc).last
-    
+
     if last_column
       ActiveRecord::Base.transaction do
         last_column.cards.active.each(&:conclude)

@@ -22,11 +22,12 @@ gem 'dotenv-rails'
 
 # Database
 group :production do
-  gem 'pg',                         '~> 1.4.5'
+  gem 'aws-sdk-s3', '~> 1.115.0'
+  gem 'pg', '~> 1.4.5'
 end
 
 group :development, :test do
-  gem 'debug',                      platforms: %i[mri mswin mswin64 mingw x64_mingw]
+  gem 'debug', platforms: %i[mri mswin mswin64 mingw x64_mingw]
   gem 'faker'
   gem 'sqlite3', '~> 1.6.0'
 end
