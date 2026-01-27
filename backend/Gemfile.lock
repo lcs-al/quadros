@@ -227,8 +227,6 @@ GEM
     reline (0.6.3)
       io-console (~> 0.5)
     securerandom (0.3.2)
-    sqlite3 (1.6.9)
-      mini_portile2 (~> 2.8.0)
     stringio (3.2.0)
     thor (1.5.0)
     timeout (0.6.0)
@@ -259,7 +257,6 @@ DEPENDENCIES
   pundit
   rack-cors
   rails (~> 7.1.5, >= 7.1.5.1)
-  sqlite3 (~> 1.6.0)
   tzinfo-data
 
 RUBY VERSION

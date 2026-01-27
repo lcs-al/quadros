@@ -1,8 +1,8 @@
 class CreateBoardMemberships < ActiveRecord::Migration[7.1]
   def change
-    create_table :board_memberships do |t|
-      t.references :board, null: false, foreign_key: true
-      t.references :user, null: false, foreign_key: true
+    create_table :board_memberships, id: :uuid do |t|
+      t.references :board, null: false, foreign_key: true, type: :uuid
+      t.references :user, null: false, foreign_key: true, type: :uuid
       t.integer :role, null: false, default: 0
 
       t.timestamps

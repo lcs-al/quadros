@@ -21,16 +21,16 @@ gem 'tzinfo-data', platforms: %i[mswin mswin64 mingw x64_mingw jruby]
 gem 'dotenv-rails'
 
 # Database
+gem 'pg', '~> 1.4.5'
+
 group :production do
   gem 'aws-sdk-core', '3.211', require: false
   gem 'aws-sdk-s3', '1.170', require: false
-  gem 'pg', '~> 1.4.5'
 end
 
 group :development, :test do
   gem 'debug', platforms: %i[mri mswin mswin64 mingw x64_mingw]
   gem 'faker'
-  gem 'sqlite3', '~> 1.6.0'
 end
 
 group :development do

@@ -1,29 +1,20 @@
 default: &default
-  adapter: sqlite3
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  timeout: 5000
-  journal_mode: wal
-  synchronous: normal
-
-development:
-  <<: *default
-  url: <%= ENV['DATABASE_URL'] %>
-  database: <%= ENV.fetch("DATABASE_NAME", "storage/development.sqlite3") %>
-  username: <%= ENV["DATABASE_USERNAME"] %>
-  password: <%= ENV["DATABASE_PASSWORD"] %>
-  host: <%= ENV["DATABASE_HOST"] %>
-  port: <%= ENV["DATABASE_PORT"] %>
-
-test:
-  <<: *default
-  database: storage/test.sqlite3
-
-production:
   adapter: postgresql
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: <%= ENV["DATABASE_USERNAME"] || "postgres" %>
+  password: <%= ENV["DATABASE_PASSWORD"] || "postgres" %>
+  host: <%= ENV["DATABASE_HOST"] || "localhost" %>
+  port: <%= ENV["DATABASE_PORT"] || 5432 %>
+
+development:
+  <<: *default
+  database: quadros
+
+test:
+  <<: *default
+  database: quadros_test
+
+production:
+  <<: *default
   database: <%= ENV["DATABASE_NAME"] %>
-  username: <%= ENV["DATABASE_USERNAME"] %>
-  password: <%= ENV["DATABASE_PASSWORD"] %>
-  host: <%= ENV["DATABASE_HOST"] %>
-  port: <%= ENV.fetch("DATABASE_PORT") { 5432 } %>
