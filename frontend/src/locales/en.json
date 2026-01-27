@@ -52,6 +52,7 @@
 	},
 	"board": {
 		"create": "Create Board",
+		"updated": "Board updated",
 		"create_new": "Create New Board",
 		"title_prompt": "Enter board title:",
 		"delete": "Delete Board",

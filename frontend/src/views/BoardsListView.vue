@@ -1,88 +1,153 @@
 <template>
-  <div class="min-h-screen bg-transparent">
+ <div class="min-h-screen bg-transparent">
     <div class="mx-auto py-6 sm:px-6 lg:px-8">
+      <Transition name="slide-up" appear>
+        <div class="mb-12">
+          <h1 class="text-4xl font-extrabold text-white mb-3 tracking-tight">
+            {{ $t('dashboard.select_board') }}
+          </h1>
+          <p class="text-gray-400 text-lg max-w-2xl">
+            {{ $t('dashboard.pick_board_msg') }}
+          </p>
+        </div>
+      </Transition>
+
       <Transition name="fade" mode="out-in">
         <div v-if="loading && boards.length === 0" class="flex flex-col items-center justify-center mt-20 space-y-4">
-          <font-awesome-icon icon="spinner" spin class="text-3xl text-indigo-600" />
-          <p class="text-gray-500 animate-pulse-subtle">{{ $t('dashboard.loading') }}</p>
+          <font-awesome-icon icon="spinner" spin class="text-3xl text-indigo-500" />
+          <p class="text-gray-500 animate-pulse">{{ $t('dashboard.loading') }}</p>
         </div>
-        <div v-else>
+        
+        <div v-else class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+          
+          <!-- Create New Board Card -->
           <Transition name="slide-up" appear>
-            <div class="mb-8 flex justify-between items-center">
-               <div>
-                 <h1 class="text-3xl font-extrabold text-gray-900 dark:text-white mb-2">
-                   {{ $t('dashboard.select_board') }}
-                 </h1>
-                 <p class="text-gray-500">{{ $t('dashboard.pick_board_msg') }}</p>
-               </div>
-               <BaseButton 
-                 v-if="authStore.isAdmin"
-                 @click="openCreateBoardModal"
-                 class="flex items-center space-x-2"
-               >
-                 <font-awesome-icon icon="plus" class="h-4 w-4" />
-                 <span>{{ $t('board.create') }}</span>
-               </BaseButton>
+            <div 
+              class="group relative overflow-hidden rounded-3xl cursor-pointer transition-all duration-500 hover:shadow-2xl hover:shadow-indigo-500/20 hover:-translate-y-2 h-[420px]"
+              @click="openCreateBoardModal"
+            >
+              <!-- Gradient Border Effect -->
+              <div class="absolute inset-0 bg-gradient-to-br from-violet-600 via-blue-500 to-emerald-400 opacity-50 transition-opacity duration-500 group-hover:opacity-100 p-[2px] rounded-3xl">
+                <!-- Glass Background -->
+                <div class="absolute inset-[2px] bg-[#0F111A]/90 backdrop-blur-xl rounded-[22px] z-10"></div>
+              </div>
+
+              <!-- Content -->
+              <div class="relative z-20 h-full p-8 flex flex-col justify-between">
+                <div>
+                  <div class="flex justify-between items-start">
+                    <div class="w-full h-48 relative flex items-center justify-center">
+                      <!-- 3D Illustration -->
+                      <img 
+                        :src="newBoardIllustration" 
+                        alt="New Board" 
+                        class="w-50 h-50 object-contain duration-700 group-hover:scale-110 group-hover:rotate-3 animate-float"
+                      />
+                      <!-- Glow behind image -->
+                      <div class="absolute inset-0 bg-indigo-500/20 blur-[60px] rounded-full transform scale-75"></div>
+                    </div>
+                  </div>
+                  
+                  <h2 class="text-2xl font-bold text-white mb-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-gray-300 transition-all">
+                    Começar um novo quadro
+                  </h2>
+                  <p class="text-gray-400 text-sm leading-relaxed">
+                    Organize seus projetos com listas claras, sprints ágeis e fluxos de trabalho eficientes.
+                  </p>
+                </div>
+
+                <button class="cursor-pointer w-full py-4 mt-6 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 text-white font-bold text-lg shadow-lg shadow-indigo-500/30 transition-all duration-300 hover:shadow-indigo-500/50 hover:brightness-110 flex items-center justify-center gap-2 group-hover:tracking-wide">
+                  <font-awesome-icon icon="plus" class="text-sm" />
+                  <span>{{ $t('board.create') }}</span>
+                </button>
+              </div>
             </div>
           </Transition>
 
-          <Transition name="fade" mode="out-in">
-            <div v-if="boards.length > 0">
-               <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                  <div 
-                    v-for="(board, index) in boards" 
-                    :key="board.id" 
-                    class="bg-white dark:bg-[#1A1D26] p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 cursor-pointer hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group relative"
-                    :style="{ transitionDelay: `${index * 50}ms` }"
-                  >
-                    <button
-                      v-if="board.created_by?.id === authStore.user?.id"
-                      @click.stop="confirmDeleteBoard(board.id)"
-                      class="absolute top-3 right-3 p-2 rounded-lg text-gray-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 opacity-0 group-hover:opacity-100 transition-all z-10"
-                      :title="$t('board.delete')"
-                    >
-                      <font-awesome-icon icon="trash-alt" class="h-4 w-4" />
-                    </button>
-                    
-                    <div @click="navigateToBoard(board.id)" class="w-full h-full text-left">
-                      <div class="flex items-center justify-between mb-4">
-                        <div class="p-3 bg-indigo-50 dark:bg-indigo-900/30 rounded-lg group-hover:bg-indigo-600 transition-colors">
-                          <font-awesome-icon icon="columns" class="h-6 w-6 text-indigo-600 dark:text-indigo-400 group-hover:text-white" />
-                        </div>
-                        
-                        <div class="flex flex-col items-end">
-                          <span 
-                            v-if="board.created_by?.id === authStore.user?.id"
-                            class="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 rounded"
-                          >
-                            {{ $t('board.access.owned') }}
-                          </span>
-                          <span 
-                            v-else
-                            class="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-300 rounded"
-                          >
-                            {{ $t('board.access.shared') }}
-                          </span>
-                        </div>
-                      </div>
-                      <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ board.title }}</h3>
-                      <div class="flex items-center justify-between mt-2">
-                        <p class="text-sm text-gray-500">{{ board.columns?.length || 0 }} {{ $t('board.columns') }}</p>
-                        
-                        <div v-if="board.created_by && board.created_by.id !== authStore.user?.id" class="flex items-center space-x-2">
-                           <UserAvatar :user="board.created_by" size="xs" />
-                           <span class="text-[10px] text-gray-400 font-medium">{{ board.created_by.name }}</span>
-                        </div>
-                      </div>
+          <!-- Existing Board Cards -->
+          <div 
+            v-for="(board, index) in boards" 
+            :key="board.id"
+            class="group relative h-[420px]"
+            :style="{ animationDelay: `${index * 100}ms` }"
+          >
+            <div 
+              @click="navigateToBoard(board.id)"
+              class="relative h-full bg-[#1A1D26] hover:bg-[#202430] border border-gray-800 hover:border-indigo-500/30 rounded-3xl p-8 transition-all duration-300 cursor-pointer overflow-hidden shadow-xl hover:shadow-indigo-900/10 hover:-translate-y-2 flex flex-col"
+            >
+              <!-- Top Metadata -->
+              <div class="relative flex justify-between items-start mb-8 z-10">
+                <div class="p-3 rounded-2xl bg-[#0F111A] border border-gray-800 group-hover:border-indigo-500/30 group-hover:shadow-indigo-500/10 transition-all">
+                   <img 
+                    :src="boardIcon" 
+                    alt="Board Icon" 
+                    class="w-20 h-20 object-contain opacity-80 group-hover:opacity-100 transition-opacity"
+                  />
+                </div>
+
+                <span 
+                  v-if="board.created_by?.id === authStore.user?.id"
+                  class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 shadow-[0_0_10px_rgba(99,102,241,0.2)]"
+                >
+                  {{ $t('board.access.owned') }}
+                </span>
+                <span 
+                  v-else
+                  class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
+                >
+                  {{ $t('board.access.shared') }}
+                </span>
+              </div>
+
+              <!-- Main Content -->
+              <div class="relative z-10 flex-1">
+                <h3 class="text-3xl font-bold text-white mb-2 leading-tight group-hover:text-indigo-300 transition-colors line-clamp-2">
+                  {{ board.title }}
+                </h3>
+                <div class="flex items-center text-gray-500 text-xs font-medium space-x-2 mt-4">
+                   <font-awesome-icon icon="folder-open" />
+                   <span>{{ $t('board.updated') }} {{ formatDate(board.updated_at) }}</span>
+                </div>
+              </div>
+
+              <!-- Footer / 3D Element -->
+              <div class="relative z-10 mt-auto pt-6 border-t border-gray-800/50 flex items-center justify-between">
+                 <div class="flex items-center space-x-3">
+                    <UserAvatar 
+                      v-if="board.created_by" 
+                      :user="board.created_by" 
+                      size="sm"
+                      class="ring-2 ring-[#1A1D26]" 
+                    />
+                    <div class="flex flex-col">
+                      <span class="text-xs text-gray-400">Created by</span>
+                      <span class="text-sm text-gray-200 font-medium">{{ board.created_by?.name }}</span>
                     </div>
-                  </div>
-               </div>
+                 </div>
+
+                 <!-- Hover Action Indicator -->
+                 <div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-gray-400 group-hover:bg-indigo-600 group-hover:text-white transition-all transform group-hover:scale-110">
+                    <font-awesome-icon icon="arrow-right" />
+                 </div>
+              </div>
+
+              <!-- Delete Button (Top Right) -->
+              <button
+                v-if="board.created_by?.id === authStore.user?.id"
+                @click.stop="confirmDeleteBoard(board.id)"
+                class="absolute top-6 right-6 p-3 rounded-xl text-gray-500 hover:text-red-400 hover:bg-red-500/10 transition-all opacity-0 group-hover:opacity-100 z-40"
+                :title="$t('board.delete')"
+              >
+                <font-awesome-icon icon="trash-alt" />
+              </button>
             </div>
-          </Transition>
+          </div>
+
         </div>
       </Transition>
     </div>
 
+    <!-- Modals (keeping existing logic) -->
     <BaseModal
       :isOpen="modalState.createBoard.isOpen"
       :title="$t('board.create_new')"
@@ -153,6 +218,10 @@ import BaseModal from '../components/common/BaseModal.vue';
 import BaseButton from '../components/common/BaseButton.vue';
 import UserAvatar from '../components/common/UserAvatar.vue';
 
+// Assets
+import newBoardIllustration from '../assets/new_board_illustration.png';
+import boardIcon from '../assets/board_icon_3d.png';
+
 const { t } = useI18n();
 
 const authStore = useAuthStore();
@@ -165,6 +234,21 @@ const modalState = reactive({
   createBoard: { isOpen: false, title: '', loading: false },
   deleteBoard: { isOpen: false, boardId: null, loading: false }
 });
+
+const formatDate = (dateString) => {
+    if (!dateString) return '';
+    // Format: "há 4 minutos" or date
+    // Simple relative implementation or standard date
+    // Using simple logic for now
+    const date = new Date(dateString);
+    const now = new Date();
+    const diff = (now - date) / 1000;
+    
+    if (diff < 60) return 'agora mesmo';
+    if (diff < 3600) return `há ${Math.floor(diff/60)} minutos`;
+    if (diff < 86400) return `há ${Math.floor(diff/3600)} horas`;
+    return date.toLocaleDateString();
+};
 
 const fetchBoards = async () => {
   try {
@@ -199,6 +283,8 @@ const submitCreateBoard = async () => {
       type: 'success',
       message: t('board.create') + ' - ' + response.data.title
     });
+    // Optional: Auto navigate to new board
+    // navigateToBoard(response.data.id); 
   } catch (error) {
     console.error('Failed to create board', error);
     uiStore.addNotification({
@@ -241,3 +327,30 @@ onMounted(() => {
   fetchBoards();
 });
 </script>
+
+<style scoped>
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(1deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+/* Custom scrollbar for better blend */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #374151;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #4B5563;
+}
+</style>

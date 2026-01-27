@@ -506,7 +506,7 @@ const getFilteredColumn = (column) => {
         }
 
         if (selectedAssignee.value) {
-            matches = matches && card.assignee?.id === parseInt(selectedAssignee.value);
+            matches = matches && card.assignee?.id === selectedAssignee.value;
         }
 
         if (activeFilters.value.includes('my_cards')) {

@@ -52,6 +52,7 @@
 	},
 	"board": {
 		"create": "Criar Quadro",
+		"updated": "Quadro atualizado",
 		"create_new": "Criar Novo Quadro",
 		"title_prompt": "Digite o título do quadro:",
 		"delete": "Excluir Quadro",

@@ -417,7 +417,7 @@ import UserAvatar from "./common/UserAvatar.vue";
 
 const props = defineProps({
   isOpen: Boolean,
-  cardId: Number,
+  cardId: [String, Number],
   board: Object,
   canEdit: Boolean,
 });
