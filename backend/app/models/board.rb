@@ -8,7 +8,7 @@ class Board < ApplicationRecord
 
   validates :title, presence: true
 
-  after_create :create_backlog
+  after_create :create_backlog, :create_default_columns
   after_commit :broadcast_update
 
   def owner?(user)
@@ -30,6 +30,12 @@ class Board < ApplicationRecord
 
   def create_backlog
     Backlog.create!(board: self)
+  end
+
+  def create_default_columns
+    ['To Do', 'In Progress', 'Done'].each do |title|
+      columns.create!(title: title)
+    end
   end
 
   def broadcast_update
