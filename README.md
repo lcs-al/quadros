@@ -4,7 +4,10 @@ Quadros Task Manager is a full-featured task management application inspired by 
 
 This is a productivity tool designed to help teams and individuals track progress, manage backlogs, and collaborate effectively.
 
-<img width="1917" height="922" alt="image" src="https://github.com/user-attachments/assets/f5fb35c0-fa57-4b16-82dd-c32168ed5edc"/>
+<img width="1919" height="922" alt="image" src="https://github.com/user-attachments/assets/925f6db1-e773-4e35-b175-4a63c7c92756" />
+<img width="1923" height="923" alt="image" src="https://github.com/user-attachments/assets/39d64186-4c53-4115-9b75-3acb4ec4bfd1" />
+
+### 🔗 You can access the platform online right here: [Quadros](https://quadros-kanban.netlify.app/)
 
 ## 🎯 Features
 
