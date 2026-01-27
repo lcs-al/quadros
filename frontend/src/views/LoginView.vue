@@ -5,7 +5,7 @@
     <!-- Cosmic Background Effects -->
     <div class="absolute inset-0 w-full h-full z-0">
        <!-- Radial Gradient Center (Purple/Amber glow) -->
-       <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-[radial-gradient(ellipse_at_center,rgba(186,28,135,0.15)_0%,transparent_70%)] blur-3xl"></div>
+       <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-[radial-gradient(ellipse_at_center,rgba(46,25,83,0.2)_0%,transparent_70%)] blur-3xl"></div>
        
        <!-- Floating Orbs/Elements (Stylized representations of the image elements) -->
        <!-- Top Left: Notification Bell Area -->

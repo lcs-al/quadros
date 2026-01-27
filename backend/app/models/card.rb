@@ -18,6 +18,8 @@ class Card < ApplicationRecord
 
   acts_as_list scope: %i[column_id backlog_id]
 
+  after_commit :broadcast_update
+
   default_scope { where(deleted_at: nil) }
   scope :active, -> { where(deleted_at: nil, completed_at: nil) }
   scope :deleted, -> { unscope(where: :deleted_at).where.not(deleted_at: nil) }
@@ -46,5 +48,10 @@ class Card < ApplicationRecord
     elsif column_id.present? && backlog_id.present?
       errors.add(:base, 'Card cannot belong to both a column and a backlog')
     end
+  end
+
+  def broadcast_update
+    board_id = column&.board_id || backlog&.board_id
+    ActionCable.server.broadcast("board_#{board_id}", { action: 'refresh' }) if board_id
   end
 end

@@ -129,7 +129,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch, nextTick } from 'vue';
+import { ref, onMounted, watch, nextTick, onUnmounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useAuthStore } from '../stores/auth';
 import { useBoardStore } from '../stores/boards';
@@ -139,6 +139,7 @@ import BoardDetail from '../components/BoardDetail.vue';
 import BoardMembersModal from '../components/BoardMembersModal.vue';
 import BaseButton from '../components/common/BaseButton.vue';
 import UserAvatar from '../components/common/UserAvatar.vue';
+import consumer from '../services/cable';
 
 
 const { t } = useI18n();
@@ -224,15 +225,53 @@ const goToBacklog = () => {
   router.push({ name: 'BoardBacklog', params: { id: board.value.id } });
 };
 
+
+
+let subscription;
+
+const subscribeToBoard = (boardId) => {
+  if (subscription) {
+    subscription.unsubscribe();
+  }
+
+  subscription = consumer.subscriptions.create(
+    { channel: 'BoardChannel', board_id: boardId },
+    {
+      received(data) {
+        if (data.action === 'refresh') {
+          fetchBoardDetails();
+        }
+      }
+    }
+  );
+};
+
 // Update document title when board changes
 watch(board, (newBoard) => {
   const baseTitle = t('app.name') || 'Quadros';
   if (newBoard) {
     document.title = `${baseTitle} | ${newBoard.title}`;
+    
+     if (newBoard.id && (!subscription || JSON.parse(subscription.identifier).board_id !== newBoard.id)) {
+       subscribeToBoard(newBoard.id);
+    }
   }
 }, { immediate: true });
 
+watch(() => route.params.id, (newId) => {
+  if (newId) {
+    fetchBoardDetails();
+    // Subscription will be handled by the board watcher once details are fetched
+  }
+});
+
 onMounted(() => {
   fetchBoardDetails();
+});
+
+onUnmounted(() => {
+  if (subscription) {
+    subscription.unsubscribe();
+  }
 });
 </script>

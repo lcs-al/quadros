@@ -6,4 +6,12 @@ class Column < ApplicationRecord
   validates :title, presence: true
 
   acts_as_list scope: :board
+
+  after_commit :broadcast_update
+
+  private
+
+  def broadcast_update
+    ActionCable.server.broadcast("board_#{board_id}", { action: 'refresh' })
+  end
 end

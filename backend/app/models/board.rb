@@ -9,6 +9,7 @@ class Board < ApplicationRecord
   validates :title, presence: true
 
   after_create :create_backlog
+  after_commit :broadcast_update
 
   def owner?(user)
     created_by_id == user.id
@@ -29,5 +30,9 @@ class Board < ApplicationRecord
 
   def create_backlog
     Backlog.create!(board: self)
+  end
+
+  def broadcast_update
+    ActionCable.server.broadcast("board_#{id}", { action: 'refresh' })
   end
 end
