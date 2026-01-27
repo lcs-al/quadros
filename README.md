@@ -1,8 +1,10 @@
-# 🐈 Quadros — Task Manager
+# ✅ Quadros — Task Manager
 
 Quadros Task Manager is a full-featured task management application inspired by industry standards like Jira. Built for the **Quadros** platform, it streamlines project organization, workflows, and daily productivity in a cohesive, user-friendly interface.
 
 This is a productivity tool designed to help teams and individuals track progress, manage backlogs, and collaborate effectively.
+
+<img width="1917" height="922" alt="image" src="https://github.com/user-attachments/assets/f5fb35c0-fa57-4b16-82dd-c32168ed5edc"/>
 
 ## 🎯 Features
 
